@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, Mr.C" />
+  <meta name="keywords" content="LSTM,Deep Learning," />
 
 
 
@@ -79,14 +79,21 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="My Works">
-<meta property="og:url" content="http://yoursite.com/works/index.html">
+<meta name="description" content="循环神经网络（RNNs）&amp;emsp;&amp;emsp;  人们思考的时候往往会依据之前的经验，正如读这篇文章的时候，在读第二段的时候你会回忆第一段相关的内容，而不是将每一段单独来进行学习。正是因为具有这用连贯性。">
+<meta name="keywords" content="LSTM,Deep Learning">
+<meta property="og:type" content="article">
+<meta property="og:title" content="详解LSTM（Understanding LSTM Networks）">
+<meta property="og:url" content="http://yoursite.com/2018/04/08/LSTM/index.html">
 <meta property="og:site_name" content="MR.C">
+<meta property="og:description" content="循环神经网络（RNNs）&amp;emsp;&amp;emsp;  人们思考的时候往往会依据之前的经验，正如读这篇文章的时候，在读第二段的时候你会回忆第一段相关的内容，而不是将每一段单独来进行学习。正是因为具有这用连贯性。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-19T03:19:16.000Z">
+<meta property="og:image" content="http://yoursite.com/images/RNN/RNN-rolled.png">
+<meta property="og:image" content="http://yoursite.com/images/RNN/RNN-unrolled.png">
+<meta property="og:updated_time" content="2018-04-08T15:30:41.126Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="My Works">
+<meta name="twitter:title" content="详解LSTM（Understanding LSTM Networks）">
+<meta name="twitter:description" content="循环神经网络（RNNs）&amp;emsp;&amp;emsp;  人们思考的时候往往会依据之前的经验，正如读这篇文章的时候，在读第二段的时候你会回忆第一段相关的内容，而不是将每一段单独来进行学习。正是因为具有这用连贯性。">
+<meta name="twitter:image" content="http://yoursite.com/images/RNN/RNN-rolled.png">
 
 
 
@@ -116,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/works/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/04/08/LSTM/"/>
 
 
 
 
 
-  <title>My Works | MR.C</title>
+  <title>详解LSTM（Understanding LSTM Networks） | MR.C</title>
   
 
 
@@ -247,33 +254,255 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/08/LSTM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MR.C">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/1.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MR.C">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">My Works</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
+          <h1 class="post-title" itemprop="name headline">详解LSTM（Understanding LSTM Networks）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-08T23:30:41+08:00">
+                2018-04-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-      </div>
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/08/LSTM/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/04/08/LSTM/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/04/08/LSTM/" class="leancloud_visitors" data-flag-title="详解LSTM（Understanding LSTM Networks）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+
+      
+        <h2 id="循环神经网络（RNNs）"><a href="#循环神经网络（RNNs）" class="headerlink" title="循环神经网络（RNNs）"></a>循环神经网络（RNNs）</h2><p>&emsp;&emsp;  人们思考的时候往往会依据之前的经验，正如读这篇文章的时候，在读第二段的时候你会回忆第一段相关的内容，而不是将每一段单独来进行学习。正是因为具有这用连贯性。</p>
+<a id="more"></a>
+<p>&emsp;&emsp;  这也正是传统神经网络的缺点。例如，你想要分辨一个电影在每个时刻想要发生什么情节。传统神经网络不能根据前一刻的情节来判断下一刻发生的情节。</p>
+<p>&emsp;&emsp;  但是，RNN可以解决这个问题。因为RNN的网络结构中有很多循环，可以让信息持久下去。</p>
+<p><img src="/images/RNN/RNN-rolled.png" alt="Recurrent Neural Networks have loops."></p>
+<p>&emsp;&emsp;  如图所示， $x_{t}$ 是输入， $h_{t}$ 是输出，中间的循环则允许信息从网络的前一个步骤传递到下一个步骤。</p>
+<p>&emsp;&emsp;  这样看可能不太明显，我们将RNN网络展开如下图，它其实可以看作多个传统的神经网络结构连接而成，只是前一个网络将一些信息传递给下一个网络。</p>
+<p><img src="/images/RNN/RNN-unrolled.png" alt="**An unrolled recurrent neural network.**"></p>
+<p>&emsp;&emsp;  这种链式结构很明显的适用于序列型数据。近几年，将RNNs应用在语音识别、语言模型、机器翻译、图像描述等等领域都取得了很大的成功。具体的可以参考 <em>Andrej Karpathy</em> 的文章 <em><a href="http://karpathy.github.io/2015/05/21/rnn-effectiveness/" target="_blank" rel="noopener">The Unreasonable Effectiveness of Recurrent Neural Networks</a></em> 。</p>
+<p>&emsp;&emsp;  <strong>重点是，这些取得的成果使用的是RNN的一个变种结构——- “LSTMs”，它的效果要比传统的RNN网络结构好的多。</strong></p>
+<h2 id="长期依赖的问题"><a href="#长期依赖的问题" class="headerlink" title="长期依赖的问题"></a>长期依赖的问题</h2><p>&emsp;&emsp;  RNN的一个很大优点是可以将之前的信息连接到当前的任务中，例如你可以联想看过的电影情节来预测接下来要发生的故事情节。如果RNN能够真正做到这样，那对很多领域非常有用。但是事实并非这样，它视情况而定。</p>
+<p>&emsp;&emsp;   有时</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p><em><a href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/" target="_blank" rel="noopener">Understanding LSTM Networks</a></em></p>
+
       
     </div>
+
+<div>
+  		
+   		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:20px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+  		
+	</div>
+
     
     
     
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="MR.C 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="MR.C 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+      <div id="bitcoin" style="display: inline-block">
+        <img id="bitcoin_qr" src="/images/bitcoin.png" alt="MR.C 比特币"/>
+        <p>比特币</p>
+      </div>
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+<div>
+      
+        
+
+      
+</div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/LSTM/" rel="tag"># LSTM</a>
+          
+            <a href="/tags/Deep-Learning/" rel="tag"># Deep Learning</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/08/随笔一/" rel="next" title="2018.4.4">
+                <i class="fa fa-chevron-left"></i> 2018.4.4
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -309,8 +538,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -404,6 +642,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#循环神经网络（RNNs）"><span class="nav-number">1.</span> <span class="nav-text">循环神经网络（RNNs）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#长期依赖的问题"><span class="nav-number">2.</span> <span class="nav-text">长期依赖的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">3.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
