@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="自编码器的介绍请参考这里 准备​    导入所需要的包。 1234import numpy as npimport sklearn.preprocessing as preimport tensorflow as tffrom tensorflow.example.tutorials.mnist import input_data">
+<meta name="description" content="自编码器的介绍请参考这里 准备​    导入所需要的包。 1234import numpy as npimport sklearn.preprocessing as preimport tensorflow as tffrom tensorflow.example.tutorials.mnist import input_data  定义函数参数初始化方法 xavier initializati">
 <meta name="keywords" content="TensorFlow">
 <meta property="og:type" content="article">
 <meta property="og:title" content="TensorFlow学习（三）—_实现自编码器">
-<meta property="og:url" content="http://yoursite.com/2018/04/07/TensorFlow学习（三）—_实现自编码器/index.html">
+<meta property="og:url" content="http://yoursite.com/2018/04/11/TensorFlow学习（三）—_实现自编码器/index.html">
 <meta property="og:site_name" content="MR.C">
-<meta property="og:description" content="自编码器的介绍请参考这里 准备​    导入所需要的包。 1234import numpy as npimport sklearn.preprocessing as preimport tensorflow as tffrom tensorflow.example.tutorials.mnist import input_data">
+<meta property="og:description" content="自编码器的介绍请参考这里 准备​    导入所需要的包。 1234import numpy as npimport sklearn.preprocessing as preimport tensorflow as tffrom tensorflow.example.tutorials.mnist import input_data  定义函数参数初始化方法 xavier initializati">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-07T05:34:55.996Z">
+<meta property="og:updated_time" content="2018-04-11T09:14:06.553Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TensorFlow学习（三）—_实现自编码器">
-<meta name="twitter:description" content="自编码器的介绍请参考这里 准备​    导入所需要的包。 1234import numpy as npimport sklearn.preprocessing as preimport tensorflow as tffrom tensorflow.example.tutorials.mnist import input_data">
+<meta name="twitter:description" content="自编码器的介绍请参考这里 准备​    导入所需要的包。 1234import numpy as npimport sklearn.preprocessing as preimport tensorflow as tffrom tensorflow.example.tutorials.mnist import input_data  定义函数参数初始化方法 xavier initializati">
 
 
 
@@ -120,7 +120,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/04/07/TensorFlow学习（三）—_实现自编码器/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/04/11/TensorFlow学习（三）—_实现自编码器/"/>
 
 
 
@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/07/TensorFlow学习（三）—_实现自编码器/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/11/TensorFlow学习（三）—_实现自编码器/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="MR.C">
@@ -292,8 +292,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-07T13:34:55+08:00">
-                2018-04-07
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-11T17:14:06+08:00">
+                2018-04-11
               </time>
             
 
@@ -333,8 +333,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/04/07/TensorFlow学习（三）—_实现自编码器/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/04/07/TensorFlow学习（三）—_实现自编码器/" itemprop="commentCount"></span>
+                <a href="/2018/04/11/TensorFlow学习（三）—_实现自编码器/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/04/11/TensorFlow学习（三）—_实现自编码器/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -342,7 +342,7 @@
 
           
           
-             <span id="/2018/04/07/TensorFlow学习（三）—_实现自编码器/" class="leancloud_visitors" data-flag-title="TensorFlow学习（三）—_实现自编码器">
+             <span id="/2018/04/11/TensorFlow学习（三）—_实现自编码器/" class="leancloud_visitors" data-flag-title="TensorFlow学习（三）—_实现自编码器">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -374,11 +374,11 @@
 
 
       
-        <p>自编码器的介绍请参考<a href="">这里</a></p>
+        <a id="more"></a>
+<p>自编码器的介绍请参考<a href="">这里</a></p>
 <h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>​    导入所需要的包。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> sklearn.preprocessing <span class="keyword">as</span> pre</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">from</span> tensorflow.example.tutorials.mnist <span class="keyword">import</span> input_data</span><br></pre></td></tr></table></figure>
 <hr>
-<a id="more"></a>
 <h2 id="定义函数"><a href="#定义函数" class="headerlink" title="定义函数"></a>定义函数</h2><h3 id="参数初始化方法-xavier-initialization"><a href="#参数初始化方法-xavier-initialization" class="headerlink" title="参数初始化方法 xavier initialization"></a>参数初始化方法 <code>xavier initialization</code></h3><blockquote>
 <p>这里是初始化参数的方法，不是初始化参数！</p>
 </blockquote>
@@ -541,8 +541,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/06/GitHub搭建个人博客(Ubuntu版)/" rel="next" title="使用Github搭建个人博客（初级篇）">
-                <i class="fa fa-chevron-left"></i> 使用Github搭建个人博客（初级篇）
+              <a href="/2018/04/11/Markdown的使用/" rel="next" title="Markdown的使用">
+                <i class="fa fa-chevron-left"></i> Markdown的使用
               </a>
             
           </div>
@@ -551,8 +551,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/04/07/index/" rel="prev" title="Hello Mr.C">
-                Hello Mr.C <i class="fa fa-chevron-right"></i>
+              <a href="/2018/04/11/TensorFlow学习（一）_ 构建卷积神经网络/" rel="prev" title="TensorFlow学习（一）_ 构建卷积神经网络">
+                TensorFlow学习（一）_ 构建卷积神经网络 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -637,7 +637,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -648,7 +648,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -659,7 +659,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
