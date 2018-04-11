@@ -79,13 +79,11 @@
 
 
 
-<meta name="description" content="循环神经网络（RNNs）&amp;emsp;&amp;emsp;  人们思考的时候往往会依据之前的经验，正如读这篇文章的时候，在读第二段的时候你会回忆第一段相关的内容，而不是将每一段单独来进行学习。正是因为这具有连贯性。 &amp;emsp;&amp;emsp;  这也恰好是传统神经网络的缺点。例如，你想要分辨一个电影在每个时刻想要发生什么情节。传统神经网络不能根据前一刻的情节来判断下一刻发生的情节。 &amp;emsp;&amp;emsp;">
 <meta name="keywords" content="LSTM,Deep Learning">
 <meta property="og:type" content="article">
 <meta property="og:title" content="详解LSTM（Understanding LSTM Networks）">
 <meta property="og:url" content="http://yoursite.com/2018/04/11/LSTM/index.html">
 <meta property="og:site_name" content="MR.C">
-<meta property="og:description" content="循环神经网络（RNNs）&amp;emsp;&amp;emsp;  人们思考的时候往往会依据之前的经验，正如读这篇文章的时候，在读第二段的时候你会回忆第一段相关的内容，而不是将每一段单独来进行学习。正是因为这具有连贯性。 &amp;emsp;&amp;emsp;  这也恰好是传统神经网络的缺点。例如，你想要分辨一个电影在每个时刻想要发生什么情节。传统神经网络不能根据前一刻的情节来判断下一刻发生的情节。 &amp;emsp;&amp;emsp;">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/images/RNN/RNN-rolled.png">
 <meta property="og:image" content="http://yoursite.com/images/RNN/RNN-unrolled.png">
@@ -100,10 +98,9 @@
 <meta property="og:image" content="http://yoursite.com/images/RNN/LSTM3-focus-i.png">
 <meta property="og:image" content="http://yoursite.com/images/RNN/LSTM3-focus-C.png">
 <meta property="og:image" content="http://yoursite.com/images/RNN/LSTM3-focus-o.png">
-<meta property="og:updated_time" content="2018-04-11T09:13:35.340Z">
+<meta property="og:updated_time" content="2018-04-11T09:22:24.472Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="详解LSTM（Understanding LSTM Networks）">
-<meta name="twitter:description" content="循环神经网络（RNNs）&amp;emsp;&amp;emsp;  人们思考的时候往往会依据之前的经验，正如读这篇文章的时候，在读第二段的时候你会回忆第一段相关的内容，而不是将每一段单独来进行学习。正是因为这具有连贯性。 &amp;emsp;&amp;emsp;  这也恰好是传统神经网络的缺点。例如，你想要分辨一个电影在每个时刻想要发生什么情节。传统神经网络不能根据前一刻的情节来判断下一刻发生的情节。 &amp;emsp;&amp;emsp;">
 <meta name="twitter:image" content="http://yoursite.com/images/RNN/RNN-rolled.png">
 
 
@@ -306,7 +303,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-11T17:13:35+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-11T17:22:24+08:00">
                 2018-04-11
               </time>
             
@@ -388,7 +385,8 @@
 
 
       
-        <a id="more"></a>
+        <hr>
+<a id="more"></a>
 <h2 id="循环神经网络（RNNs）"><a href="#循环神经网络（RNNs）" class="headerlink" title="循环神经网络（RNNs）"></a>循环神经网络（RNNs）</h2><p>&emsp;&emsp;  人们思考的时候往往会依据之前的经验，正如读这篇文章的时候，在读第二段的时候你会回忆第一段相关的内容，而不是将每一段单独来进行学习。正是因为这具有连贯性。</p>
 <p>&emsp;&emsp;  这也恰好是传统神经网络的缺点。例如，你想要分辨一个电影在每个时刻想要发生什么情节。传统神经网络不能根据前一刻的情节来判断下一刻发生的情节。</p>
 <p>&emsp;&emsp;  但是，RNN可以解决这个问题。因为RNN的网络结构中有很多循环，可以让信息持久下去。</p>
@@ -516,8 +514,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/11/GitHub搭建个人博客(Ubuntu版)/" rel="next" title="使用Github搭建个人博客（初级篇）">
-                <i class="fa fa-chevron-left"></i> 使用Github搭建个人博客（初级篇）
+              <a href="/2018/04/07/index/" rel="next" title="Hello Mr.C">
+                <i class="fa fa-chevron-left"></i> Hello Mr.C
               </a>
             
           </div>
@@ -526,8 +524,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/04/11/Markdown的使用/" rel="prev" title="Markdown的使用">
-                Markdown的使用 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/04/11/GitHub搭建个人博客(Ubuntu版)/" rel="prev" title="使用Github搭建个人博客（初级篇）">
+                使用Github搭建个人博客（初级篇） <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

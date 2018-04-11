@@ -290,7 +290,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-11T17:18:06+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-11T17:24:45+08:00">
                 2018-04-11
               </time>
             
@@ -373,11 +373,17 @@
 
       
         
-          
-            <a id="more"></a>
-<p>&emsp;&emsp;忽然想起寒假实习期间邂逅中信局学长的一番闲聊：因为攀比心理，总是把自己的进步所获得的成就和那些特别牛的人进行比较，所以觉得自己无论怎么努力，总是特别差劲。但是后来想想，其实自己并不差，只是把目标定的太高了。其实和他们相比并没错，短时间内会让自己更有动力。但是后来发现他们越来越厉害，自己落后的越来越多了。一般情况下大家的智商相差无几，但是他们的基础比你好，只能怪在之前的时间你没有好好利用，现在才开始弥补这些差距。你是在努力，但是别人也在努力，你要赶上他们就要付出更多的精力。来这实习发现自己会的东西还是蛮多的（相视而笑）。</p>
+          <hr>
+          <!--noindex-->
 
-          
+
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/04/11/随笔一/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+
+          <!--/noindex-->
         
       
     </div>
@@ -464,7 +470,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-11T17:15:01+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-11T17:24:35+08:00">
                 2018-04-11
               </time>
             
@@ -547,33 +553,17 @@
 
       
         
-          
-            <a id="more"></a>
-<h2 id="下面开始使用-Hexo-时间。"><a href="#下面开始使用-Hexo-时间。" class="headerlink" title="下面开始使用 Hexo 时间。"></a>下面开始使用 <code>Hexo</code> 时间。</h2><h3 id="新建文件夹，在文件夹打开终端，安装-Hexo"><a href="#新建文件夹，在文件夹打开终端，安装-Hexo" class="headerlink" title="新建文件夹，在文件夹打开终端，安装 Hexo"></a>新建文件夹，在文件夹打开终端，安装 <code>Hexo</code></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
-<p>结果如图所示：</p>
-<p><img src="/images/hexo1" alt=""></p>
-<p>查看 <code>Hexo</code> 版本，检查是否安装成功：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo -v</span><br></pre></td></tr></table></figure>
-<p><img src="/images/hexo2" alt=""></p>
-<h3 id="进行初始化"><a href="#进行初始化" class="headerlink" title="进行初始化"></a>进行初始化</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init</span><br></pre></td></tr></table></figure>
-<p>最后会出现 <code>INFO  Start blogging with Hexo!</code> 。</p>
-<h3 id="安装所需组件"><a href="#安装所需组件" class="headerlink" title="安装所需组件"></a>安装所需组件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install</span><br><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
-<p><img src="/images/hexo3" alt=""></p>
-<h3 id="使用-Next-主题"><a href="#使用-Next-主题" class="headerlink" title="使用 Next 主题"></a>使用 <code>Next</code> 主题</h3><blockquote>
-<p>官方地址：<a href="http://theme-next.iissnan.com/getting-started.html" target="_blank" rel="noopener">http://theme-next.iissnan.com/getting-started.html</a></p>
-</blockquote>
-<h3 id="下载主题"><a href="#下载主题" class="headerlink" title="下载主题"></a>下载主题</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/iissnan/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure>
-<p>此时在你的 <code>/Hexo/themes</code> 文件夹中多出了一个  <code>next</code> 文件夹。</p>
-<h3 id="主题配置"><a href="#主题配置" class="headerlink" title="主题配置"></a>主题配置</h3><p>打开 <code>Hexo</code> 文件夹下的配置文件 <code>_config.yml</code> ，找到 <code>theme</code> 字段，并将其值更改为 <code>next</code>。</p>
-<p>然后按照下边修改成你自己的信息：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">title: ***。</span><br><span class="line"></span><br><span class="line">author: ***</span><br><span class="line"></span><br><span class="line">language: zh-Hans</span><br><span class="line"></span><br><span class="line">timezone: Asia/Shanghai</span><br></pre></td></tr></table></figure>
-<p>.</p>
-<p>.</p>
-<p>.</p>
-<p>.</p>
-<h3 id="提交"><a href="#提交" class="headerlink" title="提交"></a>提交</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo g -d</span><br></pre></td></tr></table></figure>
-<h2 id="完成！"><a href="#完成！" class="headerlink" title="完成！"></a>完成！</h2>
-          
+          <hr>
+          <!--noindex-->
+
+
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/04/11/使用Github搭建个人博客（Hexo篇）-更帅气的next主题/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+
+          <!--/noindex-->
         
       
     </div>
@@ -660,7 +650,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-11T17:14:50+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-11T17:24:18+08:00">
                 2018-04-11
               </time>
             
@@ -743,26 +733,17 @@
 
       
         
-          
-            <a id="more"></a>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>&emsp;&emsp; 了解了区块链一些基本理论后，现在代码实战一个简单的区块链，从代码角度了解它是如何工作的。</p>
-<p>&emsp; &emsp; 区块链是一些不可改变的、有序的区块，区块的内容可以是文件、交易等等所有你喜欢放进去的数据。事实上，最重要的是将他们连接到一块的 <strong><a href="https://learncryptography.com/hash-functions/what-are-hash-functions" target="_blank" rel="noopener">哈希</a></strong>。</p>
-<p>&emsp;&emsp; 这里使用的是 <em>Python3.6</em> ，需要一个支持 <em>HTTP</em> 的客户端，如 <em>Postnam</em> 或者 <em>cURL</em> ， 同时还需要 <em>Flask、Request</em> 库：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pip3 install flask request</span><br></pre></td></tr></table></figure>
-<h2 id="Step1：创建区块链"><a href="#Step1：创建区块链" class="headerlink" title="Step1：创建区块链"></a>Step1：创建区块链</h2><p>&emsp; &emsp;  新建 <code>blockchain.py</code> ，所有的代码都将写进这一个文件中。</p>
-<h3 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h3><p>&emsp; &emsp;  新建 <em>Blockchain</em> 类，其构造函数初始化一个空列表（用来存储区块链），另一个空列表用来存储交易。该类包括创建新块、储存交易方法。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Blockchain</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.chain = []</span><br><span class="line">        self.current_transactions = []</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">new_block</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="comment"># Creates a new Block and adds it to the chain</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">new_transaction</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="comment"># Adds a new transaction to the list of transactions</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">    </span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">hash</span><span class="params">(block)</span>:</span></span><br><span class="line">        <span class="comment"># Hashes a Block</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="meta">    @property</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">last_block</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="comment"># Returns the last Block in the chain</span></span><br><span class="line">        <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
-<h3 id="区块"><a href="#区块" class="headerlink" title="区块"></a>区块</h3><p>&emsp;&emsp; 每个块都包括一个索引、一个时间戳、 一系列交易、校验和前一个块的 <em>hash</em> （哈希值）。下面是一个区块的样子：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">block = &#123;</span><br><span class="line">    <span class="string">'index'</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="string">'timestamp'</span>: <span class="number">1506057125.900785</span>,</span><br><span class="line">    <span class="string">'transactions'</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">'sender'</span>: <span class="string">"8527147fe1f5426f9dd545de4b27ee00"</span>,</span><br><span class="line">            <span class="string">'recipient'</span>: <span class="string">"a77f5cdfa2934df3954a5c7c7da5df1f"</span>,</span><br><span class="line">            <span class="string">'amount'</span>: <span class="number">5</span>,</span><br><span class="line">        &#125;</span><br><span class="line">    ],</span><br><span class="line">    <span class="string">'proof'</span>: <span class="number">324984774000</span>,</span><br><span class="line">    <span class="string">'previous_hash'</span>: <span class="string">"2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>&emsp; &emsp;  很明显，每一个区块都包含前一个区块的 <em>hash</em> ，<strong>这是区块链不可改变性的关键</strong>。如果有人篡改了很早之前的区块，那么这个区块之后的那些块的 hash 都会报错。这便是区块链的核心思想。</p>
-<h3 id="添加交易到区块"><a href="#添加交易到区块" class="headerlink" title="添加交易到区块"></a>添加交易到区块</h3><p>&emsp;&emsp; 定义 <code>new_transaction()</code> 方法来负责向区块中添加交易。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">new_transaction</span><span class="params">(self, sender, recipient, amount)</span>:</span></span><br><span class="line">    	<span class="string">"""</span></span><br><span class="line"><span class="string">        Creates a new transaction to go into the next mined Block</span></span><br><span class="line"><span class="string">        :param sender: &lt;str&gt; Address of the Sender</span></span><br><span class="line"><span class="string">        :param recipient: &lt;str&gt; Address of the Recipient</span></span><br><span class="line"><span class="string">        :param amount: &lt;int&gt; Amount</span></span><br><span class="line"><span class="string">        :return: &lt;int&gt; The index of the Block that will hold this transaction</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        </span><br><span class="line">        self.current_transactions.append(&#123;</span><br><span class="line">            <span class="string">'sender'</span>: sender,</span><br><span class="line">            <span class="string">'recipient'</span>: recipient,</span><br><span class="line">            <span class="string">'amount'</span>: amount,</span><br><span class="line">        &#125;</span><br><span class="line">        )</span><br><span class="line">        <span class="keyword">return</span> self.last_block[<span class="string">'index'</span>] + <span class="number">1</span></span><br></pre></td></tr></table></figure>
-<p>&emsp;&emsp; 该方法将交易添加到列表中，并返回交易将会被加入的那个区块索引，这个区块将会经过”挖矿“产生。</p>
-<h3 id="创建新区块"><a href="#创建新区块" class="headerlink" title="创建新区块"></a>创建新区块</h3><p>&emsp;&emsp; 当 <code>Blockchain</code> 被实例化后，我们需要将 <strong>创世区块</strong> （第一个区块，没有前驱）添加到列表中。同时还需要向创世区块中添加一个”证明“，这个证明可以理解为挖矿（或者工作量证明）。我们将在后面讨论挖矿。除了在构造函数中生成创世区块，还需要添加 <code>new_block()</code> ， <code>new_transaction()</code>  ，  <code>hash()</code> 三个方法：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">from</span> time <span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Blockchain</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.chain = []</span><br><span class="line">        self.current_transactions = []</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 创建创世区块</span></span><br><span class="line">        self.new_block(previous_hash=<span class="number">1</span>, proof=<span class="number">100</span>)</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">new_block</span><span class="params">(self, proof, previous_hash=None)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        创建一个新的区块到区块链中</span></span><br><span class="line"><span class="string">        :param proof: &lt;int&gt; 由工作证明算法生成的证明</span></span><br><span class="line"><span class="string">        :param previous_hash: (Optional) &lt;str&gt; 前一个区块的 hash 值</span></span><br><span class="line"><span class="string">        :return: &lt;dict&gt; 新区块</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        </span><br><span class="line">        block = &#123;</span><br><span class="line">            <span class="string">'index'</span>: len(self.chain) + <span class="number">1</span>,</span><br><span class="line">            <span class="string">'tinestamp'</span>: time(),</span><br><span class="line">            <span class="string">'transactions'</span>: self.current_transactions,</span><br><span class="line">            <span class="string">'proof'</span>: proof,</span><br><span class="line">            <span class="string">'previous_hash'</span>: previous_hash <span class="keyword">or</span> self.hash(self.chain[<span class="number">-1</span>]),</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 重置当前交易信息</span></span><br><span class="line">        self.current_transactions = []</span><br><span class="line">        </span><br><span class="line">        self.chain.append(block)</span><br><span class="line">        <span class="keyword">return</span> block</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">new_transactions</span><span class="params">(self, sender, recipient, amount)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        创建一笔新的交易到下一个被挖掘的区块中</span></span><br><span class="line"><span class="string">        :param sender: &lt;str&gt; 发送人的地址</span></span><br><span class="line"><span class="string">        :param recipient: &lt;str&gt; 接收人的地址</span></span><br><span class="line"><span class="string">        :param amount: &lt;int&gt; 金额</span></span><br><span class="line"><span class="string">        :return: &lt;int&gt; 持有本次交易的区块索引</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        </span><br><span class="line">        self.current_transactions.append(&#123;</span><br><span class="line">            <span class="string">'sender'</span>: sender,</span><br><span class="line">            <span class="string">'recipient'</span>: recipient,</span><br><span class="line">            <span class="string">'amount'</span>: amount,</span><br><span class="line">        &#125;)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> self.last_block[<span class="string">'index'</span>] + <span class="number">1</span></span><br><span class="line">    </span><br><span class="line"><span class="meta">    @property</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">last_block</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.chain[<span class="number">-1</span>]</span><br><span class="line">    </span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">hash</span><span class="params">(block)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        给一个区块生成 SHA-256 值</span></span><br><span class="line"><span class="string">        :param block: &lt;dict&gt; Block</span></span><br><span class="line"><span class="string">        :return: &lt;str&gt;</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 我们必须确保这个字典（区块）是经过排序的，否则我们将会得到不一致的散列</span></span><br><span class="line">        block_string = json.dumps(block, sort_keys=<span class="keyword">True</span>).encode()</span><br><span class="line">        <span class="keyword">return</span> hashlib.sha256(block_string).hexdigest()</span><br></pre></td></tr></table></figure>
-<p>&emsp;&emsp; 到现在，我们基本上已经完成了区块链基本结构。但是你也许会疑惑新的区块是怎样创建和挖掘的。</p>
+          <hr>
+          <!--noindex-->
 
-          
+
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/04/11/区块链/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+
+          <!--/noindex-->
         
       
     </div>
@@ -849,7 +830,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-11T17:14:39+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-11T17:24:07+08:00">
                 2018-04-11
               </time>
             
@@ -932,22 +913,17 @@
 
       
         
-          
-            <a id="more"></a>
-<h2 id="首先将原来电脑上的Hexo目录下的这几个文件复制到新电脑的新建Hexo目录下"><a href="#首先将原来电脑上的Hexo目录下的这几个文件复制到新电脑的新建Hexo目录下" class="headerlink" title="首先将原来电脑上的Hexo目录下的这几个文件复制到新电脑的新建Hexo目录下"></a>首先将原来电脑上的Hexo目录下的这几个文件复制到新电脑的新建Hexo目录下</h2><blockquote>
-<p>_config.yml<br> package.json<br> scaffolds<br> source<br> themes<br> .gitignore（隐藏文件，按 <code>Ctrl + H</code> 即可看到）</p>
-</blockquote>
-<h2 id="配置Hexo环境"><a href="#配置Hexo环境" class="headerlink" title="配置Hexo环境"></a>配置Hexo环境</h2><ul>
-<li>安装Node.js</li>
-<li>安装Hexo   <code>npm install hexo-cli -g</code></li>
-</ul>
-<h2 id="安装好后，切换至Hexo下"><a href="#安装好后，切换至Hexo下" class="headerlink" title="安装好后，切换至Hexo下"></a>安装好后，切换至Hexo下</h2><p><code>npm install
- npm install hexo-deployer-git --save
- npm install hexo-generator-feed --save
- npm install hexo-generator-sitemap --save</code></p>
-<h2 id="将要更新的文章放入-source-posts-下进行更新"><a href="#将要更新的文章放入-source-posts-下进行更新" class="headerlink" title="将要更新的文章放入 /source/_posts 下进行更新"></a>将要更新的文章放入 <em>/source/_posts</em> 下进行更新</h2><p><code>hexo d -g</code></p>
+          <hr>
+          <!--noindex-->
 
-          
+
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/04/11/搭建个人博客之 Github + hexo： 如何在其他电脑上更新博客/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+
+          <!--/noindex-->
         
       
     </div>
@@ -1034,7 +1010,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-11T17:14:30+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-11T17:23:56+08:00">
                 2018-04-11
               </time>
             
@@ -1117,20 +1093,17 @@
 
       
         
-          
-            <a id="more"></a>
-<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>首先去<a href="https://www.java.com/en/download/linux_manual.jsp" target="_blank" rel="noopener">这里</a>下载Java for Linux，我下的是Linux X64.</p>
-<p>首先输入 <code>java -version</code> ，如果出现如下图，说明可以继续。<br><img src="/images/1.png" alt="1"></p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>最好将你的Java放到 <em>/usr</em> 里，操作如下：<br><code>cd /usr</code><br><code>sudo mkdir java</code><br><code>cd java/</code><br>保持当前窗口。</p>
-<p>找到你下载的 <em>jre-8u161-linux-x64.tar.gz</em> 所在文件夹，在当前文件夹中右键打开终端 ，复制文件到你创建的文件夹：<br><code>sudo mv jre-8u161-linux-x64.tar.gz /usr/java</code><br>关闭此终端。</p>
-<p>打开刚才终端，输入下面命令，提取 <em>jre-8u161-linux-x64.tar.gz</em>  ,如图：</p>
-<p><code>sudo tar zxvf jre-8u161-linux-x64.tar.gz</code><br><img src="/images/2.png" alt="2"></p>
-<h2 id="配置Java-JDK环境变量"><a href="#配置Java-JDK环境变量" class="headerlink" title="配置Java JDK环境变量"></a>配置Java JDK环境变量</h2><p>输入 <code>javac</code> 和  <code>javac -version</code> 出现如下情况：<br><img src="/images/3.png" alt="3"></p>
-<p>说明可以配置环境了：<br><code>sudo vim ~/.bashrc</code> ，按下 <em>i</em> ，进入vim的编辑模式，在文档最后边添加下面几句话：<br><img src="/images/4.png" alt="4"><br>按Esc后， 输入 <em>:wq</em> ，退出vim。</p>
-<p>输入 <code>source ~/.bashrc</code> ，应用此配置。</p>
-<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>此时输入 <code>java -version</code> ，如图则成功。<br><img src="/images/5.png" alt="5"></p>
+          <hr>
+          <!--noindex-->
 
-          
+
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/04/11/Ubuntu安装以及配置Java8/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+
+          <!--/noindex-->
         
       
     </div>
@@ -1217,7 +1190,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-11T17:14:19+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-11T17:23:45+08:00">
                 2018-04-11
               </time>
             
@@ -1300,98 +1273,17 @@
 
       
         
-          
-            <a id="more"></a>
-<p> TensorFlow的 <em>layers</em> 模块提供了一个高级API，可以轻松构建神经网络。它提供了便于创建全连接层和卷积层的方法，添加了激活函数以及应用DropOut正则化(防止过拟合)。在本教程中，您将学习如何构建卷积神经网络模型来识</p>
-<p>别MNIST数据集中的手写数字。<br>   <img src="https://tensorflow.google.cn/images/mnist_0-9.png" alt="这里写图片描述"><br>   MNIST数据集包含60,000个训练样例和10,000个手写数字0-9的测试示例，格式为28x28像素单色图像。</p>
-<hr>
-<p>完整代码已上传至<a href="https://github.com/onebigcabbage/TensorFlowTool" target="_blank" rel="noopener">github</a>。</p>
-<hr>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><p>首先写出TensorFlow程序的基本框架。创建 <em>cnn_mnist.py</em> ，添加下面的代码：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line">tf.logging.set_verbosity(tf.logging.INFO)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">  tf.app.run()</span><br></pre></td></tr></table></figure>
-<p>如果用的python2，请在最上面添加：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> absolute_import</span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> division</span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br></pre></td></tr></table></figure>
-<h2 id="CNNs（卷及神经网络）简介"><a href="#CNNs（卷及神经网络）简介" class="headerlink" title="CNNs（卷及神经网络）简介"></a>CNNs（卷及神经网络）简介</h2><blockquote>
-<p>个人觉得以下能理解尽量理解，不能理解的话可以简单参考”数字图像处理“。实在不能理解，知道卷积核如何运算到数据上也可以，因为接下来的操作都是数学坑了。</p>
-</blockquote>
-<p>卷积神经网络（CNN）是当前用于图像分类任务的最先进的模型。CNN将一系列滤波器（卷积核）应用于图像的原始像素数据以提取和学习更高级别的特征，然后该模型可用于分类。 <strong>CNN包含三个组件：</strong></p>
-<blockquote>
-<p>下面属博主个人理解，和官网有些差异。可参考<a href="https://tensorflow.google.cn/tutorials/layers" target="_blank" rel="noopener">TensorFlow官网</a>。</p>
-</blockquote>
-<p><strong>卷积层:</strong>  用人工事先定义好的卷积核对图像进行卷积计算，输出采用ReLU激活函数。对于本代码的补0卷积计算，可参考下图：<br><img src="/images/cnn.gif" alt="卷积操作"><br><strong>池化层:</strong> 简单来说就是对卷积过后的特征进行下采样，也就是减少图像的空间大小。通常使用max-pooling，既在规定的窗口大小下取最大。例如定义2×2的尺寸，池化后：<br><img src="/images/pool.jpg" alt="池化操作"><br><strong>输出层:</strong> 经过卷积和池化的运算，特征提取完毕。再通过输出层计算输出可知道样本所属的类别了。一般输出层采用 <em>softmax</em> 激活函数，产生结果为属于某类别的概率，所有结果加起来总和为1。</p>
-<p>整个过程可看下图简单理解：</p>
-<p><img src="/images/out.jpg" alt="描述"></p>
-<h2 id="构建CNN的MNIST分类器"><a href="#构建CNN的MNIST分类器" class="headerlink" title="构建CNN的MNIST分类器"></a>构建CNN的MNIST分类器</h2><p>让我们构建一个模型，使用以下CNN结构对MNIST数据集中的图像进行分类：</p>
-<ol>
-<li><strong>卷积层1：</strong> 使用32 5×5的卷积核，ReLU激活函数。</li>
-<li><strong>池化层1：</strong> 使用步长为2，尺寸为2×2的窗口。</li>
-<li><strong>卷积层2：</strong> 使用64 5×5的卷积核，ReLU激活函数。</li>
-<li><strong>池化层2：</strong> 使用步长为2，尺寸为2×2的窗口。</li>
-<li><strong>特征处理层：</strong> 1024个节点。在训练中，DropOut正则率为0.4（任何给定的特征在训练中都会以0.4的概率被丢弃）（知道用来防止过拟合即可）</li>
-<li><strong>输出层：</strong> 10个节点，输出0-9各自的概率，例如<em>8</em>的概率最大，即表示图像的数字是 <em>8</em>。</li>
-</ol>
-<p><em>tf.layers</em> 模块包含了创建上面各种层的方法：</p>
-<ul>
-<li><em>conv2d()</em>  构造一个二维卷积层。需要卷积核数量,卷积核大小,是否填充和激活函数作为参数。</li>
-<li><em>max_pooling2d()</em> 使用max-pooling构造一个二维的池层。将池化窗口大小和步长作为参数</li>
-<li><em>dense()</em> 构造一个全连接层。以神经元节点数和激活函数为参数。</li>
-</ul>
-<hr>
-<p>定义<em>cnn_model_fn</em>函数。将MNIST的特征、标签和模型模式（TRAIN、EVAL、PREDICT）作为参数；并返回预测、损失和训练记录。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cnn_model_fn</span><span class="params">(features, labels, mode)</span></span></span><br></pre></td></tr></table></figure>
-<h3 id="输入层"><a href="#输入层" class="headerlink" title="输入层"></a>输入层</h3><p>输入数据向量的格式为 <em>[batch_size, image_width, image_height, channels]</em> 定义如下：</p>
-<ul>
-<li><em>batch_size: </em> 在训练梯度下降时每次训练的样本个数。</li>
-<li><em>image_width: </em> 图像训练样本的宽度。</li>
-<li><em>image_height:</em>  图像训练样本的高度。</li>
-<li><em>channels:</em> 图像样本中的颜色通道数量，彩色图像一般是<em>3</em>个通道（红、绿、蓝），而黑白图像只有单个通道（黑）。</li>
-</ul>
-<p>MNIST数据集是由单通道[28×28]像素组成的图像集。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">input_layer = tf.reshape(features[&quot;x&quot;], [-1, 28, 28, 1])</span><br></pre></td></tr></table></figure></p>
-<p>定义 <em>batch_size</em> =1，指定了这个维度应该根据 输入值的数量 动态计算features(“x”)，保持所有其他维度的大小不变。详见<a href="https://tensorflow.google.cn/api_docs/python/tf/reshape" target="_blank" rel="noopener">这里</a>。</p>
-<p>###卷积层1</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">conv1 = tf.layers.conv2d(</span><br><span class="line">      inputs=input_layer, </span><br><span class="line">      filters=32, </span><br><span class="line">      kernal_size=[5, 5], </span><br><span class="line">      padding=&apos;same&apos;, </span><br><span class="line">      activation=tf.nn.relu)</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>注： <em>padding</em> 参数有两种：<em>valid</em> 和 <em>same</em>。 <em>same</em> 是在卷积后填0，使得得到的特征尺寸大小和输入时的大小一样，而 <em>valid</em> 则是默认，28x28运算后得到的是24x24。<br>经<em>conv2d()</em> 后的形状是 <em>[batch_size, 28, 28, 32]</em> </p>
-</blockquote>
-<h3 id="池化层1"><a href="#池化层1" class="headerlink" title="池化层1"></a>池化层1</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pool1 = tf.layers.max_pooling2d(</span><br><span class="line">      inputs=conv1, </span><br><span class="line">      pool_size=[<span class="number">2</span>, <span class="number">2</span>], </span><br><span class="line">      strides=<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>经过 <em>max_pooling2d()</em> 后得到的形状大小为 <em>[batch_size, 14, 14, 32]</em> 。</p>
-</blockquote>
-<p>###卷积层2</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">conv2 = tf.layers.conv2d(</span><br><span class="line">      inputs=pool1, </span><br><span class="line">      filters=64, </span><br><span class="line">      kernal_size=[5, 5], </span><br><span class="line">      padding=&apos;same&apos;, </span><br><span class="line">      activation=tf.nn.relu)</span><br></pre></td></tr></table></figure>
-<h3 id="池化层2"><a href="#池化层2" class="headerlink" title="池化层2"></a>池化层2</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pool2 = tf.layers.max_pooling2d(</span><br><span class="line">      inputs=conv2, </span><br><span class="line">      pool_size=[2, 2], </span><br><span class="line">      strides=2)</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>最后得到特征大小为 <em>[batch_size, 7, 7, 64]</em> 。</p>
-</blockquote>
-<p>###特征处理层<br>我们想要在CNN中添加一个全连接层（包含1,024个神经元节点和ReLU激活函数），以对由卷积/池化层提取的特征进行分类。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">pool2_flat = tf.reshape(pool2, [-1, 7 * 7 * 64])</span><br><span class="line">dense = tf.layers.dense(</span><br><span class="line">	inputs=pool2_flat, </span><br><span class="line">	activation=tf.nn.relu)</span><br><span class="line">dropout = tf.layers.dropout(</span><br><span class="line">	inputs=dense, </span><br><span class="line">	rate=0.4, </span><br><span class="line">	training=mode ==tf.estimator.ModeKeys.TRAIN)</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p><em>training</em>参数采用布尔值来指定模型当前是否在训练模式下运行，当为<em>True</em> 时<em>dropout</em> 才运行。我们检查传递给函数<em>cnn_model_fn</em>的模式是否是TRAIN模式。<br>最后得到特征大小为 <em>[batch_size, 1024]</em> 。</p>
-</blockquote>
-<h3 id="输出层"><a href="#输出层" class="headerlink" title="输出层"></a>输出层</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">logits = tf.layers.dense(inputs=dropout, units=10)</span><br></pre></td></tr></table></figure>
-<h3 id="预测"><a href="#预测" class="headerlink" title="预测"></a>预测</h3><p>讲预测类别和概率放入一个dict中，并返回一个<em>EstimatorSpec</em>对象。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if mode == tf.estimator.ModeKeys.PREDICT：</span><br><span class="line">	return tf.estimator.EstimatorSpec(mode=mode, predictions=predictions)</span><br></pre></td></tr></table></figure></p>
-<p>###计算损失<br>使用交叉熵<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">loss = tf.losses.sparse_softmax_cross_entropy(labels=labels, logits=logits)</span><br></pre></td></tr></table></figure></p>
-<h3 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h3><p>通过交叉熵得到损失后，设置0.001的学习率和SGD（随机梯度下降）算法，通过训练优化损失。    </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if mode == tf.estimator.ModeKeys.TRAIN:</span><br><span class="line">    optimizer = tf.train.GradientDescentOptimizer(learing_rate=0.001)</span><br><span class="line">    train_op = optimizer.minimize(loss=loss, global_step=tf.train.get_global_step())</span><br><span class="line">    return tf.estimator.EstimatorSpec(mode=mode, loss=loss, train_op=train_op)</span><br></pre></td></tr></table></figure>
-<p>###评估指标</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">eval_metric_ops = &#123;</span><br><span class="line">      &quot;accuracy&quot;: tf.metrics.accuracy(</span><br><span class="line">          labels=labels, predictions=predictions[&quot;classes&quot;])</span><br><span class="line">      return tf.estimator.EstimatorSpec(</span><br><span class="line">          mode=mode, loss=loss, eval_metric_ops=eval_metric_ops)&#125;</span><br></pre></td></tr></table></figure>
-<p>#训练和评估CNN分类器<br>定义<em>main()</em>函数</p>
-<p>##加载数据</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">def main(unused_argv):</span><br><span class="line">  mnist = tf.contrib.learn.datasets.load_dataset(&quot;mnist&quot;)</span><br><span class="line">  train_data = mnist.train.images # Returns np.array</span><br><span class="line">  train_labels = np.asarray(mnist.train.labels, dtype=np.int32)</span><br><span class="line">  eval_data = mnist.test.images # Returns np.array</span><br><span class="line">  eval_labels = np.asarray(mnist.test.labels, dtype=np.int32)</span><br></pre></td></tr></table></figure>
-<p>##构建<em>Estimator</em></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mnist_classifier = tf.estimator.Estimator(</span><br><span class="line">      model_fn=cnn_model_fn, model_dir=&quot;/tmp/mnist_convnet_model&quot;)</span><br></pre></td></tr></table></figure>
-<p>##设置<em>Logging Hook</em><br>由于CNN可能需要一段时间才能进行训练，因此我们设置一些日志记录，以便在训练期间跟踪进度。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tensors_to_log = &#123;&quot;probabilities&quot;: &quot;softmax_tensor&quot;&#125;</span><br><span class="line">  logging_hook = tf.train.LoggingTensorHook(</span><br><span class="line">      tensors=tensors_to_log, every_n_iter=50)</span><br></pre></td></tr></table></figure>
-<p>###训练模型</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">train_input_fn = tf.estimator.inputs.numpy_input_fn(</span><br><span class="line">      x=&#123;&quot;x&quot;: train_data&#125;, </span><br><span class="line">      y=train_labels, </span><br><span class="line">      batch_size=100, </span><br><span class="line">      num_epochs=None, </span><br><span class="line">      shuffle=True) </span><br><span class="line">  mnist_classifier.train(</span><br><span class="line">      input_fn=train_input_fn,</span><br><span class="line">      steps=20000,</span><br><span class="line">      hooks=[logging_hook])</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>输入x必须是dict型； batch_size=100即小批量梯度下降每次训练的样本数为100；<br>num_epochs=None即模型一直运行完设置的steps=20000时停止；<br>shuffle=True即训练时样本是随机抽取的</p>
-</blockquote>
-<p>###评估模型</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">eval_input_fn = tf.estimator.inputs.numpy_input_fn(</span><br><span class="line">    x=&#123;&quot;x&quot;: eval_data&#125;,</span><br><span class="line">    y=eval_labels,</span><br><span class="line">    num_epochs=1,</span><br><span class="line">    shuffle=False)</span><br><span class="line">eval_results = mnist_classifier.evaluate(input_fn=eval_input_fn)</span><br><span class="line">print(eval_results)</span><br></pre></td></tr></table></figure>
-<p>#运行结果</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">Extracting MNIST-data/train-images-idx3-ubyte.gz</span><br><span class="line">Extracting MNIST-data/train-labels-idx1-ubyte.gz</span><br><span class="line">Extracting MNIST-data/t10k-images-idx3-ubyte.gz</span><br><span class="line">Extracting MNIST-data/t10k-labels-idx1-ubyte.gz</span><br><span class="line">INFO:tensorflow:Using default config.</span><br><span class="line">INFO:tensorflow:Using config: &#123;&apos;_model_dir&apos;: &apos;/tmp/mnist_convnet_model&apos;, &apos;_tf_random_seed&apos;: None, &apos;_save_summary_steps&apos;: 100, &apos;_save_checkpoints_steps&apos;: None, &apos;_save_checkpoints_secs&apos;: 600, &apos;_session_config&apos;: None, &apos;_keep_checkpoint_max&apos;: 5, &apos;_keep_checkpoint_every_n_hours&apos;: 10000, &apos;_log_step_count_steps&apos;: 100, &apos;_service&apos;: None, &apos;_cluster_spec&apos;: &lt;tensorflow.python.training.server_lib.ClusterSpec object at 0x7f35eb339128&gt;, &apos;_task_type&apos;: &apos;worker&apos;, &apos;_task_id&apos;: 0, &apos;_global_id_in_cluster&apos;: 0, &apos;_master&apos;: &apos;&apos;, &apos;_evaluation_master&apos;: &apos;&apos;, &apos;_is_chief&apos;: True, &apos;_num_ps_replicas&apos;: 0, &apos;_num_worker_replicas&apos;: 1&#125;</span><br><span class="line">INFO:tensorflow:Calling model_fn.</span><br><span class="line">INFO:tensorflow:Done calling model_fn.</span><br><span class="line">INFO:tensorflow:Create CheckpointSaverHook.</span><br><span class="line">INFO:tensorflow:Graph was finalized.</span><br><span class="line">INFO:tensorflow:Running local_init_op.</span><br><span class="line">INFO:tensorflow:Done running local_init_op.</span><br><span class="line">INFO:tensorflow:Saving checkpoints for 1 into /tmp/mnist_convnet_model/model.ckpt.</span><br><span class="line">INFO:tensorflow:probabilities = [[0.10603123 0.11674101 0.09009421 0.09591874 0.09321657 0.0876532</span><br><span class="line">  0.09703767 0.10731895 0.10852493 0.09746351]</span><br><span class="line"> [0.12638797 0.09118222 0.09904857 0.08684804 0.09524325 0.09678999</span><br><span class="line">  0.09612204 0.09447883 0.10238035 0.11151876]</span><br><span class="line"> [0.10961667 0.09775148 0.09031133 0.09005759 0.09975118 0.09663537</span><br><span class="line">  0.09558715 0.10681319 0.10184265 0.11163338]</span><br><span class="line"> [0.10582132 0.08626121 0.09644306 0.09036049 0.09503932 0.09686131</span><br><span class="line">  0.10292714 0.1105746  0.11193833 0.10377329]</span><br><span class="line"> ......</span><br><span class="line"> ......</span><br><span class="line"> ......</span><br></pre></td></tr></table></figure>
+          <hr>
+          <!--noindex-->
 
-          
+
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/04/11/TensorFlow学习（一）_ 构建卷积神经网络/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+
+          <!--/noindex-->
         
       
     </div>
@@ -1478,7 +1370,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-11T17:14:06+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-11T17:23:29+08:00">
                 2018-04-11
               </time>
             
@@ -1561,93 +1453,17 @@
 
       
         
-          
-            <a id="more"></a>
-<p>自编码器的介绍请参考<a href="">这里</a></p>
-<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>​    导入所需要的包。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> sklearn.preprocessing <span class="keyword">as</span> pre</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">from</span> tensorflow.example.tutorials.mnist <span class="keyword">import</span> input_data</span><br></pre></td></tr></table></figure>
-<hr>
-<h2 id="定义函数"><a href="#定义函数" class="headerlink" title="定义函数"></a>定义函数</h2><h3 id="参数初始化方法-xavier-initialization"><a href="#参数初始化方法-xavier-initialization" class="headerlink" title="参数初始化方法 xavier initialization"></a>参数初始化方法 <code>xavier initialization</code></h3><blockquote>
-<p>这里是初始化参数的方法，不是初始化参数！</p>
-</blockquote>
-<p><strong>为什么要参数初始化？</strong></p>
-<p>​    如果神经网络的权重初始化太小，那么我们的输入在经过每层计算后，逐渐缩小而难以产生作用，如果权重初始化太大，则计算后将逐渐增大并导致发散和失效。</p>
-<p>​    不适合的权重似的隐含层的输入方差过大，经过 <code>sigmoid</code>  激活函数时离中心较远，导数接近于零，从而导致提督弥散。</p>
-<p><strong> xavier权重初始化 </strong></p>
-<p>​    xavier权重初始化可以减少梯度弥散，使输入可以传递的更深。</p>
-<p>​    xavier根据某一层网络的输入、输出节点数量自动调整最合适的分布，让权重满足0均值，同时方差为 $\frac{2}{n_{in}+n_{out}}$ ，分布可以使用均匀分布或者高斯分布。</p>
-<p>​    下面我们创建一个 $\lgroup  -\sqrt{\frac{6}{n_{in}+n_{out}}}, \sqrt{\frac{6}{n_{in}+n_{out}}} \rgroup$ 范围内的均匀分布，而它的方差根据 $D(x)={(max-min)^2/12}$ 正好等于 $\frac{2}{n_{in}+n_{out}}$ 。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># fan_in：输入节点的数量，fan_out: 输出节点的数量</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">xavier_init</span><span class="params">(fan_in, fan_out, constant=<span class="number">1</span>)</span>:</span></span><br><span class="line">    low = -constant * np.sqrt(<span class="number">6.0</span> / (fan_in + fan_out))</span><br><span class="line">    high = constant * np.sqrt(<span class="number">6.0</span> / (fan_in + fan_out))</span><br><span class="line">    <span class="keyword">return</span> tf.random.unifom((fan_in, fan_out), minval=low, maxval=high, dtype=tf.float32)</span><br></pre></td></tr></table></figure>
-<h3 id="定义自编码器类的构建函数"><a href="#定义自编码器类的构建函数" class="headerlink" title="定义自编码器类的构建函数"></a>定义自编码器类的构建函数</h3><p>参数解释：</p>
-<p>n_input: 输入层个数    n_hidden: 隐含层个数    transfer_function: 隐含层的激活函数，设为softplus</p>
-<p>optimizer：优化器，设为Adam    scale：高斯噪声系数，设为0.1    </p>
-<p>class内的scale参数设为一个placeholder    权重初始化使用定义的init_weights函数</p>
-<blockquote>
-<p>这里我们只定义了一层隐含层，可以继续添加！</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AdditiveGaussianNoiseAutoencoder</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, n_input, n_hidden, transfer_function=tf.nn.softplus,</span></span></span><br><span class="line"><span class="function"><span class="params">                 optimizer=tf.train.AdamOptimizer<span class="params">()</span>, scale=<span class="number">0.1</span>)</span>:</span></span><br><span class="line">        self.n_input = n_input</span><br><span class="line">        self.n_hidden = n_hidden</span><br><span class="line">        self.transfer = transfer_function</span><br><span class="line">        self.scale = tf.placeholder(tf.float32)</span><br><span class="line">        self.training_scale = scale</span><br><span class="line">        weights = self.init_weights()</span><br><span class="line">        self.weights = weights</span><br></pre></td></tr></table></figure>
-<h3 id="定义权重初始化函数-init-weights"><a href="#定义权重初始化函数-init-weights" class="headerlink" title="定义权重初始化函数 init_weights"></a>定义权重初始化函数 <code>init_weights</code></h3><p>w1经过 <em>xavier_init</em> 函数初始化，传入输入层和隐含层的节点数，xavier会返回一个适合 <em>softplus</em> 等激活函数的权重初始分布，偏置 <code>b1</code> 全部置为0即可。对于输出层，因为没有使用激活函数，<em>w2、b2</em> 全部初始化为0。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">init_weights</span><span class="params">(self)</span>:</span></span><br><span class="line">    all_weights = dict()</span><br><span class="line">    all_weights[<span class="string">'w1'</span>] = tf.Variable(xavier_init(self.n_input, self.n_hidden))</span><br><span class="line">    all_weights[<span class="string">'b1'</span>] = tf.Variable(tf.zeros([self.n_hidden], dtype=tf.float32))</span><br><span class="line">    all_weights[<span class="string">'w2'</span>] = tf.Variable(tf.zeros([self.n_hidden, self.n_input], dtype=tf.float32))</span><br><span class="line">    sll_weights[<span class="string">'b2'</span>] = tf.Variable(tf.zeros([n_input], dtype=tf.float32))</span><br><span class="line">    <span class="keyword">return</span> all_weights</span><br></pre></td></tr></table></figure>
-<h3 id="定义网络结构"><a href="#定义网络结构" class="headerlink" title="定义网络结构"></a>定义网络结构</h3><ul>
-<li>输入层： <code>self.x</code></li>
-<li>隐含层：首先计算 <code>w1 * x + b</code> ，然后带入激活函数 <code>transfer</code> 中计算。其中 <code>x</code> 为输入加上噪声即 <code>self.x + scale * tf.random_normal({n_input,})</code> 。</li>
-<li>重建层（输出层）：将数据尽大的复原为输入的数据</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">self.x = tf.placeholder(tf.float, [<span class="keyword">None</span>, self.n_input])</span><br><span class="line">self.hidden = self.transfer(tf.add(tf.matmul(</span><br><span class="line">    self.x + scale * tf.random_normal(&#123;n_input,&#125;), </span><br><span class="line">    self.weights[<span class="string">'w1'</span>]), self.weights[<span class="string">'b1'</span>]))</span><br><span class="line">self.reconstruction = tf.add(tf.matmul(</span><br><span class="line">    self.hidden, self.weights[<span class="string">'w2'</span>]), self.weights[<span class="string">'b3'</span>])</span><br></pre></td></tr></table></figure>
-<h3 id="定义损失函数"><a href="#定义损失函数" class="headerlink" title="定义损失函数"></a>定义损失函数</h3><p>使用平方误差函数（SSE）</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">self.cost = <span class="number">0.5</span> * tf.reduce_sum(tf.pow(tf.subtract(</span><br><span class="line">    							self.reconstruction, self.x), <span class="number">2.0</span>))</span><br><span class="line">self.optimizer = optimizer.minimize(self.cost)</span><br></pre></td></tr></table></figure>
-<h3 id="初始化全部参数"><a href="#初始化全部参数" class="headerlink" title="初始化全部参数"></a>初始化全部参数</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">init = tf.global_variables_initializer()</span><br><span class="line">self.sess = tf.Session()</span><br><span class="line">self.sess.run(init)</span><br></pre></td></tr></table></figure>
-<h3 id="定义计算损失-cost-及执行进一步训练的函数-partial-fit"><a href="#定义计算损失-cost-及执行进一步训练的函数-partial-fit" class="headerlink" title="定义计算损失 cost 及执行进一步训练的函数 partial_fit"></a>定义计算损失 <code>cost</code> 及执行进一步训练的函数 <code>partial_fit</code></h3><blockquote>
-<p>功能：触发训练操作，对一个 <code>batch</code> 的数据进行训练并计算当前的损失！</p>
-</blockquote>
-<p>​    函数里只需让Session执行两个计算图的节点，分别是损失 <code>cost</code> 和训练过程 <code>optimizer</code> ，输入的 <code>feed_dict</code> 包括输入数据 <code>x</code> 、噪声的系数 <code>scale</code> 。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">partial_fit</span><span class="params">(self, x)</span>:</span></span><br><span class="line">    cost, opt = self.sess.run((self.cost, self.optimizer),</span><br><span class="line">                             feed_Dict=&#123;self.x: x, self.scale: self.training_scale&#125;)</span><br><span class="line">    <span class="keyword">return</span> cost</span><br></pre></td></tr></table></figure>
-<h3 id="定义总损失函数-calc-total-cost"><a href="#定义总损失函数-calc-total-cost" class="headerlink" title="定义总损失函数 calc_total_cost"></a>定义总损失函数 <code>calc_total_cost</code></h3><blockquote>
-<p>自编码器训练完后，用来在测试集数据上对数据模型进行评测</p>
-</blockquote>
-<p>​    与  <code>partial_fit</code> 函数不同，这里只让Session执行一个计算图节点 <code>self.cost</code> ，传入的参数和上一个函数一样。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cal_total_cost</span><span class="params">(self, x)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> self.sess.run(self.cost, feed_dict=&#123;self.x: x, </span><br><span class="line">                                               self.scale: self.training.scale&#125;)</span><br></pre></td></tr></table></figure>
-<h3 id="定义-transform-函数"><a href="#定义-transform-函数" class="headerlink" title="定义 transform 函数"></a>定义 <code>transform</code> 函数</h3><blockquote>
-<p>功能：返回自编码器隐含层的输出结果。隐含层的主要功能是学习处数据中的高级特征，该函数目的是提供一个接口来得到经过隐含层抽象后的特征！</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">transform</span><span class="params">(self, x)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> self.sess.run(self.hidden, feed_dict=&#123;self.x: x, </span><br><span class="line">                                                self.scale: self.training_scale&#125;)</span><br></pre></td></tr></table></figure>
-<h3 id="定义-generate-函数"><a href="#定义-generate-函数" class="headerlink" title="定义 generate 函数"></a>定义 <code>generate</code> 函数</h3><blockquote>
-<p>功能：返回自编码器重构层的输出结果。重构层的主要功能是将隐含层提取的高阶特征复原为原输入数据。</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">generaate</span><span class="params">(self, hidden = None)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> hidden == <span class="keyword">None</span>:</span><br><span class="line">        hidden = np.random.normal(size = self.weights[<span class="string">'b1'</span>])</span><br><span class="line">     <span class="keyword">return</span> self.sess.run(self.reconstruction, feed_dict=&#123;self.hidden: hidden&#125;)</span><br></pre></td></tr></table></figure>
-<h3 id="定义reconstruct-函数"><a href="#定义reconstruct-函数" class="headerlink" title="定义reconstruct 函数"></a>定义<code>reconstruct</code> 函数</h3><blockquote>
-<p>功能：完整运行 输入数据 $\to$ 提取高级特征 $\to$ 复原数据 ，即同时包括 <code>transform</code> 、 <code>generate</code> 函数。</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">reconstruct</span><span class="params">(self, x)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> self.sess.run(self.reconstruction, feed_dict=&#123;self.x: x,</span><br><span class="line">                                                       self.scale: self.training_scale&#125;)</span><br></pre></td></tr></table></figure>
-<h3 id="定义获取参数函数"><a href="#定义获取参数函数" class="headerlink" title="定义获取参数函数"></a>定义获取参数函数</h3><blockquote>
-<p>功能：得到隐含层的权重 <code>w1</code> 和偏置 <code>b1</code> ！</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getWeight</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> self.sess.run(self.weights[<span class="string">'w1'</span>])</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getBias</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> self.sess.run(self.weights[<span class="string">'b1'</span>])</span><br></pre></td></tr></table></figure>
-<p>去噪编码器类已经定义完成，包括对神经网络的设计、权重的初始化以及几个成员函数。</p>
-<hr>
-<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>我们使用TensorFlow提供的 <code>MNIST</code> 数据集进行测试。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">input_data.read_data_sets(<span class="string">'MNIST_data'</span>, one_hot=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
-<h3 id="定义数据标准化函数"><a href="#定义数据标准化函数" class="headerlink" title="定义数据标准化函数"></a>定义数据标准化函数</h3><blockquote>
-<p>即将数据变为均值为0, 便准差为1的分布。将数据减去均值，然后除以方差。</p>
-</blockquote>
-<p>​    使用 <code>sklearn.preprocessing</code> 的 <code>StandardScaler</code> 类现在训练集上进行 <code>fit</code> ，再将这个 <code>Scale</code> 用在训练数据和测试数据上。保证训练数据和测试数据使用同一个 <code>Scale</code> ，使得后面模型处理数据时的一致性。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Standard_scale</span><span class="params">(x_train, x_test)</span>:</span></span><br><span class="line">    preprocessor = prep.Stap yndardScale().fit(x_train)</span><br><span class="line">    x_train = preprocessor.transform(x_train)</span><br><span class="line">    x_test = preprocessor.transform(x_test)</span><br><span class="line">    retutn x_train, x_test</span><br></pre></td></tr></table></figure>
-<h3 id="定义获取随机-batch-size-大小的数据函数"><a href="#定义获取随机-batch-size-大小的数据函数" class="headerlink" title="定义获取随机 batch_size 大小的数据函数"></a>定义获取随机 <code>batch_size</code> 大小的数据函数</h3><blockquote>
-<p>不放回的每次抽样！</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_random_block_from_data</span><span class="params">(data, batch_seze)</span>:</span></span><br><span class="line">    start_index = np.random.randint(<span class="number">0</span>, len(data)-batch_size)</span><br><span class="line">    <span class="keyword">return</span> data[start_index : (start_index + batch_size)]</span><br></pre></td></tr></table></figure>
-<h3 id="标准化训练集、测试集"><a href="#标准化训练集、测试集" class="headerlink" title="标准化训练集、测试集"></a>标准化训练集、测试集</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x_train, x_test = Standard_scale(mnist.train.images, mnist.test.images)</span><br></pre></td></tr></table></figure>
-<h3 id="定义常用参数"><a href="#定义常用参数" class="headerlink" title="定义常用参数"></a>定义常用参数</h3><p>参数解释：</p>
-<p>n_samples：总训练样本数        training_epoches：最大训练轮数    batch_size：批数据样本大小，设为128</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">n_samples = int(mnist.train.num_examples)</span><br><span class="line">training_epoches = <span class="number">20</span></span><br><span class="line">batch_size = <span class="number">128</span></span><br><span class="line">display_step = <span class="number">1</span></span><br></pre></td></tr></table></figure>
-<h2 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h2><h3 id="实例化自编码器类"><a href="#实例化自编码器类" class="headerlink" title="实例化自编码器类"></a>实例化自编码器类</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">autoencoder = AdditiveGaussianNoiseAutoencoder(n_input=<span class="number">784</span>,</span><br><span class="line">                                              n_hidden=<span class="number">200</span>,</span><br><span class="line">                                              transfer_function = tf.nn.softplus,</span><br><span class="line">                                              optimizer=tf.train.AdamOptimizer(learning_rate=<span class="number">0.001</span>),</span><br><span class="line">                                              scale=<span class="number">0.01</span>)</span><br></pre></td></tr></table></figure>
-<h3 id="开始训练"><a href="#开始训练" class="headerlink" title="开始训练"></a>开始训练</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(training_epochs):</span><br><span class="line">    avg_cost = <span class="number">0.</span></span><br><span class="line">    total_batch = int(n_samples / batch_size)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(total_size):</span><br><span class="line">        batch_xs = get_random_block_from_data(x_train, batch_size)</span><br><span class="line">        cost = autoencoder.partial_fit(batch_xs)</span><br><span class="line">        avg_cost += cost / n_sample * batch_size</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> epoch % display_step == <span class="number">0</span>:</span><br><span class="line">        print(<span class="string">"Epoch:"</span>, <span class="string">'%04d'</span> %(epoch + <span class="number">1</span>), <span class="string">"cost="</span>, <span class="string">":.9f"</span>.format(avg_cost))</span><br></pre></td></tr></table></figure>
-<h2 id="评测"><a href="#评测" class="headerlink" title="评测"></a>评测</h2><p>​    使用平方误差和来</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">"total cost:"</span> + autoencoder.cal_total_cost(x_test))</span><br></pre></td></tr></table></figure>
-<p>​    </p>
-<p>去噪自编码器的TensorFlow实现完成。</p>
+          <hr>
+          <!--noindex-->
 
-          
+
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/04/11/TensorFlow学习（三）—_实现自编码器/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+
+          <!--/noindex-->
         
       
     </div>
@@ -1734,7 +1550,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-11T17:13:52+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-11T17:23:18+08:00">
                 2018-04-11
               </time>
             
@@ -1817,230 +1633,17 @@
 
       
         
-          
-            <a id="more"></a>
-<ul>
-<li><p>插入链接</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">描述</span>](<span class="link">链接</span>)：	[<span class="string">See You Again</span>](<span class="link">http://music.163.com/#/mv?id=393006</span>)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-<div>
-  		
-	</div>
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-<div>
-      
-</div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
+          <hr>
+          <!--noindex-->
 
 
-    
-      
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/04/11/Markdown的使用/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/11/LSTM/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="MR.C">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/1.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="MR.C">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/11/LSTM/" itemprop="url">详解LSTM（Understanding LSTM Networks）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-11T17:13:35+08:00">
-                2018-04-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/深度学习/" itemprop="url" rel="index">
-                    <span itemprop="name">深度学习</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/11/LSTM/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/04/11/LSTM/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2018/04/11/LSTM/" class="leancloud_visitors" data-flag-title="详解LSTM（Understanding LSTM Networks）">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-
-      
-        
-          
-            <a id="more"></a>
-<h2 id="循环神经网络（RNNs）"><a href="#循环神经网络（RNNs）" class="headerlink" title="循环神经网络（RNNs）"></a>循环神经网络（RNNs）</h2><p>&emsp;&emsp;  人们思考的时候往往会依据之前的经验，正如读这篇文章的时候，在读第二段的时候你会回忆第一段相关的内容，而不是将每一段单独来进行学习。正是因为这具有连贯性。</p>
-<p>&emsp;&emsp;  这也恰好是传统神经网络的缺点。例如，你想要分辨一个电影在每个时刻想要发生什么情节。传统神经网络不能根据前一刻的情节来判断下一刻发生的情节。</p>
-<p>&emsp;&emsp;  但是，RNN可以解决这个问题。因为RNN的网络结构中有很多循环，可以让信息持久下去。</p>
-<p><img src="/images/RNN/RNN-rolled.png" alt="Recurrent Neural Networks have loops."></p>
-<p>&emsp;&emsp;  如图所示，$x_{t}$ 是输入, $h_{t}$ 是输出，中间的循环则允许信息从网络的前一个步骤传递到下一个步骤。</p>
-<p>&emsp;&emsp;  这样看可能不太明显，我们将RNN网络展开如下图，它其实可以看作多个传统的神经网络结构连接而成，只是前一个网络将一些信息传递给下一个网络。</p>
-<p><img src="/images/RNN/RNN-unrolled.png" alt="**An unrolled recurrent neural network.**"></p>
-<p>&emsp;&emsp;  这种链式结构很明显的适用于序列型数据。近几年，将RNNs应用在语音识别、语言模型、机器翻译、图像描述等等领域都取得了很大的成功。具体的可以参考 <em>Andrej Karpathy</em> 的文章 <em><a href="http://karpathy.github.io/2015/05/21/rnn-effectiveness/" target="_blank" rel="noopener">The Unreasonable Effectiveness of Recurrent Neural Networks</a></em> 。</p>
-<p>&emsp;&emsp;  <strong>重点是，这些取得的成果使用的是RNN的一个变种结构——- “LSTMs”，它的效果要比传统的RNN网络结构好的多。</strong></p>
-<h2 id="长期依赖的问题"><a href="#长期依赖的问题" class="headerlink" title="长期依赖的问题"></a>长期依赖的问题</h2><p>&emsp;&emsp;  RNN的一个很大优点是可以将之前的信息连接到当前的任务中，例如你可以联想看过的电影情节来预测接下来要发生的故事情节。如果RNN能够真正做到这样，那对很多领域非常有用。但是事实并非这样，它视情况而定。</p>
-<p>&emsp;&emsp;   有时我们当前的任务只需要最近的信息就可以了。例如，语言模型基于之前的几个词就可以预测接下来的词。假设想要预测 <em>the clouds are in the </em>sky<em>,</em> 的最后一个单词，我们不需要太多的上下文语境就可以推测出是 <em>sky</em> 。在这种语境很简单，并且相关信息与其位置差距很小的情况下，RNNs可以很好的从之前的语境推测出答案。</p>
-<p><img src="/images/RNN/RNN-shorttermdepdencies.png" alt="RNN-shorttermdepdencies"></p>
-<p>&emsp;&emsp;  但是很多情况下我们需要更多的上下文情节。假如我们想要推测 <em>I grew up in France… I speak fluent </em>French<em>.</em> 的最后一个词， 根据最近的词的语境，最后一个词最可能的是一种语言，但是想要知道是什么语言，我们需要知道很靠前的 <em>France</em> 这个词。很有可能相关信息和我们需要的关键信息相隔非常远。</p>
-<p>&emsp; &emsp;然而，随着间隔的增大，RNNs也越来越不能从之前的信息学到东西。</p>
-<p>&emsp;&emsp; 然而，随着间隔的增大，RNNs也越来越不能从之前的信息学到东西。</p>
-<p><img src="/images/RNN/RNN-longtermdependencies.png" alt="RNN-longtermdependencies"></p>
-<p>&emsp;&emsp; 理论上，RNNs可以通过人工调节参数来解决这种”长期依赖“问题。但是实践证明，RNNs并不能很好的学习很长的句子。<strong>不过，LSTMs可以解决这个问题。</strong></p>
-<h2 id="LSTM网络"><a href="#LSTM网络" class="headerlink" title="LSTM网络"></a>LSTM网络</h2><p>&emsp;&emsp; <strong>LSTMs</strong> 是RNN的一种特殊网络结构，通常也被称为长短期记忆网络，它可以有效解决长期依赖问题。有关介绍可参见<a href="http://www.bioinf.jku.at/publications/older/2604.pdf" target="_blank" rel="noopener">Hochreiter &amp; Schmidhuber (1997)</a> 。LSTM被明确的设计出来解决长期依赖问题，它很大的功能就是嫩记住很长时间之前的信息。所有的RNNs网络结构都是由一串相同的神经网络单元构成。标准的RNN神经单元都很简单，比如只有一个 <em>tanh</em> 层。</p>
-<p><img src="/images/RNN/LSTM3-SimpleRNN.png" alt="The repeating module in a standard RNN contains a single layer."></p>
-<p>&emsp;&emsp; LSTM同样也是这种链式结构，但是其神经网络单元不同。它拥有四个层而不是一层，并且这四层相互作用。</p>
-<p><img src="/images/RNN/LSTM3-chain.png" alt="The repeating module in an LSTM contains four interacting layers"></p>
-<p>&emsp; &emsp;  不用担心上面复杂的流程图，接下来我们一步步讲述。首先看下图，流程图中的每一条黑线表示将一个向量从一个节点的输出传输到另一个节点的输入；红色圆圈表示向量运算，比如向量相加、向量相乘等；黄色的方块表示学习神经网络层；合并线表示将数据合并；分叉线表示其内容被复制为多份并且转移到不同的地方。</p>
-<p><img src="/images/RNN/LSTM2-notation.png" alt=""></p>
-<h2 id="LSTM核心思想"><a href="#LSTM核心思想" class="headerlink" title="LSTM核心思想"></a>LSTM核心思想</h2><p>&emsp;&emsp; LSTM最重要的就是 <em>Cell State</em> （细胞状态）: $C_{t}$ ，它就像一种传输带，仅仅通过一些少量的线性运算，通过水平线贯穿作用在整个流程图中。</p>
-<blockquote>
-<p>Cell：相当于一个记事本，有个叫State的参数记东西。</p>
-</blockquote>
-<p><img src="/images/RNN/LSTM3-C-line.png" alt=""></p>
-<p>&emsp;&emsp; LSTM还可以通过调节 一种被称为”门“的结构在神经单元上增加或者减少信息。”门“可以让信息选择性的通过，由 <em>sigmoid</em> 神经网络层和点乘运算操作构成。</p>
-<p><img src="/images/RNN/LSTM3-gate.png" alt=""></p>
-<p>&emsp;&emsp; <em>sigmoid</em> 层的输出是一个介于0到1之间的数，表示可以通过的信息量。0表示丢弃所有的信息，1表示让所有的信息全部通过。LSTM一共有三个”门“用来控制 <em>Cell State</em> 。</p>
-<h2 id="LSTM工作步骤详解"><a href="#LSTM工作步骤详解" class="headerlink" title="LSTM工作步骤详解"></a>LSTM工作步骤详解</h2><p>&emsp; &emsp;  LSTM首先确定从 <em>Cell State</em> 中丢弃哪些信息，这个决定是由被称为”遗忘门“的 <em>sigmoid</em> 层所决定的。输入 <em>$h_{t-1}​$</em> 和 <em>$x_{t}​$</em> ，输出一个介于0到1的数至单元状态 <em>$C_{t-1}​$</em> 。1代表全部保留，0代表全部丢弃。</p>
-<p>&emsp; &emsp;  让我们继续看基于所有之前词语来预测新词的语言模型，<em>Cell State</em> 也许包含了当前主语的类别，所以可以选择正确的代词。当看到一个新的主语时，我们就会忘记之前旧的那个。</p>
-<p><img src="/images/RNN/LSTM3-focus-f.png" alt=""></p>
-<p>&emsp;&emsp; 接下来，我们要确定在 <em>Cell State</em> 中存储哪些新信息，两部分完成。第一步：由 <em>sigmoid</em> 层构成的”更新门“确定我们需要更新的值。接着，由 <em>tanh</em> 层建立一个能够和 <em>$C_{t-1}$</em> 相加的候选集向量 <em>$\tilde{C_{t}}$</em>；第二步：将这第一步中的东西结合产生新的更新状态。</p>
-<p>&emsp; &emsp;  在语言模型中，我们想要添加新的主语到 <em>Cell State</em> ，来取代要遗忘的旧的主语。</p>
-<p><img src="/images/RNN/LSTM3-focus-i.png" alt=""></p>
-<p>&emsp;&emsp; 现在利用旧的  <em>Cell State</em> ：$C_{t-1}$ 更新新的  <em>Cell State</em> ：$C_{t-1}$ 。使用 $C_{t-1}$ 乘以 $f_{t}$ ，表示忘掉我们决定丢弃之前的那些信息。然后加上 $i_{t} <em> \tilde{C_{t}}$ ，这就是新的 </em>Cell State*。在语言模型中，这就是我们丢弃旧的主语，添加新信息的步骤。</p>
-<p><img src="/images/RNN/LSTM3-focus-C.png" alt=""></p>
-<p>&emsp;&emsp; 最终的输出基于 <em>Cell State</em>：$C_{t}$ 。首先经过 <em>sigmoid</em> 层来确定 $C_{t}$ 的哪些部分需要输出，然后将  $C_{t}$ 通过 <em>tanh</em> 层变为一个介于-1到1的值，乘上 <em>sigmoid</em> 层的输出，这就是我们需要的输出。</p>
-<p><img src="/images/RNN/LSTM3-focus-o.png" alt=""></p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p><em><a href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/" target="_blank" rel="noopener">Understanding LSTM Networks</a></em></p>
-
-          
+          <!--/noindex-->
         
       
     </div>
@@ -2127,7 +1730,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-11T17:13:20+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-11T17:23:06+08:00">
                 2018-04-11
               </time>
             
@@ -2210,44 +1813,197 @@
 
       
         
+          <hr>
+          <!--noindex-->
+
+
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/04/11/GitHub搭建个人博客(Ubuntu版)/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+
+          <!--/noindex-->
+        
+      
+    </div>
+
+<div>
+  		
+	</div>
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+<div>
+      
+</div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/11/LSTM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MR.C">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/1.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MR.C">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/11/LSTM/" itemprop="url">详解LSTM（Understanding LSTM Networks）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-11T17:22:24+08:00">
+                2018-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-            <a id="more"></a>
-<blockquote>
-<p>注：这里默认你的电脑可以用Git连接GitHub。如果没有，请点击 <strong><a href="https://www.baidu.com/s?ie=utf-8&amp;f=8&amp;rsv_bp=1&amp;tn=ubuntuu_cb&amp;wd=git%20%E8%BF%9E%E6%8E%A5github&amp;oq=git%2520%25E8%25BF%259E%25E6%258E%25A5github%2520%25E7%259F%25A5%25E4%25B9%258E&amp;rsv_pq=a0dbd1b90004f336&amp;rsv_t=52f4URJICWe1HnuisY0QYu6nIsf9cURSM46stM/kcy9tQB21P3zHyBaxMlkBTlaZhw&amp;rqlang=cn&amp;rsv_enter=1&amp;inputT=43715&amp;rsv_sug3=22&amp;rsv_sug1=17&amp;rsv_sug7=100&amp;rsv_sug2=0&amp;rsv_sug4=44230&amp;rsv_sug=2" target="_blank" rel="noopener">git连接github</a></strong></p>
-</blockquote>
-<ul>
-<li><p>注册并登录GitHub<br><img src="/images/11.png" alt="这里写图片描述"></p>
-</li>
-<li><p>新建Repositories<br><img src="/images/12.png" alt="这里写图片描述"></p>
-</li>
-<li>看图，Repositories name和Owner一样，是 ×××××.github.io<br><img src="/images/13.png" alt="这里写图片描述"></li>
-<li>然后 ，和我左手右手一个慢动作<br><img src="/images/14.png" alt="这里写图片描述"></li>
-<li>点击Choose a Theme<br><img src="/images/15.png" alt="这里写图片描述"></li>
-<li>选一个主题，然后Select the Theme。<br><img src="/images/16.png" alt="这里写图片描述"></li>
-</ul>
-<h2 id="大功告成，现在在浏览器地址栏输入："><a href="#大功告成，现在在浏览器地址栏输入：" class="headerlink" title="大功告成，现在在浏览器地址栏输入："></a>大功告成，现在在浏览器地址栏输入：</h2><p><em>××××××.github.io</em><br>一个简(难)约(看)的个人博客就完成了！</p>
-<hr>
-<p><strong>使用Hexo主题请移至<a href="https://onebigcabbage.github.io/2018/04/06/%E4%BD%BF%E7%94%A8Github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%EF%BC%88Hexo%E7%AF%87%EF%BC%89-%E6%9B%B4%E5%B8%85%E6%B0%94%E7%9A%84next%E4%B8%BB%E9%A2%98/" target="_blank" rel="noopener">这里</a>。</strong></p>
-<hr>
-<h2 id="并没有结束，请往下看："><a href="#并没有结束，请往下看：" class="headerlink" title="并没有结束，请往下看："></a>并没有结束，请往下看：</h2><ul>
-<li>复制绿色按钮下的地址<br><img src="/images/17.png" alt="这里写图片描述"></li>
-</ul>
-<p>###下面是命令行时间</p>
-<ul>
-<li>命令行下打开一个你喜欢的文件夹（不要说不会，自行百度了哈），*  号是你自己的名称。</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/*****/*****.github.io.git</span><br></pre></td></tr></table></figure>
-<ul>
-<li>然后就可以在你的文件夹下发现这个文件夹了：<br><img src="/images/18.png" alt="这里写图片描述"></li>
-<li>打开里面是不是有东西啊？ 有！ 删掉！ 好的。（如果有.git文件，需要保留.git文件）</li>
-<li>将自己下载的博客模板解压后放进去，推荐<a href="https://html5up.net/" target="_blank" rel="noopener">html5up</a>这个网站，里面模板还算蛮好看的</li>
-<li>上传模板代码时间：</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m &quot;alpha&quot;</span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
-<p>“alpha”是我下的模板的名称，你可以随意写，没有关系。<br>git push 需要你填写你的GitHub用户名和密码。</p>
-<h3 id="大功告成，浏览器打开输入××××××-github-io，回车。是不是有点激动了。"><a href="#大功告成，浏览器打开输入××××××-github-io，回车。是不是有点激动了。" class="headerlink" title="大功告成，浏览器打开输入××××××.github.io，回车。是不是有点激动了。"></a>大功告成，浏览器打开输入<em>××××××.github.io</em>，回车。是不是有点激动了。</h3><p><img src="/images/19.png" alt="这里写图片描述"></p>
-<h3 id="然而…………"><a href="#然而…………" class="headerlink" title="然而…………"></a>然而…………</h3><h3 id="事情并没有完。你还需要自己修改博客的界面，这属于前端知识，这里不说了。"><a href="#事情并没有完。你还需要自己修改博客的界面，这属于前端知识，这里不说了。" class="headerlink" title="事情并没有完。你还需要自己修改博客的界面，这属于前端知识，这里不说了。"></a>事情并没有完。你还需要自己修改博客的界面，这属于前端知识，这里不说了。</h3><h2 id="当然，大家还可以使用-Github-Hexo-搭建更好看的个人博客，详见下篇文章："><a href="#当然，大家还可以使用-Github-Hexo-搭建更好看的个人博客，详见下篇文章：" class="headerlink" title="当然，大家还可以使用 Github+Hexo 搭建更好看的个人博客，详见下篇文章："></a>当然，大家还可以使用 <em>Github+Hexo</em> 搭建更好看的个人博客，详见下篇文章：</h2><h2 id="GitHub搭建个人博客-（高级篇）：-Github-Hexo-搭建个人网站-博客"><a href="#GitHub搭建个人博客-（高级篇）：-Github-Hexo-搭建个人网站-博客" class="headerlink" title="GitHub搭建个人博客 （高级篇）： Github+Hexo 搭建个人网站/博客"></a>GitHub搭建个人博客 （高级篇）： <em>Github+Hexo</em> 搭建个人网站/博客</h2>
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/11/LSTM/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/04/11/LSTM/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/04/11/LSTM/" class="leancloud_visitors" data-flag-title="详解LSTM（Understanding LSTM Networks）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+
+      
+        
+          <hr>
+          <!--noindex-->
+
+
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/04/11/LSTM/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+
+          <!--/noindex-->
         
       
     </div>

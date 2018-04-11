@@ -79,18 +79,15 @@
 
 
 
-<meta name="description" content="自编码器的介绍请参考这里 准备​    导入所需要的包。 1234import numpy as npimport sklearn.preprocessing as preimport tensorflow as tffrom tensorflow.example.tutorials.mnist import input_data  定义函数参数初始化方法 xavier initializati">
 <meta name="keywords" content="TensorFlow">
 <meta property="og:type" content="article">
 <meta property="og:title" content="TensorFlow学习（三）—_实现自编码器">
 <meta property="og:url" content="http://yoursite.com/2018/04/11/TensorFlow学习（三）—_实现自编码器/index.html">
 <meta property="og:site_name" content="MR.C">
-<meta property="og:description" content="自编码器的介绍请参考这里 准备​    导入所需要的包。 1234import numpy as npimport sklearn.preprocessing as preimport tensorflow as tffrom tensorflow.example.tutorials.mnist import input_data  定义函数参数初始化方法 xavier initializati">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-11T09:14:06.553Z">
+<meta property="og:updated_time" content="2018-04-11T09:23:29.905Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TensorFlow学习（三）—_实现自编码器">
-<meta name="twitter:description" content="自编码器的介绍请参考这里 准备​    导入所需要的包。 1234import numpy as npimport sklearn.preprocessing as preimport tensorflow as tffrom tensorflow.example.tutorials.mnist import input_data  定义函数参数初始化方法 xavier initializati">
 
 
 
@@ -292,7 +289,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-11T17:14:06+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-11T17:23:29+08:00">
                 2018-04-11
               </time>
             
@@ -374,7 +371,8 @@
 
 
       
-        <a id="more"></a>
+        <hr>
+<a id="more"></a>
 <p>自编码器的介绍请参考<a href="">这里</a></p>
 <h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>​    导入所需要的包。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> sklearn.preprocessing <span class="keyword">as</span> pre</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">from</span> tensorflow.example.tutorials.mnist <span class="keyword">import</span> input_data</span><br></pre></td></tr></table></figure>
