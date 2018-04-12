@@ -82,12 +82,14 @@
 <meta name="keywords" content="区块链">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用python搭建一个属于自己的区块链">
-<meta property="og:url" content="http://yoursite.com/2018/04/11/区块链/index.html">
+<meta property="og:url" content="http://yoursite.com/2018/04/12/区块链/index.html">
 <meta property="og:site_name" content="MR.C">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-11T10:36:53.313Z">
+<meta property="og:image" content="http://yoursite.com/images/blockchain/demo.png">
+<meta property="og:updated_time" content="2018-04-12T14:00:37.928Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用python搭建一个属于自己的区块链">
+<meta name="twitter:image" content="http://yoursite.com/images/blockchain/demo.png">
 
 
 
@@ -117,7 +119,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/04/11/区块链/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/04/12/区块链/"/>
 
 
 
@@ -260,7 +262,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/11/区块链/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/12/区块链/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="MR.C">
@@ -289,8 +291,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-11T18:36:53+08:00">
-                2018-04-11
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-12T22:00:37+08:00">
+                2018-04-12
               </time>
             
 
@@ -330,8 +332,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/04/11/区块链/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/04/11/区块链/" itemprop="commentCount"></span>
+                <a href="/2018/04/12/区块链/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/04/12/区块链/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -339,7 +341,7 @@
 
           
           
-             <span id="/2018/04/11/区块链/" class="leancloud_visitors" data-flag-title="使用python搭建一个属于自己的区块链">
+             <span id="/2018/04/12/区块链/" class="leancloud_visitors" data-flag-title="使用python搭建一个属于自己的区块链">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -389,7 +391,17 @@
 <h3 id="创建新区块"><a href="#创建新区块" class="headerlink" title="创建新区块"></a>创建新区块</h3><p>&emsp;&emsp; 当 <code>Blockchain</code> 被实例化后，我们需要将 <strong>创世区块</strong> （第一个区块，没有前驱）添加到列表中。同时还需要向创世区块中添加一个”证明“，这个证明可以理解为挖矿（或者工作量证明）。我们将在后面讨论挖矿。除了在构造函数中生成创世区块，还需要添加 <code>new_block()</code> ， <code>new_transaction()</code>  ，  <code>hash()</code> 三个方法：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">from</span> time <span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Blockchain</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.chain = []</span><br><span class="line">        self.current_transactions = []</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 创建创世区块</span></span><br><span class="line">        self.new_block(previous_hash=<span class="number">1</span>, proof=<span class="number">100</span>)</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">new_block</span><span class="params">(self, proof, previous_hash=None)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        创建一个新的区块到区块链中</span></span><br><span class="line"><span class="string">        :param proof: &lt;int&gt; 由工作证明算法生成的证明</span></span><br><span class="line"><span class="string">        :param previous_hash: (Optional) &lt;str&gt; 前一个区块的 hash 值</span></span><br><span class="line"><span class="string">        :return: &lt;dict&gt; 新区块</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        </span><br><span class="line">        block = &#123;</span><br><span class="line">            <span class="string">'index'</span>: len(self.chain) + <span class="number">1</span>,</span><br><span class="line">            <span class="string">'tinestamp'</span>: time(),</span><br><span class="line">            <span class="string">'transactions'</span>: self.current_transactions,</span><br><span class="line">            <span class="string">'proof'</span>: proof,</span><br><span class="line">            <span class="string">'previous_hash'</span>: previous_hash <span class="keyword">or</span> self.hash(self.chain[<span class="number">-1</span>]),</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 重置当前交易信息</span></span><br><span class="line">        self.current_transactions = []</span><br><span class="line">        </span><br><span class="line">        self.chain.append(block)</span><br><span class="line">        <span class="keyword">return</span> block</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">new_transactions</span><span class="params">(self, sender, recipient, amount)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        创建一笔新的交易到下一个被挖掘的区块中</span></span><br><span class="line"><span class="string">        :param sender: &lt;str&gt; 发送人的地址</span></span><br><span class="line"><span class="string">        :param recipient: &lt;str&gt; 接收人的地址</span></span><br><span class="line"><span class="string">        :param amount: &lt;int&gt; 金额</span></span><br><span class="line"><span class="string">        :return: &lt;int&gt; 持有本次交易的区块索引</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        </span><br><span class="line">        self.current_transactions.append(&#123;</span><br><span class="line">            <span class="string">'sender'</span>: sender,</span><br><span class="line">            <span class="string">'recipient'</span>: recipient,</span><br><span class="line">            <span class="string">'amount'</span>: amount,</span><br><span class="line">        &#125;)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> self.last_block[<span class="string">'index'</span>] + <span class="number">1</span></span><br><span class="line">    </span><br><span class="line"><span class="meta">    @property</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">last_block</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.chain[<span class="number">-1</span>]</span><br><span class="line">    </span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">hash</span><span class="params">(block)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        给一个区块生成 SHA-256 值</span></span><br><span class="line"><span class="string">        :param block: &lt;dict&gt; Block</span></span><br><span class="line"><span class="string">        :return: &lt;str&gt;</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 我们必须确保这个字典（区块）是经过排序的，否则我们将会得到不一致的散列</span></span><br><span class="line">        block_string = json.dumps(block, sort_keys=<span class="keyword">True</span>).encode()</span><br><span class="line">        <span class="keyword">return</span> hashlib.sha256(block_string).hexdigest()</span><br></pre></td></tr></table></figure>
 <p>&emsp;&emsp; 到现在，我们基本上已经完成了区块链基本结构。但是你也许会疑惑新的区块是怎样创建和挖掘的。</p>
-
+<h3 id="工作量证明算法（PoW）"><a href="#工作量证明算法（PoW）" class="headerlink" title="工作量证明算法（PoW）"></a>工作量证明算法（PoW）</h3><p>&emsp;&emsp; 在区块链上创建或者挖掘新的区块使用 PoW 算法。该算法的目标是计算出一个符合特定特定条件的数字，这个数字必须很难计算出来但是却很容易验证的。这个就是 PoW 的核心思想。</p>
+<p>&emsp;&emsp; 举个例子，用以0结尾的 hash 表示整数 <code>x</code> 乘以整数 <code>y</code> 的积，即 <code>hash(x * y) = ac23dc...0</code> ，设 <code>x = 5</code> 求 <code>y</code> ？用Python实现：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> hashlib <span class="keyword">import</span> sha256</span><br><span class="line"></span><br><span class="line">x = <span class="number">5</span></span><br><span class="line">y = <span class="number">0</span> <span class="comment"># 现在我们还不知道y的值</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> sha256(<span class="string">f'<span class="subst">&#123;x*y&#125;</span>'</span>.encode()).hexdigest()[<span class="number">-1</span>] != <span class="string">"0"</span>:</span><br><span class="line">    y += <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">print(<span class="string">f'The sloution is y = <span class="subst">&#123;y&#125;</span>'</span>)</span><br></pre></td></tr></table></figure>
+<p>&emsp; &emsp;  结果是 <code>y = 21</code> ，因为生成的 hash 以0结尾：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hash(<span class="number">5</span> * <span class="number">21</span>) = <span class="number">1253e9373</span>e..<span class="number">.5e3600155</span>e860</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp; 在比特币中， PoW 算法又被称为 <em>Hashcash</em> 。和上面的例子相似，PoW 是“矿工”们争相抢夺谁先创建区块问题的算法。通常计算难度取决于目标字符串的长度。计算出来的”矿工“将会得到一定数量的比特币奖励。</p>
+<h3 id="工作量证明实现"><a href="#工作量证明实现" class="headerlink" title="工作量证明实现"></a>工作量证明实现</h3><p>&emsp;&emsp; 现在实现PoW算法，其规则类似上面的例子：找到一个数字p，使得当与前一个区块的hash值进行 <code>hash</code> 操作后，生成4个0开头的哈希值，类似下图：</p>
+<p><img src="/images/blockchain/demo.png" alt=""></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> time inport time</span><br><span class="line"><span class="keyword">from</span> uuid <span class="keyword">import</span> uuid4</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Blockchain</span><span class="params">(object)</span>:</span></span><br><span class="line">    ...</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">proof_of_work</span><span class="params">(self, last_proof)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Simple Proof of Work Algorithm:</span></span><br><span class="line"><span class="string">         - Find a number p' such that hash(pp') contains leading 4 zeroes, where p is the previous p'</span></span><br><span class="line"><span class="string">         - p is the previous proof, and p' is the new proof</span></span><br><span class="line"><span class="string">        :param last_proof: &lt;int&gt;</span></span><br><span class="line"><span class="string">        :return: &lt;int&gt;</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        </span><br><span class="line">        proof = <span class="number">0</span></span><br><span class="line">        <span class="keyword">while</span> self.valid_proof(last_proof, proof) <span class="keyword">is</span> <span class="keyword">False</span>:</span><br><span class="line">            proof += <span class="number">1</span></span><br><span class="line">            </span><br><span class="line">        <span class="keyword">return</span> proof</span><br><span class="line">    </span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">valid_proof</span><span class="params">(last_proof, proof)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Validates the Proof: Does hash(last_proof, proof) contain 4 leading zeroes?</span></span><br><span class="line"><span class="string">        :param last_proof: &lt;int&gt; Previous Proof</span></span><br><span class="line"><span class="string">        :param proof: &lt;int&gt; Current Proof</span></span><br><span class="line"><span class="string">        :return: &lt;bool&gt; True if correct, False if not.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        </span><br><span class="line">        guess = <span class="string">f'<span class="subst">&#123;last_proof&#125;</span><span class="subst">&#123;proof&#125;</span>'</span>.encode()</span><br><span class="line">        guess_hash = hashlib.sha256(guess).hexdigest()</span><br><span class="line">        <span class="keyword">return</span> guess_hash[:<span class="number">4</span>] = <span class="string">"0000"</span></span><br></pre></td></tr></table></figure>
+<p>&emsp; &emsp;  修改算法的复杂度，只需要修改0的个数就可以，其实四个0足够了。现在 <code>Blockchain</code> 类基本已经完成，接下来使用 <em>HTTP requests</em> 进行交互。</p>
+<h2 id="Step-2：将-Blockchain-作为接口"><a href="#Step-2：将-Blockchain-作为接口" class="headerlink" title="Step 2：将 Blockchain 作为接口"></a>Step 2：将 <em>Blockchain</em> 作为接口</h2>
       
     </div>
 
@@ -472,8 +484,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/11/随笔一/" rel="next" title="2018.4.4">
-                <i class="fa fa-chevron-left"></i> 2018.4.4
+              <a href="/2018/04/11/index/" rel="next" title="Hello Mr.C">
+                <i class="fa fa-chevron-left"></i> Hello Mr.C
               </a>
             
           </div>
@@ -481,10 +493,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/04/11/index/" rel="prev" title="Hello Mr.C">
-                Hello Mr.C <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -653,7 +661,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step1：创建区块链"><span class="nav-number">2.</span> <span class="nav-text">Step1：创建区块链</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#描述"><span class="nav-number">2.1.</span> <span class="nav-text">描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#区块"><span class="nav-number">2.2.</span> <span class="nav-text">区块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加交易到区块"><span class="nav-number">2.3.</span> <span class="nav-text">添加交易到区块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建新区块"><span class="nav-number">2.4.</span> <span class="nav-text">创建新区块</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step1：创建区块链"><span class="nav-number">2.</span> <span class="nav-text">Step1：创建区块链</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#描述"><span class="nav-number">2.1.</span> <span class="nav-text">描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#区块"><span class="nav-number">2.2.</span> <span class="nav-text">区块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加交易到区块"><span class="nav-number">2.3.</span> <span class="nav-text">添加交易到区块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建新区块"><span class="nav-number">2.4.</span> <span class="nav-text">创建新区块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工作量证明算法（PoW）"><span class="nav-number">2.5.</span> <span class="nav-text">工作量证明算法（PoW）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工作量证明实现"><span class="nav-number">2.6.</span> <span class="nav-text">工作量证明实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-2：将-Blockchain-作为接口"><span class="nav-number">3.</span> <span class="nav-text">Step 2：将 Blockchain 作为接口</span></a></li></ol></div>
             
 
           </div>
