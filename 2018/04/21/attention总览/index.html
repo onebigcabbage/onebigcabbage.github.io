@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Java," />
+  <meta name="keywords" content="LSTM,Deep Learning,RNN,Attention Model," />
 
 
 
@@ -79,21 +79,17 @@
 
 
 
-<meta name="keywords" content="Java">
+<meta name="keywords" content="LSTM,Deep Learning,RNN,Attention Model">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Ubuntu安装以及配置Java8">
-<meta property="og:url" content="http://yoursite.com/2018/04/11/Ubuntu安装以及配置Java8/index.html">
+<meta property="og:title" content="详解从 Seq2Seq模型、RNN结构、Encoder-Decoder模型 到 Attention模型">
+<meta property="og:url" content="http://yoursite.com/2018/04/21/attention总览/index.html">
 <meta property="og:site_name" content="MR.C">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/images/1.png">
-<meta property="og:image" content="http://yoursite.com/images/2.png">
-<meta property="og:image" content="http://yoursite.com/images/3.png">
-<meta property="og:image" content="http://yoursite.com/images/4.png">
-<meta property="og:image" content="http://yoursite.com/images/5.png">
-<meta property="og:updated_time" content="2018-04-11T09:23:56.890Z">
+<meta property="og:image" content="http://yoursite.com/images/attention/seq1.png">
+<meta property="og:updated_time" content="2018-04-21T14:24:31.560Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Ubuntu安装以及配置Java8">
-<meta name="twitter:image" content="http://yoursite.com/images/1.png">
+<meta name="twitter:title" content="详解从 Seq2Seq模型、RNN结构、Encoder-Decoder模型 到 Attention模型">
+<meta name="twitter:image" content="http://yoursite.com/images/attention/seq1.png">
 
 
 
@@ -123,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/04/11/Ubuntu安装以及配置Java8/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/04/21/attention总览/"/>
 
 
 
 
 
-  <title>Ubuntu安装以及配置Java8 | MR.C</title>
+  <title>详解从 Seq2Seq模型、RNN结构、Encoder-Decoder模型 到 Attention模型 | MR.C</title>
   
 
 
@@ -276,7 +272,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/11/Ubuntu安装以及配置Java8/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/21/attention总览/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="MR.C">
@@ -293,7 +289,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Ubuntu安装以及配置Java8</h1>
+          <h1 class="post-title" itemprop="name headline">详解从 Seq2Seq模型、RNN结构、Encoder-Decoder模型 到 Attention模型</h1>
         
 
         <div class="post-meta">
@@ -305,8 +301,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-11T17:23:56+08:00">
-                2018-04-11
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-21T22:24:31+08:00">
+                2018-04-21
               </time>
             
 
@@ -328,8 +324,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Ubuntu-配置/" itemprop="url" rel="index">
-                    <span itemprop="name">Ubuntu 配置</span>
+                  <a href="/categories/深度学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
                   </a>
                 </span>
 
@@ -345,7 +341,7 @@
 
           
           
-             <span id="/2018/04/11/Ubuntu安装以及配置Java8/" class="leancloud_visitors" data-flag-title="Ubuntu安装以及配置Java8">
+             <span id="/2018/04/21/attention总览/" class="leancloud_visitors" data-flag-title="详解从 Seq2Seq模型、RNN结构、Encoder-Decoder模型 到 Attention模型">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -379,16 +375,29 @@
       
         <hr>
 <a id="more"></a>
-<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>首先去<a href="https://www.java.com/en/download/linux_manual.jsp" target="_blank" rel="noopener">这里</a>下载Java for Linux，我下的是Linux X64.</p>
-<p>首先输入 <code>java -version</code> ，如果出现如下图，说明可以继续。<br><img src="/images/1.png" alt="1"></p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>最好将你的Java放到 <em>/usr</em> 里，操作如下：<br><code>cd /usr</code><br><code>sudo mkdir java</code><br><code>cd java/</code><br>保持当前窗口。</p>
-<p>找到你下载的 <em>jre-8u161-linux-x64.tar.gz</em> 所在文件夹，在当前文件夹中右键打开终端 ，复制文件到你创建的文件夹：<br><code>sudo mv jre-8u161-linux-x64.tar.gz /usr/java</code><br>关闭此终端。</p>
-<p>打开刚才终端，输入下面命令，提取 <em>jre-8u161-linux-x64.tar.gz</em>  ,如图：</p>
-<p><code>sudo tar zxvf jre-8u161-linux-x64.tar.gz</code><br><img src="/images/2.png" alt="2"></p>
-<h2 id="配置Java-JDK环境变量"><a href="#配置Java-JDK环境变量" class="headerlink" title="配置Java JDK环境变量"></a>配置Java JDK环境变量</h2><p>输入 <code>javac</code> 和  <code>javac -version</code> 出现如下情况：<br><img src="/images/3.png" alt="3"></p>
-<p>说明可以配置环境了：<br><code>sudo vim ~/.bashrc</code> ，按下 <em>i</em> ，进入vim的编辑模式，在文档最后边添加下面几句话：<br><img src="/images/4.png" alt="4"><br>按Esc后， 输入 <em>:wq</em> ，退出vim。</p>
-<p>输入 <code>source ~/.bashrc</code> ，应用此配置。</p>
-<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>此时输入 <code>java -version</code> ，如图则成功。<br><img src="/images/5.png" alt="5"></p>
+<blockquote>
+<p>注：本文的所有模型只涉及自然语言处理领域。</p>
+</blockquote>
+<h2 id="Seq2Seq模型"><a href="#Seq2Seq模型" class="headerlink" title="Seq2Seq模型"></a>Seq2Seq模型</h2><h3 id="1-简介"><a href="#1-简介" class="headerlink" title="1. 简介"></a>1. 简介</h3><p>Sequence-to-sequence (seq2seq) 模型，顾名思义，其输入是一个序列，输出也是一个序列，例如输入是英文句子，输出则是翻译的中文。seq2seq可以用在很多方面：机器翻译、QA系统、文档摘要生成、Image Captioning(图片描述生成)。</p>
+<h3 id="2-基本框架"><a href="#2-基本框架" class="headerlink" title="2. 基本框架"></a>2. 基本框架</h3><p>seq2seq模型可简单理解为由三部分组成：<strong> Encoder、Decoder 和连接两者的 State Vector (中间状态向量) C 。</strong></p>
+<p><img src="/images/attention/seq1.png" alt="RNN encoder-decoder"></p>
+<p>上图中Encoder和Decoder可以是一个RNN，但通常是其变种LSTM或者GRU。</p>
+<p>应用：</p>
+<ul>
+<li><p>在英文翻译中，将英文输入到Encoder中，Decoder输出中文。&emsp;&emsp;&emsp;&emsp;&emsp;  </p>
+<p>[参考：-原创翻译- 基于RNNEncoder–Decoder的机器翻译L(earning Phrase Representations using RNN Encoder–Decoder<br>for Statistical Machine Translation)]:</p>
+<p>​</p>
+</li>
+<li><p>在图像标注中，将图像特征输入到Encoder中，Decoder输出一段文字对图像的描述。&emsp;&emsp;&emsp;&emsp;&emsp; <a href="">参考：-原创翻译- 图像标注生成器 (Show and Tell: A Neural Image Caption Generator)</a></p>
+</li>
+<li><p>在QA系统中，将提出的问题输入Encoder中，Decoder输出对于问题的回答。</p>
+</li>
+</ul>
+<p>……</p>
+<blockquote>
+<p>注：确保你对所有模型都有所了解后再阅读应用后面的参考链接。</p>
+</blockquote>
+<h2 id="RNN结构"><a href="#RNN结构" class="headerlink" title="RNN结构"></a>RNN结构</h2><h2 id="Encoder-Decoder模型"><a href="#Encoder-Decoder模型" class="headerlink" title="Encoder-Decoder模型"></a>Encoder-Decoder模型</h2><h2 id="Attention模型"><a href="#Attention模型" class="headerlink" title="Attention模型"></a>Attention模型</h2><h3 id="1-使用原因"><a href="#1-使用原因" class="headerlink" title="1. 使用原因"></a>1. 使用原因</h3><p>基础的Seq2Seq是有很多弊端的，首先Encoder将输入编码为固定大小状态向量的过程实际上是一个信息“信息有损压缩”的过程，如果信息量越大，那么这个转化向量的过程对信息的损失就越大，同时，随着sequence length的增加，意味着时间维度上的序列很长，RNN模型也会出现梯度弥散。最后，基础的模型连接Encoder和Decoder模块的组件仅仅是一个固定大小的状态向量，这使得Decoder无法直接去关注到输入信息的更多细节。由于基础Seq2Seq的种种缺陷，随后引入了Attention。</p>
 
       
     </div>
@@ -459,7 +468,13 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Java/" rel="tag"># Java</a>
+            <a href="/tags/LSTM/" rel="tag"># LSTM</a>
+          
+            <a href="/tags/Deep-Learning/" rel="tag"># Deep Learning</a>
+          
+            <a href="/tags/RNN/" rel="tag"># RNN</a>
+          
+            <a href="/tags/Attention-Model/" rel="tag"># Attention Model</a>
           
         </div>
       
@@ -472,8 +487,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/11/TensorFlow学习（一）_ 构建卷积神经网络/" rel="next" title="TensorFlow学习（一）_ 构建卷积神经网络">
-                <i class="fa fa-chevron-left"></i> TensorFlow学习（一）_ 构建卷积神经网络
+              <a href="/2018/04/21/基于RNNEncoder–Decoder的机器翻译/" rel="next" title="-原创翻译- 基于RNNEncoder–Decoder的机器翻译">
+                <i class="fa fa-chevron-left"></i> -原创翻译- 基于RNNEncoder–Decoder的机器翻译
               </a>
             
           </div>
@@ -481,10 +496,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/04/11/搭建个人博客之 Github + hexo： 如何在其他电脑上更新博客/" rel="prev" title="使用Github搭建个人博客（番外篇）： 换电脑后，如何更新博客">
-                使用Github搭建个人博客（番外篇）： 换电脑后，如何更新博客 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -655,7 +666,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#准备"><span class="nav-number">1.</span> <span class="nav-text">准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置Java-JDK环境变量"><span class="nav-number">3.</span> <span class="nav-text">配置Java JDK环境变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试"><span class="nav-number">4.</span> <span class="nav-text">测试</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Seq2Seq模型"><span class="nav-number">1.</span> <span class="nav-text">Seq2Seq模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-简介"><span class="nav-number">1.1.</span> <span class="nav-text">1. 简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-基本框架"><span class="nav-number">1.2.</span> <span class="nav-text">2. 基本框架</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RNN结构"><span class="nav-number">2.</span> <span class="nav-text">RNN结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Encoder-Decoder模型"><span class="nav-number">3.</span> <span class="nav-text">Encoder-Decoder模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Attention模型"><span class="nav-number">4.</span> <span class="nav-text">Attention模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-使用原因"><span class="nav-number">4.1.</span> <span class="nav-text">1. 使用原因</span></a></li></ol></li></ol></div>
             
 
           </div>
