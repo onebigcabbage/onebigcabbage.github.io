@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="LSTM,Deep Learning,RNN,Attention Model," />
+  <meta name="keywords" content="RNN,Deep Learning,LSTM,Attention Model," />
 
 
 
@@ -79,10 +79,10 @@
 
 
 
-<meta name="keywords" content="LSTM,Deep Learning,RNN,Attention Model">
+<meta name="keywords" content="RNN,Deep Learning,LSTM,Attention Model">
 <meta property="og:type" content="article">
 <meta property="og:title" content="详解从 Seq2Seq模型、RNN结构、Encoder-Decoder模型 到 Attention模型">
-<meta property="og:url" content="http://yoursite.com/2018/04/24/attention总览/index.html">
+<meta property="og:url" content="http://yoursite.com/2018/04/25/attention总览/index.html">
 <meta property="og:site_name" content="MR.C">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/images/attention/seq1.png">
@@ -98,7 +98,12 @@
 <meta property="og:image" content="http://yoursite.com/images/attention/e&d%20stru1.png">
 <meta property="og:image" content="http://yoursite.com/images/attention/e&d%20stru2.png">
 <meta property="og:image" content="http://yoursite.com/images/attention/am.png">
-<meta property="og:updated_time" content="2018-04-24T06:47:41.812Z">
+<meta property="og:image" content="http://yoursite.com/images/attention/h1.png">
+<meta property="og:image" content="http://yoursite.com/images/attention/h2.png">
+<meta property="og:image" content="http://yoursite.com/images/attention/h3.png">
+<meta property="og:image" content="http://yoursite.com/images/attention/a11.png">
+<meta property="og:image" content="http://yoursite.com/images/attention/a22.png">
+<meta property="og:updated_time" content="2018-04-25T12:48:08.361Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="详解从 Seq2Seq模型、RNN结构、Encoder-Decoder模型 到 Attention模型">
 <meta name="twitter:image" content="http://yoursite.com/images/attention/seq1.png">
@@ -131,7 +136,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/04/24/attention总览/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/04/25/attention总览/"/>
 
 
 
@@ -284,7 +289,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/24/attention总览/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/25/attention总览/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="MR.C">
@@ -313,8 +318,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-24T14:47:41+08:00">
-                2018-04-24
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-25T20:48:08+08:00">
+                2018-04-25
               </time>
             
 
@@ -353,7 +358,7 @@
 
           
           
-             <span id="/2018/04/24/attention总览/" class="leancloud_visitors" data-flag-title="详解从 Seq2Seq模型、RNN结构、Encoder-Decoder模型 到 Attention模型">
+             <span id="/2018/04/25/attention总览/" class="leancloud_visitors" data-flag-title="详解从 Seq2Seq模型、RNN结构、Encoder-Decoder模型 到 Attention模型">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -452,26 +457,34 @@
 <p><em>Encoder-Decoder</em> 模型是使用非常广泛的深度学习模型框架，与其说 <em>Encoder-Decoder</em> 是一种模型，不如称其为一种通用框架。因为 <em>Encoder</em> 和 <em>Decoder</em> 具体使用什么模型是根据任务而定义的。在自然语言处理研究中通常使用 <em>LSTM</em> 或者是 <em>GRU</em> 。</p>
 </li>
 </ul>
-<h2 id="四、Attention-模型"><a href="#四、Attention-模型" class="headerlink" title="四、Attention 模型"></a>四、<em>Attention</em> 模型</h2><blockquote>
-<p>注：这里我们还是只讨论在文本领域的应用。</p>
-</blockquote>
-<h3 id="1-Encoder-Decoder-模型的局限性"><a href="#1-Encoder-Decoder-模型的局限性" class="headerlink" title="1. Encoder-Decoder 模型的局限性"></a>1. <em>Encoder-Decoder</em> 模型的局限性</h3><p>(1) 从第三节的第一部分的 <em>Encoder-Decoder</em> 模型的抽象图中可以看出 <em>Encoder</em> 和 <em>Decoder</em> 的唯一联系只有语义编码 <em>Ｃ</em> ，即将整个输入序列的信息编码成一个固定大小的状态向量再解码，相当于将信息”有损压缩”。很明显这样做有两个缺点：</p>
+<h2 id="四、Attention-模型"><a href="#四、Attention-模型" class="headerlink" title="四、Attention 模型"></a>四、<em>Attention</em> 模型</h2><h3 id="1-Encoder-Decoder-模型的局限性"><a href="#1-Encoder-Decoder-模型的局限性" class="headerlink" title="1. Encoder-Decoder 模型的局限性"></a>1. <em>Encoder-Decoder</em> 模型的局限性</h3><p>(1) 从第三节的第一部分的 <em>Encoder-Decoder</em> 模型的抽象图中可以看出 <em>Encoder</em> 和 <em>Decoder</em> 的唯一联系只有语义编码 <em>Ｃ</em> ，即将整个输入序列的信息编码成一个固定大小的状态向量再解码，相当于将信息”有损压缩”。很明显这样做有两个缺点：</p>
 <ul>
 <li>中间语义向量无法完全表达整个输入序列的信息。</li>
 <li>随着输入信息长度的增加，由于向量长度固定，先前编码好的信息会被后来的信息覆盖，丢失很多信息。</li>
 </ul>
 <p>(2)大家看第三节的第二部分的第二个 <em>Decoder</em> 过程，其输出的产生如下：</p>
 <p>$y_{1}=g(C, h’_{0})$ </p>
-<p>$y_{2}=g(C, y-{1})$ </p>
-<p>$y_{3}=g(C, y-{1}, y_{2})$ </p>
+<p>$y_{2}=g(C, y_{1})$ </p>
+<p>$y_{3}=g(C, y_{1}, y_{2})$ </p>
 <p>明显可以发现在生成 $y_{1}、y_{2}、y_{3}$ 时，语义编码 <em>Ｃ</em> 对它们所产生的贡献都是一样的。例如翻译：<em>Cat chase mouse</em> ，<em>Encoder-Decoder</em> 模型逐字生成：“猫”、“捉”、“老鼠”。在翻译 <em>mouse</em> 单词时，每一个英语单词对“老鼠”的贡献都是相同的。如果引入了<em>Ａttention</em> 模型，那么 <em>mouse</em> 对于它的影响应该是最大的。</p>
 <h3 id="2-图解-Attention"><a href="#2-图解-Attention" class="headerlink" title="2. 图解 Attention"></a>2. 图解 <em>Attention</em></h3><p>为了解决上面两个问题，于是引入了 <em>Ａttention</em> 模型。<em>Ａttention</em> 模型的特点是 <em>Decoder</em> 不再将整个输入序列编码为固定长度的中间语义向量 <em>Ｃ</em> ，而是根据当前生成的新单词计算新的 <em>$C_{i}$</em> ，使得每个时刻输入不同的 <em>Ｃ</em> ，这样就解决了单词信息丢失的问题。引入了 <em>Ａttention</em> 的 <em>Encoder-Decoder</em> 模型如下图：</p>
 <p><img src="/images/attention/am.png" alt="am"></p>
 <p>对于刚才提到的那个“猫捉老鼠”的翻译过程变成了如下：</p>
 <p>$y_{1}=g(C_{1}, h’_{0})$ </p>
-<p>$y_{2}=g(C_{2}, y-{1})$ </p>
-<p>$y_{3}=g(C_{3}, y-{1}, y_{2})$ </p>
-<p>那么 $C_{i}$ 是如何得到呢？</p>
+<p>$y_{2}=g(C_{2}, y_{1})$ </p>
+<p>$y_{3}=g(C_{3}, y_{1}, y_{2})$ </p>
+<p>整个翻译流程如下：</p>
+<p><img src="/images/attention/h1.png" alt="h1"></p>
+<p>图中输入是 <em>Cat chase mouse</em> ，<em>Encoder</em> 中隐层 <em>h1、h2、h3</em> 可看作经过计算 <em>Cat、chase、mouse</em> 这些词的信息。</p>
+<p><img src="/images/attention/h2.png" alt="h2"></p>
+<p>使用 $a_{ij}$ 表示 <em>Encoder</em> 中第 <em>j</em> 阶段的 $h_{j}$ 和解码时第 <em>i</em> 阶段的相关性，计算出解码需要的中间语义向量 $C_{i}$ 。$C_{1}$ 和 “猫” 关系最近，相对应的 $a_{11}$ 要比 $a_{12}、a_{13}$ 大；而 $C_{2}$ 和 “捉” 关系最近，相对应的 $a_{22}$ 要比 $a_{21}、a_{23}$ 大；同理  $C_{3}$ 和 “老鼠” 关系最近，相对应的 $a_{33}$ 要比 $a_{31}、a_{32}$ 大。</p>
+<p><img src="/images/attention/h3.png" alt="h3"></p>
+<p>那么<strong>参数 $a_{ij}$ 是如何得到呢？</strong> </p>
+<p><em>Encoder</em> 中第 <em>j</em> 个隐层单元 $h_{j}$ 和 <em>Decoder</em> 第 <em>i-1</em> 个隐层单元 $h’<em>{i-1}$ 经过运算得到  $a</em>{ij}$ 。</p>
+<p>例如 $a_{1j}$ 的计算过程：</p>
+<p><img src="/images/attention/a11.png" alt="a1j"></p>
+<p> $a_{2j}$ 的计算过程：</p>
+<p><img src="/images/attention/a22.png" alt="a2j"></p>
 <blockquote>
 <p>参考 ：<a href="">引入<em>Ａttention</em> 并基于 <em>RNN</em> 的 <em>Encoder-Decoder</em> 模型公式推导</a> </p>
 </blockquote>
@@ -545,11 +558,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/LSTM/" rel="tag"># LSTM</a>
+            <a href="/tags/RNN/" rel="tag"># RNN</a>
           
             <a href="/tags/Deep-Learning/" rel="tag"># Deep Learning</a>
           
-            <a href="/tags/RNN/" rel="tag"># RNN</a>
+            <a href="/tags/LSTM/" rel="tag"># LSTM</a>
           
             <a href="/tags/Attention-Model/" rel="tag"># Attention Model</a>
           
