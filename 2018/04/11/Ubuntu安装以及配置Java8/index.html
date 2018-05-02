@@ -379,34 +379,17 @@
       
         <hr>
 <a id="more"></a>
-<h2 id="准备"><a class="header-anchor" href="#准备" aria-hidden="true">¶</a> 准备</h2>
-<p>首先去<a href="https://www.java.com/en/download/linux_manual.jsp" target="_blank" rel="noopener">这里</a>下载Java for Linux，我下的是Linux X64.</p>
-<p>首先输入 <code>java -version</code> ，如果出现如下图，说明可以继续。<br>
-<img src="/images/1.png" alt="1"></p>
-<h2 id="安装"><a class="header-anchor" href="#安装" aria-hidden="true">¶</a> 安装</h2>
-<p>最好将你的Java放到 <em>/usr</em> 里，操作如下：<br>
-<code>cd /usr</code><br>
-<code>sudo mkdir java</code><br>
-<code>cd java/</code><br>
-保持当前窗口。</p>
-<p>找到你下载的 <em>jre-8u161-linux-x64.tar.gz</em> 所在文件夹，在当前文件夹中右键打开终端 ，复制文件到你创建的文件夹：<br>
-<code>sudo mv jre-8u161-linux-x64.tar.gz /usr/java</code><br>
-关闭此终端。</p>
+<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>首先去<a href="https://www.java.com/en/download/linux_manual.jsp" target="_blank" rel="noopener">这里</a>下载Java for Linux，我下的是Linux X64.</p>
+<p>首先输入 <code>java -version</code> ，如果出现如下图，说明可以继续。<br><img src="/images/1.png" alt="1"></p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>最好将你的Java放到 <em>/usr</em> 里，操作如下：<br><code>cd /usr</code><br><code>sudo mkdir java</code><br><code>cd java/</code><br>保持当前窗口。</p>
+<p>找到你下载的 <em>jre-8u161-linux-x64.tar.gz</em> 所在文件夹，在当前文件夹中右键打开终端 ，复制文件到你创建的文件夹：<br><code>sudo mv jre-8u161-linux-x64.tar.gz /usr/java</code><br>关闭此终端。</p>
 <p>打开刚才终端，输入下面命令，提取 <em>jre-8u161-linux-x64.tar.gz</em>  ,如图：</p>
-<p><code>sudo tar zxvf jre-8u161-linux-x64.tar.gz</code><br>
-<img src="/images/2.png" alt="2"></p>
-<h2 id="配置Java JDK环境变量"><a class="header-anchor" href="#配置Java JDK环境变量" aria-hidden="true">¶</a> 配置Java JDK环境变量</h2>
-<p>输入 <code>javac</code> 和  <code>javac -version</code> 出现如下情况：<br>
-<img src="/images/3.png" alt="3"></p>
-<p>说明可以配置环境了：<br>
-<code>sudo vim ~/.bashrc</code> ，按下 <em>i</em> ，进入vim的编辑模式，在文档最后边添加下面几句话：<br>
-<img src="/images/4.png" alt="4"><br>
-按Esc后， 输入 <em>:wq</em> ，退出vim。</p>
+<p><code>sudo tar zxvf jre-8u161-linux-x64.tar.gz</code><br><img src="/images/2.png" alt="2"></p>
+<h2 id="配置Java-JDK环境变量"><a href="#配置Java-JDK环境变量" class="headerlink" title="配置Java JDK环境变量"></a>配置Java JDK环境变量</h2><p>输入 <code>javac</code> 和  <code>javac -version</code> 出现如下情况：<br><img src="/images/3.png" alt="3"></p>
+<p>说明可以配置环境了：<br><code>sudo vim ~/.bashrc</code> ，按下 <em>i</em> ，进入vim的编辑模式，在文档最后边添加下面几句话：<br><img src="/images/4.png" alt="4"><br>按Esc后， 输入 <em>:wq</em> ，退出vim。</p>
 <p>输入 <code>source ~/.bashrc</code> ，应用此配置。</p>
-<h2 id="测试"><a class="header-anchor" href="#测试" aria-hidden="true">¶</a> 测试</h2>
-<p>此时输入 <code>java -version</code> ，如图则成功。<br>
-<img src="/images/5.png" alt="5"></p>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css">
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>此时输入 <code>java -version</code> ，如图则成功。<br><img src="/images/5.png" alt="5"></p>
+
       
     </div>
 
@@ -672,7 +655,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#准备"><span class="nav-number">1.</span> <span class="nav-text">¶ 准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">¶ 安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置Java JDK环境变量"><span class="nav-number">3.</span> <span class="nav-text">¶ 配置Java JDK环境变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试"><span class="nav-number">4.</span> <span class="nav-text">¶ 测试</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#准备"><span class="nav-number">1.</span> <span class="nav-text">准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置Java-JDK环境变量"><span class="nav-number">3.</span> <span class="nav-text">配置Java JDK环境变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试"><span class="nav-number">4.</span> <span class="nav-text">测试</span></a></li></ol></div>
             
 
           </div>
