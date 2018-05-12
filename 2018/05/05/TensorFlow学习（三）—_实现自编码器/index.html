@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="TensorFlow," />
+
+
+
+
+
+
+
+
+
+
+<meta name="keywords" content="TensorFlow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TensorFlow学习（三）—_实现自编码器">
+<meta property="og:url" content="http://yoursite.com/2018/05/05/TensorFlow学习（三）—_实现自编码器/index.html">
+<meta property="og:site_name" content="蔡圣哲">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-11T09:23:29.906Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TensorFlow学习（三）—_实现自编码器">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/05/05/TensorFlow学习（三）—_实现自编码器/"/>
+
+
+
+
+
+  <title>TensorFlow学习（三）—_实现自编码器 | 蔡圣哲</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">蔡圣哲</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">千堆雪 长街 日出一到 彼此瓦解</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-推荐">
+          <a href="/leisure/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-headphones"></i> <br />
+            
+            推荐
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-学习">
+          <a href="/study/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-leanpub"></i> <br />
+            
+            学习
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/05/TensorFlow学习（三）—_实现自编码器/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MR.C">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/1.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="蔡圣哲">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">TensorFlow学习（三）—_实现自编码器</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-05T10:08:58+08:00">
+                2018-05-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/05/05/TensorFlow学习（三）—_实现自编码器/" class="leancloud_visitors" data-flag-title="TensorFlow学习（三）—_实现自编码器">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+
+      
+        <hr>
+<a id="more"></a>
+<p>自编码器的介绍请参考<a href="">这里</a></p>
+<h2 id="准备"><a class="header-anchor" href="#准备" aria-hidden="true">¶</a> 准备</h2>
+<p>​	导入所需要的包。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> sklearn.preprocessing <span class="keyword">as</span> pre</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">from</span> tensorflow.example.tutorials.mnist <span class="keyword">import</span> input_data</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="定义函数"><a class="header-anchor" href="#定义函数" aria-hidden="true">¶</a> 定义函数</h2>
+<h3 id="参数初始化方法 xavier initialization"><a class="header-anchor" href="#参数初始化方法 xavier initialization" aria-hidden="true">¶</a> 参数初始化方法 <code>xavier initialization</code></h3>
+<blockquote>
+<p>这里是初始化参数的方法，不是初始化参数！</p>
+</blockquote>
+<p><strong>为什么要参数初始化？</strong></p>
+<p>​	如果神经网络的权重初始化太小，那么我们的输入在经过每层计算后，逐渐缩小而难以产生作用，如果权重初始化太大，则计算后将逐渐增大并导致发散和失效。</p>
+<p>​	不适合的权重似的隐含层的输入方差过大，经过 <code>sigmoid</code>  激活函数时离中心较远，导数接近于零，从而导致提督弥散。</p>
+<p>** xavier权重初始化 **</p>
+<p>​	xavier权重初始化可以减少梯度弥散，使输入可以传递的更深。</p>
+<p>​	xavier根据某一层网络的输入、输出节点数量自动调整最合适的分布，让权重满足0均值，同时方差为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mfrac><mrow><mn>2</mn></mrow><mrow><msub><mi>n</mi><mrow><mi>i</mi><mi>n</mi></mrow></msub><mo>+</mo><msub><mi>n</mi><mrow><mi>o</mi><mi>u</mi><mi>t</mi></mrow></msub></mrow></mfrac></mrow><annotation encoding="application/x-tex">\frac{2}{n_{in}+n_{out}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.845108em;"></span><span class="strut bottom" style="height:1.295108em;vertical-align:-0.44999999999999996em;"></span><span class="base textstyle uncramped"><span class="mord reset-textstyle textstyle uncramped"><span class="sizing reset-size5 size5 reset-textstyle textstyle uncramped nulldelimiter"></span><span class="mfrac"><span class="vlist"><span style="top:0.345em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord"><span class="mord mathit">n</span><span class="vlist"><span style="top:0.15em;margin-right:0.07142857142857144em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-scriptstyle scriptscriptstyle cramped"><span class="mord scriptscriptstyle cramped"><span class="mord mathit">i</span><span class="mord mathit">n</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mbin">+</span><span class="mord"><span class="mord mathit">n</span><span class="vlist"><span style="top:0.15em;margin-right:0.07142857142857144em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-scriptstyle scriptscriptstyle cramped"><span class="mord scriptscriptstyle cramped"><span class="mord mathit">o</span><span class="mord mathit">u</span><span class="mord mathit">t</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span><span style="top:-0.22999999999999998em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle textstyle uncramped frac-line"></span></span><span style="top:-0.394em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord scriptstyle uncramped"><span class="mord mathrm">2</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="sizing reset-size5 size5 reset-textstyle textstyle uncramped nulldelimiter"></span></span></span></span></span> ，分布可以使用均匀分布或者高斯分布。</p>
+<p>​	下面我们创建一个 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>⟮</mo><mo>−</mo><msqrt><mrow><mfrac><mrow><mn>6</mn></mrow><mrow><msub><mi>n</mi><mrow><mi>i</mi><mi>n</mi></mrow></msub><mo>+</mo><msub><mi>n</mi><mrow><mi>o</mi><mi>u</mi><mi>t</mi></mrow></msub></mrow></mfrac></mrow></msqrt><mo separator="true">,</mo><msqrt><mrow><mfrac><mrow><mn>6</mn></mrow><mrow><msub><mi>n</mi><mrow><mi>i</mi><mi>n</mi></mrow></msub><mo>+</mo><msub><mi>n</mi><mrow><mi>o</mi><mi>u</mi><mi>t</mi></mrow></msub></mrow></mfrac></mrow></msqrt><mo>⟯</mo></mrow><annotation encoding="application/x-tex">\lgroup  -\sqrt{\frac{6}{n_{in}+n_{out}}}, \sqrt{\frac{6}{n_{in}+n_{out}}} \rgroup</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:1.1825640000000002em;"></span><span class="strut bottom" style="height:1.84002em;vertical-align:-0.6574559999999998em;"></span><span class="base textstyle uncramped"><span class="mopen">⟮</span><span class="mord">−</span><span class="sqrt mord"><span class="sqrt-sign" style="top:0.007435999999999776em;"><span class="style-wrap reset-textstyle textstyle uncramped"><span class="delimsizing size2">√</span></span></span><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1em;">​</span></span><span class="mord textstyle cramped"><span class="mord reset-textstyle textstyle cramped"><span class="sizing reset-size5 size5 reset-textstyle textstyle uncramped nulldelimiter"></span><span class="mfrac"><span class="vlist"><span style="top:0.345em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord"><span class="mord mathit">n</span><span class="vlist"><span style="top:0.15em;margin-right:0.07142857142857144em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-scriptstyle scriptscriptstyle cramped"><span class="mord scriptscriptstyle cramped"><span class="mord mathit">i</span><span class="mord mathit">n</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mbin">+</span><span class="mord"><span class="mord mathit">n</span><span class="vlist"><span style="top:0.15em;margin-right:0.07142857142857144em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-scriptstyle scriptscriptstyle cramped"><span class="mord scriptscriptstyle cramped"><span class="mord mathit">o</span><span class="mord mathit">u</span><span class="mord mathit">t</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span><span style="top:-0.22999999999999998em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle textstyle uncramped frac-line"></span></span><span style="top:-0.394em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathrm">6</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="sizing reset-size5 size5 reset-textstyle textstyle uncramped nulldelimiter"></span></span></span></span><span style="top:-1.102564em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1em;">​</span></span><span class="reset-textstyle textstyle uncramped sqrt-line"></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1em;">​</span></span>​</span></span></span><span class="mpunct">,</span><span class="sqrt mord"><span class="sqrt-sign" style="top:0.007435999999999776em;"><span class="style-wrap reset-textstyle textstyle uncramped"><span class="delimsizing size2">√</span></span></span><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1em;">​</span></span><span class="mord textstyle cramped"><span class="mord reset-textstyle textstyle cramped"><span class="sizing reset-size5 size5 reset-textstyle textstyle uncramped nulldelimiter"></span><span class="mfrac"><span class="vlist"><span style="top:0.345em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord"><span class="mord mathit">n</span><span class="vlist"><span style="top:0.15em;margin-right:0.07142857142857144em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-scriptstyle scriptscriptstyle cramped"><span class="mord scriptscriptstyle cramped"><span class="mord mathit">i</span><span class="mord mathit">n</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mbin">+</span><span class="mord"><span class="mord mathit">n</span><span class="vlist"><span style="top:0.15em;margin-right:0.07142857142857144em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-scriptstyle scriptscriptstyle cramped"><span class="mord scriptscriptstyle cramped"><span class="mord mathit">o</span><span class="mord mathit">u</span><span class="mord mathit">t</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span><span style="top:-0.22999999999999998em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle textstyle uncramped frac-line"></span></span><span style="top:-0.394em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathrm">6</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="sizing reset-size5 size5 reset-textstyle textstyle uncramped nulldelimiter"></span></span></span></span><span style="top:-1.102564em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1em;">​</span></span><span class="reset-textstyle textstyle uncramped sqrt-line"></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1em;">​</span></span>​</span></span></span><span class="mclose">⟯</span></span></span></span> 范围内的均匀分布，而它的方差根据 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>D</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mrow><mo>(</mo><mi>m</mi><mi>a</mi><mi>x</mi><mo>−</mo><mi>m</mi><mi>i</mi><mi>n</mi><msup><mo>)</mo><mn>2</mn></msup><mi mathvariant="normal">/</mi><mn>1</mn><mn>2</mn></mrow></mrow><annotation encoding="application/x-tex">D(x)={(max-min)^2/12}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.8141079999999999em;"></span><span class="strut bottom" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.02778em;">D</span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span><span class="mrel">=</span><span class="mord textstyle uncramped"><span class="mopen">(</span><span class="mord mathit">m</span><span class="mord mathit">a</span><span class="mord mathit">x</span><span class="mbin">−</span><span class="mord mathit">m</span><span class="mord mathit">i</span><span class="mord mathit">n</span><span class="mclose"><span class="mclose">)</span><span class="vlist"><span style="top:-0.363em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord mathrm">2</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mord mathrm">/</span><span class="mord mathrm">1</span><span class="mord mathrm">2</span></span></span></span></span> 正好等于 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mfrac><mrow><mn>2</mn></mrow><mrow><msub><mi>n</mi><mrow><mi>i</mi><mi>n</mi></mrow></msub><mo>+</mo><msub><mi>n</mi><mrow><mi>o</mi><mi>u</mi><mi>t</mi></mrow></msub></mrow></mfrac></mrow><annotation encoding="application/x-tex">\frac{2}{n_{in}+n_{out}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.845108em;"></span><span class="strut bottom" style="height:1.295108em;vertical-align:-0.44999999999999996em;"></span><span class="base textstyle uncramped"><span class="mord reset-textstyle textstyle uncramped"><span class="sizing reset-size5 size5 reset-textstyle textstyle uncramped nulldelimiter"></span><span class="mfrac"><span class="vlist"><span style="top:0.345em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord"><span class="mord mathit">n</span><span class="vlist"><span style="top:0.15em;margin-right:0.07142857142857144em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-scriptstyle scriptscriptstyle cramped"><span class="mord scriptscriptstyle cramped"><span class="mord mathit">i</span><span class="mord mathit">n</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mbin">+</span><span class="mord"><span class="mord mathit">n</span><span class="vlist"><span style="top:0.15em;margin-right:0.07142857142857144em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-scriptstyle scriptscriptstyle cramped"><span class="mord scriptscriptstyle cramped"><span class="mord mathit">o</span><span class="mord mathit">u</span><span class="mord mathit">t</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span><span style="top:-0.22999999999999998em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle textstyle uncramped frac-line"></span></span><span style="top:-0.394em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord scriptstyle uncramped"><span class="mord mathrm">2</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="sizing reset-size5 size5 reset-textstyle textstyle uncramped nulldelimiter"></span></span></span></span></span> 。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># fan_in：输入节点的数量，fan_out: 输出节点的数量</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">xavier_init</span><span class="params">(fan_in, fan_out, constant=<span class="number">1</span>)</span>:</span></span><br><span class="line">    low = -constant * np.sqrt(<span class="number">6.0</span> / (fan_in + fan_out))</span><br><span class="line">    high = constant * np.sqrt(<span class="number">6.0</span> / (fan_in + fan_out))</span><br><span class="line">    <span class="keyword">return</span> tf.random.unifom((fan_in, fan_out), minval=low, maxval=high, dtype=tf.float32)</span><br></pre></td></tr></table></figure>
+<h3 id="定义自编码器类的构建函数"><a class="header-anchor" href="#定义自编码器类的构建函数" aria-hidden="true">¶</a> 定义自编码器类的构建函数</h3>
+<p>参数解释：</p>
+<p>n_input: 输入层个数	n_hidden: 隐含层个数	transfer_function: 隐含层的激活函数，设为softplus</p>
+<p>optimizer：优化器，设为Adam	scale：高斯噪声系数，设为0.1</p>
+<p>class内的scale参数设为一个placeholder	权重初始化使用定义的init_weights函数</p>
+<blockquote>
+<p>这里我们只定义了一层隐含层，可以继续添加！</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AdditiveGaussianNoiseAutoencoder</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, n_input, n_hidden, transfer_function=tf.nn.softplus,</span></span></span><br><span class="line"><span class="function"><span class="params">                 optimizer=tf.train.AdamOptimizer<span class="params">()</span>, scale=<span class="number">0.1</span>)</span>:</span></span><br><span class="line">        self.n_input = n_input</span><br><span class="line">        self.n_hidden = n_hidden</span><br><span class="line">        self.transfer = transfer_function</span><br><span class="line">        self.scale = tf.placeholder(tf.float32)</span><br><span class="line">        self.training_scale = scale</span><br><span class="line">        weights = self.init_weights()</span><br><span class="line">        self.weights = weights</span><br></pre></td></tr></table></figure>
+<h3 id="定义权重初始化函数 init_weights"><a class="header-anchor" href="#定义权重初始化函数 init_weights" aria-hidden="true">¶</a> 定义权重初始化函数 <code>init_weights</code></h3>
+<p>w1经过 <em>xavier_init</em> 函数初始化，传入输入层和隐含层的节点数，xavier会返回一个适合 <em>softplus</em> 等激活函数的权重初始分布，偏置 <code>b1</code> 全部置为0即可。对于输出层，因为没有使用激活函数，<em>w2、b2</em> 全部初始化为0。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">init_weights</span><span class="params">(self)</span>:</span></span><br><span class="line">    all_weights = dict()</span><br><span class="line">    all_weights[<span class="string">'w1'</span>] = tf.Variable(xavier_init(self.n_input, self.n_hidden))</span><br><span class="line">    all_weights[<span class="string">'b1'</span>] = tf.Variable(tf.zeros([self.n_hidden], dtype=tf.float32))</span><br><span class="line">    all_weights[<span class="string">'w2'</span>] = tf.Variable(tf.zeros([self.n_hidden, self.n_input], dtype=tf.float32))</span><br><span class="line">    sll_weights[<span class="string">'b2'</span>] = tf.Variable(tf.zeros([n_input], dtype=tf.float32))</span><br><span class="line">    <span class="keyword">return</span> all_weights</span><br></pre></td></tr></table></figure>
+<h3 id="定义网络结构"><a class="header-anchor" href="#定义网络结构" aria-hidden="true">¶</a> 定义网络结构</h3>
+<ul>
+<li>输入层： <code>self.x</code></li>
+<li>隐含层：首先计算 <code>w1 * x + b</code> ，然后带入激活函数 <code>transfer</code> 中计算。其中 <code>x</code> 为输入加上噪声即 <code>self.x + scale * tf.random_normal({n_input,})</code> 。</li>
+<li>重建层（输出层）：将数据尽大的复原为输入的数据</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">self.x = tf.placeholder(tf.float, [<span class="keyword">None</span>, self.n_input])</span><br><span class="line">self.hidden = self.transfer(tf.add(tf.matmul(</span><br><span class="line">    self.x + scale * tf.random_normal(&#123;n_input,&#125;), </span><br><span class="line">    self.weights[<span class="string">'w1'</span>]), self.weights[<span class="string">'b1'</span>]))</span><br><span class="line">self.reconstruction = tf.add(tf.matmul(</span><br><span class="line">    self.hidden, self.weights[<span class="string">'w2'</span>]), self.weights[<span class="string">'b3'</span>])</span><br></pre></td></tr></table></figure>
+<h3 id="定义损失函数"><a class="header-anchor" href="#定义损失函数" aria-hidden="true">¶</a> 定义损失函数</h3>
+<p>使用平方误差函数（SSE）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">self.cost = <span class="number">0.5</span> * tf.reduce_sum(tf.pow(tf.subtract(</span><br><span class="line">    							self.reconstruction, self.x), <span class="number">2.0</span>))</span><br><span class="line">self.optimizer = optimizer.minimize(self.cost)</span><br></pre></td></tr></table></figure>
+<h3 id="初始化全部参数"><a class="header-anchor" href="#初始化全部参数" aria-hidden="true">¶</a> 初始化全部参数</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">init = tf.global_variables_initializer()</span><br><span class="line">self.sess = tf.Session()</span><br><span class="line">self.sess.run(init)</span><br></pre></td></tr></table></figure>
+<h3 id="定义计算损失 cost 及执行进一步训练的函数 partial_fit"><a class="header-anchor" href="#定义计算损失 cost 及执行进一步训练的函数 partial_fit" aria-hidden="true">¶</a> 定义计算损失 <code>cost</code> 及执行进一步训练的函数 <code>partial_fit</code></h3>
+<blockquote>
+<p>功能：触发训练操作，对一个 <code>batch</code> 的数据进行训练并计算当前的损失！</p>
+</blockquote>
+<p>​	函数里只需让Session执行两个计算图的节点，分别是损失 <code>cost</code> 和训练过程 <code>optimizer</code> ，输入的 <code>feed_dict</code> 包括输入数据 <code>x</code> 、噪声的系数 <code>scale</code> 。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">partial_fit</span><span class="params">(self, x)</span>:</span></span><br><span class="line">    cost, opt = self.sess.run((self.cost, self.optimizer),</span><br><span class="line">                             feed_Dict=&#123;self.x: x, self.scale: self.training_scale&#125;)</span><br><span class="line">    <span class="keyword">return</span> cost</span><br></pre></td></tr></table></figure>
+<h3 id="定义总损失函数 calc_total_cost"><a class="header-anchor" href="#定义总损失函数 calc_total_cost" aria-hidden="true">¶</a> 定义总损失函数 <code>calc_total_cost</code></h3>
+<blockquote>
+<p>自编码器训练完后，用来在测试集数据上对数据模型进行评测</p>
+</blockquote>
+<p>​	与  <code>partial_fit</code> 函数不同，这里只让Session执行一个计算图节点 <code>self.cost</code> ，传入的参数和上一个函数一样。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cal_total_cost</span><span class="params">(self, x)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> self.sess.run(self.cost, feed_dict=&#123;self.x: x, </span><br><span class="line">                                               self.scale: self.training.scale&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="定义 transform 函数"><a class="header-anchor" href="#定义 transform 函数" aria-hidden="true">¶</a> 定义 <code>transform</code> 函数</h3>
+<blockquote>
+<p>功能：返回自编码器隐含层的输出结果。隐含层的主要功能是学习处数据中的高级特征，该函数目的是提供一个接口来得到经过隐含层抽象后的特征！</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">transform</span><span class="params">(self, x)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> self.sess.run(self.hidden, feed_dict=&#123;self.x: x, </span><br><span class="line">                                                self.scale: self.training_scale&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="定义 generate 函数"><a class="header-anchor" href="#定义 generate 函数" aria-hidden="true">¶</a> 定义 <code>generate</code> 函数</h3>
+<blockquote>
+<p>功能：返回自编码器重构层的输出结果。重构层的主要功能是将隐含层提取的高阶特征复原为原输入数据。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">generaate</span><span class="params">(self, hidden = None)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> hidden == <span class="keyword">None</span>:</span><br><span class="line">        hidden = np.random.normal(size = self.weights[<span class="string">'b1'</span>])</span><br><span class="line">     <span class="keyword">return</span> self.sess.run(self.reconstruction, feed_dict=&#123;self.hidden: hidden&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="定义reconstruct 函数"><a class="header-anchor" href="#定义reconstruct 函数" aria-hidden="true">¶</a> 定义<code>reconstruct</code> 函数</h3>
+<blockquote>
+<p>功能：完整运行 输入数据 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\to</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.36687em;"></span><span class="strut bottom" style="height:0.36687em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mrel">→</span></span></span></span> 提取高级特征 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\to</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.36687em;"></span><span class="strut bottom" style="height:0.36687em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mrel">→</span></span></span></span> 复原数据 ，即同时包括 <code>transform</code> 、 <code>generate</code> 函数。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">reconstruct</span><span class="params">(self, x)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> self.sess.run(self.reconstruction, feed_dict=&#123;self.x: x,</span><br><span class="line">                                                       self.scale: self.training_scale&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="定义获取参数函数"><a class="header-anchor" href="#定义获取参数函数" aria-hidden="true">¶</a> 定义获取参数函数</h3>
+<blockquote>
+<p>功能：得到隐含层的权重 <code>w1</code> 和偏置 <code>b1</code> ！</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getWeight</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> self.sess.run(self.weights[<span class="string">'w1'</span>])</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getBias</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> self.sess.run(self.weights[<span class="string">'b1'</span>])</span><br></pre></td></tr></table></figure>
+<p>去噪编码器类已经定义完成，包括对神经网络的设计、权重的初始化以及几个成员函数。</p>
+<hr>
+<h2 id="测试"><a class="header-anchor" href="#测试" aria-hidden="true">¶</a> 测试</h2>
+<p>我们使用TensorFlow提供的 <code>MNIST</code> 数据集进行测试。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">input_data.read_data_sets(<span class="string">'MNIST_data'</span>, one_hot=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="定义数据标准化函数"><a class="header-anchor" href="#定义数据标准化函数" aria-hidden="true">¶</a> 定义数据标准化函数</h3>
+<blockquote>
+<p>即将数据变为均值为0, 便准差为1的分布。将数据减去均值，然后除以方差。</p>
+</blockquote>
+<p>​	使用 <code>sklearn.preprocessing</code> 的 <code>StandardScaler</code> 类现在训练集上进行 <code>fit</code> ，再将这个 <code>Scale</code> 用在训练数据和测试数据上。保证训练数据和测试数据使用同一个 <code>Scale</code> ，使得后面模型处理数据时的一致性。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Standard_scale</span><span class="params">(x_train, x_test)</span>:</span></span><br><span class="line">    preprocessor = prep.Stap yndardScale().fit(x_train)</span><br><span class="line">    x_train = preprocessor.transform(x_train)</span><br><span class="line">    x_test = preprocessor.transform(x_test)</span><br><span class="line">    retutn x_train, x_test</span><br></pre></td></tr></table></figure>
+<h3 id="定义获取随机 batch_size 大小的数据函数"><a class="header-anchor" href="#定义获取随机 batch_size 大小的数据函数" aria-hidden="true">¶</a> 定义获取随机 <code>batch_size</code> 大小的数据函数</h3>
+<blockquote>
+<p>不放回的每次抽样！</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_random_block_from_data</span><span class="params">(data, batch_seze)</span>:</span></span><br><span class="line">    start_index = np.random.randint(<span class="number">0</span>, len(data)-batch_size)</span><br><span class="line">    <span class="keyword">return</span> data[start_index : (start_index + batch_size)]</span><br></pre></td></tr></table></figure>
+<h3 id="标准化训练集、测试集"><a class="header-anchor" href="#标准化训练集、测试集" aria-hidden="true">¶</a> 标准化训练集、测试集</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x_train, x_test = Standard_scale(mnist.train.images, mnist.test.images)</span><br></pre></td></tr></table></figure>
+<h3 id="定义常用参数"><a class="header-anchor" href="#定义常用参数" aria-hidden="true">¶</a> 定义常用参数</h3>
+<p>参数解释：</p>
+<p>n_samples：总训练样本数		training_epoches：最大训练轮数	batch_size：批数据样本大小，设为128</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">n_samples = int(mnist.train.num_examples)</span><br><span class="line">training_epoches = <span class="number">20</span></span><br><span class="line">batch_size = <span class="number">128</span></span><br><span class="line">display_step = <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<h2 id="训练"><a class="header-anchor" href="#训练" aria-hidden="true">¶</a> 训练</h2>
+<h3 id="实例化自编码器类"><a class="header-anchor" href="#实例化自编码器类" aria-hidden="true">¶</a> 实例化自编码器类</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">autoencoder = AdditiveGaussianNoiseAutoencoder(n_input=<span class="number">784</span>,</span><br><span class="line">                                              n_hidden=<span class="number">200</span>,</span><br><span class="line">                                              transfer_function = tf.nn.softplus,</span><br><span class="line">                                              optimizer=tf.train.AdamOptimizer(learning_rate=<span class="number">0.001</span>),</span><br><span class="line">                                              scale=<span class="number">0.01</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="开始训练"><a class="header-anchor" href="#开始训练" aria-hidden="true">¶</a> 开始训练</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(training_epochs):</span><br><span class="line">    avg_cost = <span class="number">0.</span></span><br><span class="line">    total_batch = int(n_samples / batch_size)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(total_size):</span><br><span class="line">        batch_xs = get_random_block_from_data(x_train, batch_size)</span><br><span class="line">        cost = autoencoder.partial_fit(batch_xs)</span><br><span class="line">        avg_cost += cost / n_sample * batch_size</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> epoch % display_step == <span class="number">0</span>:</span><br><span class="line">        print(<span class="string">"Epoch:"</span>, <span class="string">'%04d'</span> %(epoch + <span class="number">1</span>), <span class="string">"cost="</span>, <span class="string">":.9f"</span>.format(avg_cost))</span><br></pre></td></tr></table></figure>
+<h2 id="评测"><a class="header-anchor" href="#评测" aria-hidden="true">¶</a> 评测</h2>
+<p>​	使用平方误差和来</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">"total cost:"</span> + autoencoder.cal_total_cost(x_test))</span><br></pre></td></tr></table></figure>
+<p>​</p>
+<p>去噪自编码器的TensorFlow实现完成。</p>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css">
+      
+    </div>
+
+<div>
+  		
+   		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:20px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+  		
+	</div>
+
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="MR.C 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="MR.C 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+      <div id="bitcoin" style="display: inline-block">
+        <img id="bitcoin_qr" src="/images/bitcoin.png" alt="MR.C 比特币"/>
+        <p>比特币</p>
+      </div>
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+<div>
+      
+        
+
+      
+</div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/TensorFlow/" rel="tag"># TensorFlow</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/05/index/" rel="next" title="Hello Mr.C">
+                <i class="fa fa-chevron-left"></i> Hello Mr.C
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/05/Markdown的使用/" rel="prev" title="Markdown的使用">
+                Markdown的使用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNTcwMC8xMjIzNg=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/1.jpg"
+                alt="MR.C" />
+            
+              <p class="site-author-name" itemprop="name">MR.C</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/onebigcabbage" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:zhongxiangcai_ucas@foxmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://o--o.win" title="杉哥" target="_blank">杉哥</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#准备"><span class="nav-number">1.</span> <span class="nav-text">¶ 准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定义函数"><span class="nav-number">2.</span> <span class="nav-text">¶ 定义函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参数初始化方法 xavier initialization"><span class="nav-number">2.1.</span> <span class="nav-text">¶ 参数初始化方法 xavier initialization</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定义自编码器类的构建函数"><span class="nav-number">2.2.</span> <span class="nav-text">¶ 定义自编码器类的构建函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定义权重初始化函数 init_weights"><span class="nav-number">2.3.</span> <span class="nav-text">¶ 定义权重初始化函数 init_weights</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定义网络结构"><span class="nav-number">2.4.</span> <span class="nav-text">¶ 定义网络结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定义损失函数"><span class="nav-number">2.5.</span> <span class="nav-text">¶ 定义损失函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化全部参数"><span class="nav-number">2.6.</span> <span class="nav-text">¶ 初始化全部参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定义计算损失 cost 及执行进一步训练的函数 partial_fit"><span class="nav-number">2.7.</span> <span class="nav-text">¶ 定义计算损失 cost 及执行进一步训练的函数 partial_fit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定义总损失函数 calc_total_cost"><span class="nav-number">2.8.</span> <span class="nav-text">¶ 定义总损失函数 calc_total_cost</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定义 transform 函数"><span class="nav-number">2.9.</span> <span class="nav-text">¶ 定义 transform 函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定义 generate 函数"><span class="nav-number">2.10.</span> <span class="nav-text">¶ 定义 generate 函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定义reconstruct 函数"><span class="nav-number">2.11.</span> <span class="nav-text">¶ 定义reconstruct 函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定义获取参数函数"><span class="nav-number">2.12.</span> <span class="nav-text">¶ 定义获取参数函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试"><span class="nav-number">3.</span> <span class="nav-text">¶ 测试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义数据标准化函数"><span class="nav-number">3.1.</span> <span class="nav-text">¶ 定义数据标准化函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定义获取随机 batch_size 大小的数据函数"><span class="nav-number">3.2.</span> <span class="nav-text">¶ 定义获取随机 batch_size 大小的数据函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标准化训练集、测试集"><span class="nav-number">3.3.</span> <span class="nav-text">¶ 标准化训练集、测试集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定义常用参数"><span class="nav-number">3.4.</span> <span class="nav-text">¶ 定义常用参数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#训练"><span class="nav-number">4.</span> <span class="nav-text">¶ 训练</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实例化自编码器类"><span class="nav-number">4.1.</span> <span class="nav-text">¶ 实例化自编码器类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开始训练"><span class="nav-number">4.2.</span> <span class="nav-text">¶ 开始训练</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#评测"><span class="nav-number">5.</span> <span class="nav-text">¶ 评测</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">MR.C</span>
+
+  
+</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("V45POMeDep7sBWQCkkM2ypKN-gzGzoHsz", "hMstczlxL21OL84n4sfkv4pm");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
