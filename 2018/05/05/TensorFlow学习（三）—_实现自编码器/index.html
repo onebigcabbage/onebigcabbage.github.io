@@ -385,8 +385,8 @@
 <p>​    不适合的权重似的隐含层的输入方差过大，经过 <code>sigmoid</code>  激活函数时离中心较远，导数接近于零，从而导致提督弥散。</p>
 <p><strong> xavier权重初始化 </strong></p>
 <p>​    xavier权重初始化可以减少梯度弥散，使输入可以传递的更深。</p>
-<p>​    xavier根据某一层网络的输入、输出节点数量自动调整最合适的分布，让权重满足0均值，同时方差为 $\frac{2}{n<em>{in}+n</em>{out}}$ ，分布可以使用均匀分布或者高斯分布。</p>
-<p>​    下面我们创建一个 $\lgroup  -\sqrt{\frac{6}{n<em>{in}+n</em>{out}}}, \sqrt{\frac{6}{n<em>{in}+n</em>{out}}} \rgroup$ 范围内的均匀分布，而它的方差根据 $D(x)={(max-min)^2/12}$ 正好等于 $\frac{2}{n<em>{in}+n</em>{out}}$ 。</p>
+<p>​    xavier根据某一层网络的输入、输出节点数量自动调整最合适的分布，让权重满足0均值，同时方差为 $\frac{2}{n_{in}+n_{out}}$ ，分布可以使用均匀分布或者高斯分布。</p>
+<p>​    下面我们创建一个 $\lgroup  -\sqrt{\frac{6}{n_{in}+n_{out}}}, \sqrt{\frac{6}{n_{in}+n_{out}}} \rgroup$ 范围内的均匀分布，而它的方差根据 $D(x)={(max-min)^2/12}$ 正好等于 $\frac{2}{n_{in}+n_{out}}$ 。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># fan_in：输入节点的数量，fan_out: 输出节点的数量</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">xavier_init</span><span class="params">(fan_in, fan_out, constant=<span class="number">1</span>)</span>:</span></span><br><span class="line">    low = -constant * np.sqrt(<span class="number">6.0</span> / (fan_in + fan_out))</span><br><span class="line">    high = constant * np.sqrt(<span class="number">6.0</span> / (fan_in + fan_out))</span><br><span class="line">    <span class="keyword">return</span> tf.random.unifom((fan_in, fan_out), minval=low, maxval=high, dtype=tf.float32)</span><br></pre></td></tr></table></figure>
 <h3 id="定义自编码器类的构建函数"><a href="#定义自编码器类的构建函数" class="headerlink" title="定义自编码器类的构建函数"></a>定义自编码器类的构建函数</h3><p>参数解释：</p>
 <p>n_input: 输入层个数    n_hidden: 隐含层个数    transfer_function: 隐含层的激活函数，设为softplus</p>
@@ -539,8 +539,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/05/LSTM/" rel="next" title="-原创翻译- 详解LSTM（Understanding LSTM Networks）">
-                <i class="fa fa-chevron-left"></i> -原创翻译- 详解LSTM（Understanding LSTM Networks）
+              <a href="/2018/05/05/notalk/" rel="next" title="为什么我认为程序员似乎大多不善言辞？">
+                <i class="fa fa-chevron-left"></i> 为什么我认为程序员似乎大多不善言辞？
               </a>
             
           </div>
@@ -549,8 +549,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/05/05/Ubuntu安装以及配置Java8/" rel="prev" title="Ubuntu安装以及配置Java8">
-                Ubuntu安装以及配置Java8 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/05/05/GitHub搭建个人博客(Ubuntu版)/" rel="prev" title="使用Github搭建个人博客（初级篇）">
+                使用Github搭建个人博客（初级篇） <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

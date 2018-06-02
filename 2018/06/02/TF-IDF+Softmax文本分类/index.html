@@ -79,20 +79,17 @@
 
 
 
-<meta name="description" content="一、整理数据1. 数据格式本实验所用文件为表格 xlsx 类型，共 116290 行，格式如下：  标签：第一列的首字母，共八个类别 A、B、C、D、E、F、G、H 。 数据：最后三列的 ‘标题’、’摘要’、’首项权利要求’ 合并为一条句子作为训练数据。 2. 整理训练数据从 xlsx 中读取数据需要用到 Python 的 xlrd 模块： 1sudo pip3 install xlrd 得到">
 <meta name="keywords" content="文本分类">
 <meta property="og:type" content="article">
 <meta property="og:title" content="TF-IDF+Softmax文本分类">
-<meta property="og:url" content="http://yoursite.com/2018/06/01/TF-IDF+Softmax文本分类/index.html">
+<meta property="og:url" content="http://yoursite.com/2018/06/02/TF-IDF+Softmax文本分类/index.html">
 <meta property="og:site_name" content="蔡圣哲">
-<meta property="og:description" content="一、整理数据1. 数据格式本实验所用文件为表格 xlsx 类型，共 116290 行，格式如下：  标签：第一列的首字母，共八个类别 A、B、C、D、E、F、G、H 。 数据：最后三列的 ‘标题’、’摘要’、’首项权利要求’ 合并为一条句子作为训练数据。 2. 整理训练数据从 xlsx 中读取数据需要用到 Python 的 xlrd 模块： 1sudo pip3 install xlrd 得到">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/home/cai/hexo/source/images/tfidf/predata.png">
-<meta property="og:updated_time" content="2018-06-01T07:48:47.503Z">
+<meta property="og:image" content="http://yoursite.com/images/tfidf/predata.png">
+<meta property="og:updated_time" content="2018-06-02T11:42:42.045Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TF-IDF+Softmax文本分类">
-<meta name="twitter:description" content="一、整理数据1. 数据格式本实验所用文件为表格 xlsx 类型，共 116290 行，格式如下：  标签：第一列的首字母，共八个类别 A、B、C、D、E、F、G、H 。 数据：最后三列的 ‘标题’、’摘要’、’首项权利要求’ 合并为一条句子作为训练数据。 2. 整理训练数据从 xlsx 中读取数据需要用到 Python 的 xlrd 模块： 1sudo pip3 install xlrd 得到">
-<meta name="twitter:image" content="http://yoursite.com/home/cai/hexo/source/images/tfidf/predata.png">
+<meta name="twitter:image" content="http://yoursite.com/images/tfidf/predata.png">
 
 
 
@@ -122,7 +119,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/06/01/TF-IDF+Softmax文本分类/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/06/02/TF-IDF+Softmax文本分类/"/>
 
 
 
@@ -275,7 +272,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/01/TF-IDF+Softmax文本分类/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/02/TF-IDF+Softmax文本分类/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="MR.C">
@@ -304,8 +301,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-01T15:48:47+08:00">
-                2018-06-01
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-02T19:42:42+08:00">
+                2018-06-02
               </time>
             
 
@@ -344,7 +341,7 @@
 
           
           
-             <span id="/2018/06/01/TF-IDF+Softmax文本分类/" class="leancloud_visitors" data-flag-title="TF-IDF+Softmax文本分类">
+             <span id="/2018/06/02/TF-IDF+Softmax文本分类/" class="leancloud_visitors" data-flag-title="TF-IDF+Softmax文本分类">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -376,9 +373,10 @@
 
 
       
-        <a id="more"></a>
+        <hr>
+<a id="more"></a>
 <h2 id="一、整理数据"><a href="#一、整理数据" class="headerlink" title="一、整理数据"></a>一、整理数据</h2><h3 id="1-数据格式"><a href="#1-数据格式" class="headerlink" title="1. 数据格式"></a>1. 数据格式</h3><p>本实验所用文件为表格 <em>xlsx</em> 类型，共 <em>116290</em> 行，格式如下：</p>
-<p><img src="/home/cai/hexo/source/images/tfidf/predata.png" alt="源数据"></p>
+<p><img src="/images/tfidf/predata.png" alt="源数据"></p>
 <p>标签：第一列的首字母，共八个类别 <em>A、B、C、D、E、F、G、H</em> 。</p>
 <p>数据：最后三列的 ‘标题’、’摘要’、’首项权利要求’ 合并为一条句子作为训练数据。</p>
 <h3 id="2-整理训练数据"><a href="#2-整理训练数据" class="headerlink" title="2. 整理训练数据"></a>2. 整理训练数据</h3><p>从 <em>xlsx</em> 中读取数据需要用到 <em>Python</em> 的 <em>xlrd</em> 模块：</p>
@@ -406,6 +404,9 @@
 <p>经测试如下：</p>
 <p>实际标签：[7, 7,  7,  7,  6,  6,  6,  6,  6,   6]              对应分类：[‘H’ ‘H’ ‘H’ ‘H’ ‘G’ ‘G’ ‘G’ ‘G’ ‘G’ ‘G’]</p>
 <p>预测标签：[7, 7,  7,  7,  7,  6,  6,  6,  6,   6]              对应分类：[‘H’ ‘H’ ‘H’ ‘H’ ‘H’ ‘G’ ‘G’ ‘G’ ‘G’ ‘G’]</p>
+<blockquote>
+<p>数据不方便上传，但是数据格式在第一节已经说明。</p>
+</blockquote>
 
       
     </div>
@@ -489,8 +490,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/28/Git/" rel="next" title="Git学习笔记">
-                <i class="fa fa-chevron-left"></i> Git学习笔记
+              <a href="/2018/06/02/index/" rel="next" title="Hello Mr.C">
+                <i class="fa fa-chevron-left"></i> Hello Mr.C
               </a>
             
           </div>
@@ -498,6 +499,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/06/02/Git/" rel="prev" title="Git学习笔记">
+                Git学习笔记 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>

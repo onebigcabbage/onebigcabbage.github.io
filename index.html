@@ -269,7 +269,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/01/TF-IDF+Softmax文本分类/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/02/Git/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="MR.C">
@@ -288,7 +288,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/06/01/TF-IDF+Softmax文本分类/" itemprop="url">TF-IDF+Softmax文本分类</a></h1>
+                <a class="post-title-link" href="/2018/06/02/Git/" itemprop="url">Git学习笔记</a></h1>
         
 
         <div class="post-meta">
@@ -300,200 +300,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-01T15:48:47+08:00">
-                2018-06-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/机器学习/" itemprop="url" rel="index">
-                    <span itemprop="name">机器学习</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/06/01/TF-IDF+Softmax文本分类/" class="leancloud_visitors" data-flag-title="TF-IDF+Softmax文本分类">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-
-      
-        
-          
-            <a id="more"></a>
-<h2 id="一、整理数据"><a href="#一、整理数据" class="headerlink" title="一、整理数据"></a>一、整理数据</h2><h3 id="1-数据格式"><a href="#1-数据格式" class="headerlink" title="1. 数据格式"></a>1. 数据格式</h3><p>本实验所用文件为表格 <em>xlsx</em> 类型，共 <em>116290</em> 行，格式如下：</p>
-<p><img src="/home/cai/hexo/source/images/tfidf/predata.png" alt="源数据"></p>
-<p>标签：第一列的首字母，共八个类别 <em>A、B、C、D、E、F、G、H</em> 。</p>
-<p>数据：最后三列的 ‘标题’、’摘要’、’首项权利要求’ 合并为一条句子作为训练数据。</p>
-<h3 id="2-整理训练数据"><a href="#2-整理训练数据" class="headerlink" title="2. 整理训练数据"></a>2. 整理训练数据</h3><p>从 <em>xlsx</em> 中读取数据需要用到 <em>Python</em> 的 <em>xlrd</em> 模块：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pip3 install xlrd</span><br></pre></td></tr></table></figure>
-<p>得到 <em>xlsx</em> 表格的信息：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import xlrd  </span><br><span class="line">workbook = xlrd.open_workbook(&apos;data.xlsx&apos;)      </span><br><span class="line">sheet = workbook.sheet_by_index(0)</span><br></pre></td></tr></table></figure>
-<p>取出最后三列数据连接成一条数据，进行中文分词，并去掉停用词，写入 <em>txt</em> 文件中：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">import jieba</span><br><span class="line"># 打开要存放数据的文件</span><br><span class="line">with open(&apos;data_jieba_1000.txt&apos;, &apos;w&apos;) as f:</span><br><span class="line">	# 取1000行</span><br><span class="line">    for i in range(1, 1001):</span><br><span class="line">    	# 在xlsx表格中取出数据的列</span><br><span class="line">        num_need = [1, 2, 3]</span><br><span class="line">        # 存放由三列数据组成的一条数据</span><br><span class="line">        temp = []</span><br><span class="line">        for j in num_need:</span><br><span class="line">        	# 将第i行的第j列的数据取出</span><br><span class="line">            temp.append(sheet.cell(i, j).value)</span><br><span class="line">            # 将每一列添加到列表中组成一条数据</span><br><span class="line">            temp_str = &apos;&apos;.join(temp)</span><br><span class="line">            # 去除换行</span><br><span class="line">            temp_op = temp_str.replace(&apos;\n&apos;, &apos;&apos;)</span><br><span class="line">        # 使用结巴分词</span><br><span class="line">        cutword = jieba.cut(temp_op, cut_all=False)</span><br><span class="line">        # 从stopWords.txt文件中读取所有的停用词</span><br><span class="line">        stopwords = [line.strip() for line in open(&apos;stopWords.txt&apos;, &apos;r&apos;, encoding=&apos;utf-8&apos;).readlines()]</span><br><span class="line">        outstr = &apos;&apos;</span><br><span class="line">        for word in cutword:</span><br><span class="line">        	# 如果切好的词不在停用词表中，则留下</span><br><span class="line">            if word not in stopwords:</span><br><span class="line">                outstr += word  </span><br><span class="line">                outstr += &apos; &apos;     </span><br><span class="line">        f.write(outstr + &apos;\n&apos;)</span><br><span class="line">print(&quot;write done&quot;)</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>为了方便，只取了1000条数据。</p>
-</blockquote>
-<p>至此，训练数据已经分好词并去除了停用词，放在 <em>data_jieba_1000.txt</em> 中。</p>
-<h3 id="3-整理分类标签"><a href="#3-整理分类标签" class="headerlink" title="3. 整理分类标签"></a>3. 整理分类标签</h3><p>给定的类别是 <em>A、B、C、D、E、F、G、H</em> ，使用 <em>sklearn</em> 的 <em>LabelEncoder</em> 将其转换为 <em>0、1、2、3、4、5、6、7</em> ，同时使用 <em>OneHotEncoder</em> 将每一个字母转换为 <em>onehot</em> 编码形式，方便 <em>softmax</em> 分类时使用。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">from sklearn.preprocessing import LabelEncoder</span><br><span class="line">from sklearn.preprocessing import OneHotEncoder</span><br><span class="line"># 取与1000个训练数据相对应的类别</span><br><span class="line">target_name = []</span><br><span class="line">for i in range(1, 1001):</span><br><span class="line">    target_name.append(sheet.cell(i, 3).value[0])</span><br><span class="line"># 查看前12个类别   output：[&apos;H&apos;, &apos;H&apos;, &apos;H&apos;, &apos;H&apos;, &apos;G&apos;, &apos;G&apos;, &apos;G&apos;, &apos;G&apos;, &apos;G&apos;, &apos;G&apos;, &apos;G&apos;, &apos;G&apos;]</span><br><span class="line">print(target_name[:12])</span><br><span class="line"># 转换为 numpy.ndarray 类型</span><br><span class="line">values = np.array(target_name)</span><br><span class="line"># 标签化</span><br><span class="line">label_encoder = LabelEncoder()</span><br><span class="line">label = label_encoder.fit_transform(values)</span><br><span class="line"># 输出前12个类别对应的标签  output：[7 7 7 7 6 6 6 6 6 6 6 6 7 7 7 7 2 4 4 5]</span><br><span class="line">print(label[:12])</span><br><span class="line"></span><br><span class="line"># 对标签onehot编码</span><br><span class="line">onehot_encoder = OneHotEncoder(sparse=False)</span><br><span class="line">label = label.reshape(len(label), 1)</span><br><span class="line">onehot_encoded = onehot_encoder.fit_transform(label)</span><br><span class="line"># 编码后得到 (1000, 8) 的数组，输出前12个label的编码 </span><br><span class="line">print(onehot_encoded[:12])</span><br><span class="line">output：</span><br><span class="line"> [0. 0. 0. 0. 0. 0. 0. 1.]</span><br><span class="line"> [0. 0. 0. 0. 0. 0. 0. 1.]</span><br><span class="line"> [0. 0. 0. 0. 0. 0. 0. 1.]</span><br><span class="line"> [0. 0. 0. 0. 0. 0. 0. 1.]</span><br><span class="line"> [0. 0. 0. 0. 0. 0. 1. 0.]</span><br><span class="line"> [0. 0. 0. 0. 0. 0. 1. 0.]</span><br><span class="line"> [0. 0. 0. 0. 0. 0. 1. 0.]</span><br><span class="line"> [0. 0. 0. 0. 0. 0. 1. 0.]</span><br><span class="line"> [0. 0. 0. 0. 0. 0. 1. 0.]</span><br><span class="line"> [0. 0. 0. 0. 0. 0. 1. 0.]</span><br><span class="line"> [0. 0. 0. 0. 0. 0. 1. 0.]</span><br><span class="line"> [0. 0. 0. 0. 0. 0. 1. 0.]</span><br><span class="line"> </span><br><span class="line"># 根据标签反得到类别 例如标签7 output： H</span><br><span class="line">inverse_labe = label_encoder.inverse_transform(7)</span><br><span class="line">print(inverse_labe)</span><br></pre></td></tr></table></figure>
-<h2 id="二、训练"><a href="#二、训练" class="headerlink" title="二、训练"></a>二、训练</h2><h3 id="1-切分训练集和测试集"><a href="#1-切分训练集和测试集" class="headerlink" title="1. 切分训练集和测试集"></a>1. 切分训练集和测试集</h3><p>从 <em>txt</em> 中读取整理好的数据：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import codecs</span><br><span class="line">with codecs.open(&apos;data_jieba_1000.txt&apos;,&apos;r&apos;,&apos;utf-8&apos;) as f:</span><br><span class="line">    data = []</span><br><span class="line">    for line in f.readlines():</span><br><span class="line">        line = line.replace(&apos;\n&apos;, &apos;&apos;)</span><br><span class="line">        data.append(line)</span><br></pre></td></tr></table></figure>
-<p>抽取 <em>20%</em> 数据作为测试，共 <em>800</em> 训练集和 <em>200</em> 测试集：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line">x_train, x_test, y_train, y_test = train_test_split(data, onehot_encoded, test_size=0.2, random_state=33)</span><br></pre></td></tr></table></figure>
-<h3 id="2-使用-TF-IDF-提取特征"><a href="#2-使用-TF-IDF-提取特征" class="headerlink" title="2. 使用 TF-IDF 提取特征"></a>2. 使用 <em>TF-IDF</em> 提取特征</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 假定每个词向量为150维，每句话有500个词，设每条训练集的特征维数为75000</span><br><span class="line">tfidf_vec = TfidfVectorizer(max_features=75000)</span><br><span class="line"># 将训练数据和测试数据转化为特征向量，得到的特征为稀疏矩阵</span><br><span class="line">x_tfidf_train = tfidf_vec.fit_transform(x_train)</span><br><span class="line">x_tfidf_test  = tfidf_vec.transform(x_test)</span><br><span class="line"># 将稀疏矩阵转换为numpy类型的完整矩阵</span><br><span class="line">tf_train = x_tfidf_train.toarray()</span><br><span class="line">tf_train.astype(numpy.float32)</span><br><span class="line"></span><br><span class="line">tf_test = x_tfidf_test.toarray()</span><br><span class="line">tf_test.astype(numpy.float32)</span><br></pre></td></tr></table></figure>
-<h3 id="3-Softmax-分类"><a href="#3-Softmax-分类" class="headerlink" title="3. Softmax 分类"></a>3. <em>Softmax</em> 分类</h3><p><em>softmax</em> 函数最后给每个类别分别一个概率，所有类别的概率总和为 <em>1</em> 。最大概率的那个类别就是预测的最终结果。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">import tensorflow as tf</span><br><span class="line"></span><br><span class="line">x = tf.placeholder(tf.float32,[None, 11751])</span><br><span class="line">W = tf.Variable(tf.zeros([11751, 8])) </span><br><span class="line">b = tf.Variable(tf.zeros([8])) </span><br><span class="line">y = tf.nn.softmax(tf.matmul(x,W)+b) </span><br><span class="line">y_ = tf.placeholder(tf.float32,[None, 8])</span><br><span class="line"># 交叉熵损失函数</span><br><span class="line">cross_entropy = tf.reduce_mean(-tf.reduce_sum(y_ * tf.log(y), reduction_indices=[1])) </span><br><span class="line"># 优化算法，更新参数</span><br><span class="line">train_step = tf.train.GradientDescentOptimizer(0.5).minimize(cross_entropy) </span><br><span class="line"></span><br><span class="line">init = tf.global_variables_initializer()</span><br><span class="line">sess = tf.Session() </span><br><span class="line">sess.run(init) </span><br><span class="line"># 迭代1000次</span><br><span class="line">for i in range(1000):     </span><br><span class="line">    sess.run(train_step, feed_dict = &#123;x: tf_train, y_: y_train&#125;)</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">correct_prediction = tf.equal(tf.argmax(y,1),tf.argmax(y_,1)) </span><br><span class="line">accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32)) </span><br><span class="line">print(sess.run(accuracy, feed_dict=&#123;x: tf_test, y_: y_test&#125;))</span><br></pre></td></tr></table></figure>
-<p>最后准确率为 <em>0.71</em> ，当然，这只是 <em>1000</em> 条的测试。</p>
-<h3 id="4-测试"><a href="#4-测试" class="headerlink" title="4. 测试"></a>4. 测试</h3><p>随机取出10条数据使用刚才的模型进行测试：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">data_index = []</span><br><span class="line">   for i in range(10):</span><br><span class="line">       ran_int = random.randint(0, 1000)</span><br><span class="line">       data_index.append(ran_int)</span><br><span class="line">   print(data_index)</span><br><span class="line"></span><br><span class="line">   test_data = []</span><br><span class="line">   for i in range(10):</span><br><span class="line">       test_data.append(data[i])</span><br><span class="line"></span><br><span class="line">   test_onehot = []</span><br><span class="line">   test_label = []</span><br><span class="line">   for i in range(10):</span><br><span class="line">       test_onehot.append(onehot_encoded[i])</span><br><span class="line">       test_label.append(label[i])</span><br><span class="line"></span><br><span class="line">   # print(&apos;the real label: &apos;, test_label)</span><br><span class="line">   test_class = label_fit.inverse_transform(test_label)</span><br><span class="line">   # print(test_class)</span><br><span class="line"></span><br><span class="line">   t_test_data = tfidf.transform(test_data).toarray()</span><br><span class="line">   t_test_data.astype(np.float32)</span><br><span class="line"></span><br><span class="line">   test_prediction = np.argmax(sess.run(y, feed_dict=&#123;x: t_test_data&#125;), axis=1)</span><br><span class="line">   # print(test_prediction)</span><br><span class="line"></span><br><span class="line">   print(&apos;the prediction label: &apos;, test_class.reshape(1, 10))</span><br><span class="line">   print(&apos;the real label: &apos;, label_fit.inverse_transform(test_prediction))</span><br></pre></td></tr></table></figure>
-<p>经测试如下：</p>
-<p>实际标签：[7, 7,  7,  7,  6,  6,  6,  6,  6,   6]              对应分类：[‘H’ ‘H’ ‘H’ ‘H’ ‘G’ ‘G’ ‘G’ ‘G’ ‘G’ ‘G’]</p>
-<p>预测标签：[7, 7,  7,  7,  7,  6,  6,  6,  6,   6]              对应分类：[‘H’ ‘H’ ‘H’ ‘H’ ‘H’ ‘G’ ‘G’ ‘G’ ‘G’ ‘G’]</p>
-
-          
-        
-      
-    </div>
-
-<div>
-  		
-	</div>
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-<div>
-      
-</div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/28/Git/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="MR.C">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/1.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="蔡圣哲">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/28/Git/" itemprop="url">Git学习笔记</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-28T20:22:58+08:00">
-                2018-05-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-02T20:41:08+08:00">
+                2018-06-02
               </time>
             
 
@@ -532,7 +340,325 @@
 
           
           
-             <span id="/2018/05/28/Git/" class="leancloud_visitors" data-flag-title="Git学习笔记">
+             <span id="/2018/06/02/Git/" class="leancloud_visitors" data-flag-title="Git学习笔记">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+
+      
+        
+          <hr>
+          <!--noindex-->
+
+
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/06/02/Git/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+
+          <!--/noindex-->
+        
+      
+    </div>
+
+<div>
+  		
+	</div>
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+<div>
+      
+</div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/02/TF-IDF+Softmax文本分类/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MR.C">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/1.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="蔡圣哲">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/02/TF-IDF+Softmax文本分类/" itemprop="url">TF-IDF+Softmax文本分类</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-02T19:42:42+08:00">
+                2018-06-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/06/02/TF-IDF+Softmax文本分类/" class="leancloud_visitors" data-flag-title="TF-IDF+Softmax文本分类">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+
+      
+        
+          <hr>
+          <!--noindex-->
+
+
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/06/02/TF-IDF+Softmax文本分类/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+
+          <!--/noindex-->
+        
+      
+    </div>
+
+<div>
+  		
+	</div>
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+<div>
+      
+</div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/02/index/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MR.C">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/1.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="蔡圣哲">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/02/index/" itemprop="url">Hello Mr.C</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-02T09:21:08+08:00">
+                2018-06-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/06/02/index/" class="leancloud_visitors" data-flag-title="Hello Mr.C">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -566,61 +692,9 @@
       
         
           
-            <a id="more"></a>
-<h2 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h2><p>创建仓库：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir learngit</span><br></pre></td></tr></table></figure>
-<p>打开仓库：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd learngit</span><br></pre></td></tr></table></figure>
-<p>查看仓库所在目录：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pwd</span><br></pre></td></tr></table></figure>
-<p>将该目录变成Git可管理：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
-<p>此时提示 <em>已初始化空的 Git 仓库于 /home/hahaha/Code/learngit/.git/</em>  ， 表示仓库已经建好。</p>
-<p>在该文件夹中新建 <em>testgit.txt</em> ，添加内容：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Git is a version control system.</span><br><span class="line">Git is free software.</span><br></pre></td></tr></table></figure>
-<p>执行添加命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add testgit.txt</span><br></pre></td></tr></table></figure>
-<p>执行提交命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -m &quot;add testgit.txt&quot;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>-m 代表一个说明。</p>
-</blockquote>
-<h2 id="修改操作"><a href="#修改操作" class="headerlink" title="修改操作"></a>修改操作</h2><p>修改 <em>testgit.txt</em> 内容为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Git is a distributed version control system.</span><br><span class="line">Git is free software.</span><br></pre></td></tr></table></figure>
-<p>输入 <code>git status</code> 查看仓库当前的状态：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ha@haha:~/Code/learngit$ git status</span><br><span class="line">位于分支 master</span><br><span class="line">尚未暂存以备提交的变更：</span><br><span class="line">  （使用 &quot;git add &lt;文件&gt;...&quot; 更新要提交的内容）</span><br><span class="line">  （使用 &quot;git checkout -- &lt;文件&gt;...&quot; 丢弃工作区的改动）</span><br><span class="line"></span><br><span class="line">	修改：     readme.txt</span><br><span class="line"></span><br><span class="line">修改尚未加入提交（使用 &quot;git add&quot; 和/或 &quot;git commit -a&quot;）</span><br></pre></td></tr></table></figure>
-<p>输入 <code>git diff readme.txt</code> 查看具体做了什么修改：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ha@haha:~/Code/learngit$ git diff testgit.txt</span><br><span class="line">diff --git a/readme.txt b/readme.txt</span><br><span class="line">index d8036c1..013b5bc 100644</span><br><span class="line">--- a/readme.txt</span><br><span class="line">+++ b/readme.txt</span><br><span class="line">@@ -1,2 +1,2 @@</span><br><span class="line">-Git is a version control system.</span><br><span class="line">+Git is a distributed version control system.</span><br><span class="line"> Git is free software.</span><br></pre></td></tr></table></figure>
-<p>输入 <code>git add testgit.txt</code> 添加。</p>
-<p>输入 <code>git status</code> 查看仓库当前的状态：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ha@haha:~/Code/learngit$ git status</span><br><span class="line">位于分支 master</span><br><span class="line">要提交的变更：</span><br><span class="line">  （使用 &quot;git reset HEAD &lt;文件&gt;...&quot; 以取消暂存）</span><br><span class="line"></span><br><span class="line">	修改：     testgit.txt</span><br></pre></td></tr></table></figure>
-<p>提交：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ha@haha:~/Code/learngit$ git commit -m &quot;add distributed&quot;</span><br><span class="line">[master 96f9e99] add distributed</span><br><span class="line"> 1 file changed, 1 insertion(+), 1 deletion(-)</span><br></pre></td></tr></table></figure>
-<h2 id="回滚操作"><a href="#回滚操作" class="headerlink" title="回滚操作"></a>回滚操作</h2><p>再次熟悉一下修改操作，这次修改第二行为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Git is a distributed version control system.</span><br><span class="line">Git is good free software.</span><br></pre></td></tr></table></figure>
-<p>添加、提交：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add testgit.txt</span><br><span class="line">git commit -m &quot;add good&quot;</span><br></pre></td></tr></table></figure>
-<p>我门进行了两次修改：</p>
-<p>原文件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Git is a version control system.</span><br><span class="line">Git is free software.</span><br></pre></td></tr></table></figure>
-<p>第一次修改：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Git is a distributed version control system.</span><br><span class="line">Git is free software.</span><br></pre></td></tr></table></figure>
-<p>第二次修改：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Git is a distributed version control system.</span><br><span class="line">Git is good free software.</span><br></pre></td></tr></table></figure>
-<p>经过n次的修改后，使用 <code>git log</code> 查看修改记录：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">ha@haha:~/Code/learngit$ git log</span><br><span class="line">commit 5c521fd2e0da79649d0dbcc0f0125e443cb46ac9 (HEAD -&gt; master)</span><br><span class="line">Author: onebigcabbage &lt;zhongxiangcai17@gmail.com&gt;</span><br><span class="line">Date:   Mon May 28 19:55:16 2018 +0800</span><br><span class="line"></span><br><span class="line">    add good</span><br><span class="line"></span><br><span class="line">commit 96f9e997ce0a5ead8d852c15d34247823b358263</span><br><span class="line">Author: onebigcabbage &lt;zhongxiangcai17@gmail.com&gt;</span><br><span class="line">Date:   Mon May 28 17:17:05 2018 +0800</span><br><span class="line"></span><br><span class="line">    add distributed</span><br><span class="line"></span><br><span class="line">commit 0a75a380a3d155a717d0ab9e67e665d623304665</span><br><span class="line">Author: onebigcabbage &lt;zhongxiangcai17@gmail.com&gt;</span><br><span class="line">Date:   Mon May 28 17:13:51 2018 +0800</span><br><span class="line"></span><br><span class="line">    write a readme file</span><br></pre></td></tr></table></figure>
-<p>还可以通过 <code>git log --pretty=oneline</code> 以每行查看修改记录：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ha@haha:~/Code/learngit$ git log --pretty=oneline</span><br><span class="line">5c521fd2e0da79649d0dbcc0f0125e443cb46ac9 (HEAD -&gt; master) add good</span><br><span class="line">96f9e997ce0a5ead8d852c15d34247823b358263 add distributed</span><br><span class="line">0a75a380a3d155a717d0ab9e67e665d623304665 write a readme file</span><br></pre></td></tr></table></figure>
-<p>如果想回到修改前一次的文件，使用 <code>git set --hard HEAD^</code> 命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ha@haha:~/Code/learngit$ git reset --hard HEAD^</span><br><span class="line">HEAD 现在位于 96f9e99 add distributed</span><br></pre></td></tr></table></figure>
-<p>输入 <code>cat testgit.txt</code> 查看一下，已经回到最后一次修改的内容:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Git is a distributed version control system.</span><br><span class="line">Git is free software.</span><br></pre></td></tr></table></figure>
-<p>如果想回到n次修改前，通过 <code>git reflog</code> 找到想要回到修改的那条记录号：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ha@haha:~/Code/learngit$ git reflog</span><br><span class="line">96f9e99 (HEAD -&gt; master) HEAD@&#123;0&#125;: reset: moving to HEAD^</span><br><span class="line">5c521fd HEAD@&#123;1&#125;: commit: add good</span><br><span class="line">96f9e99 (HEAD -&gt; master) HEAD@&#123;2&#125;: reset: moving to 96f9e99</span><br><span class="line">0a75a38 HEAD@&#123;3&#125;: reset: moving to HEAD^</span><br><span class="line">96f9e99 (HEAD -&gt; master) HEAD@&#123;4&#125;: commit: add distributed</span><br><span class="line">0a75a38 HEAD@&#123;5&#125;: commit (initial): write a readme file</span><br></pre></td></tr></table></figure>
-<p>假如我们想回到文本根本没有被修改的时候，看上面最后一行信息，表示刚开始添加文件的信息，其中需要的是前面的 <code>0a75a38</code> 记录号，输入进行回滚：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ha@haha:~/Code/learngit$ git reset --hard 0a75a38</span><br><span class="line">HEAD 现在位于 0a75a38 write a readme file</span><br></pre></td></tr></table></figure>
-<p>查看一下文件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ha@haha:~/Code/learngit$ cat testgit.txt </span><br><span class="line">Git is a version control system.</span><br><span class="line">Git is free software.</span><br></pre></td></tr></table></figure>
+            <center> 君不见，黄河之水天上来，奔流到海不复回。</center><br><center>君不见，高堂明镜悲白发，朝如青丝暮成雪。</center><br><center>人生得意须尽欢，    莫使金樽空对月。</center><br><center>天生我材必有用，    千金散尽还复来。</center>
+
+
 
           
         
@@ -678,7 +752,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/27/Ubuntu安装Mysql/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/02/Ubuntu安装Mysql/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="MR.C">
@@ -697,7 +771,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/05/27/Ubuntu安装Mysql/" itemprop="url">Ubuntu安装Mysql</a></h1>
+                <a class="post-title-link" href="/2018/06/02/Ubuntu安装Mysql/" itemprop="url">Ubuntu安装Mysql</a></h1>
         
 
         <div class="post-meta">
@@ -709,8 +783,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-27T15:07:07+08:00">
-                2018-05-27
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-02T09:19:07+08:00">
+                2018-06-02
               </time>
             
 
@@ -749,7 +823,7 @@
 
           
           
-             <span id="/2018/05/27/Ubuntu安装Mysql/" class="leancloud_visitors" data-flag-title="Ubuntu安装Mysql">
+             <span id="/2018/06/02/Ubuntu安装Mysql/" class="leancloud_visitors" data-flag-title="Ubuntu安装Mysql">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -782,45 +856,17 @@
 
       
         
-          
-            <a id="more"></a>
-<h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><p>在官网下载 <a href="https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-server_8.0.11-1ubuntu18.04_amd64.deb-bundle.tar" target="_blank" rel="noopener">mysql-server_8.0.11-1ubuntu18.04_amd64.deb-bundle.tar</a> 文件。</p>
-<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>将文件放到 <code>/usr/local/src</code> 中：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mv mysql-server_8.0.11-1ubuntu18.04_amd64.deb-bundle.tar /usr/local/src</span><br></pre></td></tr></table></figure>
-<p>切换到该文件夹：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/src</span><br></pre></td></tr></table></figure>
-<p>更改文件的权限：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chmod +x mysql-server_8.0.11-1ubuntu18.04_amd64.deb-bundle.tar</span><br></pre></td></tr></table></figure>
-<p>解压 <em>tar</em> 文件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -xf mysql-server_8.0.11-1ubuntu18.04_amd64.deb-bundle.tar</span><br></pre></td></tr></table></figure>
-<p>执行完成所有步骤后，将会多出以下几个文件：</p>
-<p><code>libmysqlclient21_8.0.11-1ubuntu18.04_amd64.deb</code>  </p>
-<p><code>libmysqlclient-dev_8.0.11-1ubuntu18.04_amd64.deb</code> </p>
-<p><code>mysql-client_8.0.11-1ubuntu18.04_amd64.deb</code> </p>
-<p><code>mysql-common_8.0.11-1ubuntu18.04_amd64.deb</code> </p>
-<p><code>libmysqlclient21_8.0.11-1ubuntu18.04_amd64.deb</code> </p>
-<p><code>libmysqlclient-dev_8.0.11-1ubuntu18.04_amd64.deb</code> </p>
-<p><code>mysql-client_8.0.11-1ubuntu18.04_amd64.deb</code> </p>
-<p><code>mysql-common_8.0.11-1ubuntu18.04_amd64.deb</code></p>
-<p><code>mysql-community-client_8.0.11-1ubuntu18.04_amd64.deb</code> </p>
-<p><code>mysql-community-client-core_8.0.11-1ubuntu18.04_amd64.deb</code> </p>
-<p><code>mysql-community-server-core_8.0.11-1ubuntu18.04_amd64.deb</code> </p>
-<p><code>mysql-community-server_8.0.11-1ubuntu18.04_amd64.deb</code> </p>
-<p><code>mysql-community-test_8.0.11-1ubuntu18.04_amd64.deb</code> </p>
-<p><code>mysql-server_8.0.11-1ubuntu18.04_amd64.deb</code> </p>
-<p><code>mysql-testsuite_8.0.11-1ubuntu18.04_amd64.deb</code>    无用</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>按下面命令运行：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dpkg-preconfigure mysql-community-server</span><br></pre></td></tr></table></figure>
-<p>运行后会出现让输入密码，输入密码后按 <code>Tab</code> 和回车，再次输入密码按 <code>Tab</code> 和回车，回到命令行。</p>
-<p>将文件夹中的所有文件名挨个输入到下面语句中替代*，有可能会出现先后顺序问题：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dpkg -i mysql-***********.deb</span><br></pre></td></tr></table></figure>
-<p>若出现依赖错误提示：出现错误，无法安装，则输入下面命令解决依赖问题：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get -f install</span><br></pre></td></tr></table></figure>
-<p>安装完成后，输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -u root -p</span><br></pre></td></tr></table></figure>
-<p>输入密码。</p>
-<h2 id="完成。"><a href="#完成。" class="headerlink" title="完成。"></a>完成。</h2>
-          
+          <hr>
+          <!--noindex-->
+
+
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/06/02/Ubuntu安装Mysql/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+
+          <!--/noindex-->
         
       
     </div>
@@ -876,7 +922,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/26/零碎随笔二/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/02/零碎随笔二/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="MR.C">
@@ -895,7 +941,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/05/26/零碎随笔二/" itemprop="url">零碎随笔二</a></h1>
+                <a class="post-title-link" href="/2018/06/02/零碎随笔二/" itemprop="url">零碎随笔二</a></h1>
         
 
         <div class="post-meta">
@@ -907,8 +953,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-26T10:25:41+08:00">
-                2018-05-26
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-02T09:18:23+08:00">
+                2018-06-02
               </time>
             
 
@@ -947,7 +993,7 @@
 
           
           
-             <span id="/2018/05/26/零碎随笔二/" class="leancloud_visitors" data-flag-title="零碎随笔二">
+             <span id="/2018/06/02/零碎随笔二/" class="leancloud_visitors" data-flag-title="零碎随笔二">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -980,10 +1026,17 @@
 
       
         
-          
-            <p>对于一个丧失聊天技能的程序员来说，大概有趣的灵魂就是能接住尬聊，同时还有90年代老梗的人吧。</p>
+          <hr>
+          <!--noindex-->
 
-          
+
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/06/02/零碎随笔二/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+
+          <!--/noindex-->
         
       
     </div>
@@ -1149,6 +1202,176 @@
 
           <div class="post-button text-center">
             <a class="btn" href="/2018/05/24/attention总览/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+
+          <!--/noindex-->
+        
+      
+    </div>
+
+<div>
+  		
+	</div>
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+<div>
+      
+</div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/05/TensorFlow学习（一）_ 构建卷积神经网络/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MR.C">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/1.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="蔡圣哲">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/05/TensorFlow学习（一）_ 构建卷积神经网络/" itemprop="url">TensorFlow学习（一）_ 构建卷积神经网络</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-05T10:08:58+08:00">
+                2018-05-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/05/05/TensorFlow学习（一）_ 构建卷积神经网络/" class="leancloud_visitors" data-flag-title="TensorFlow学习（一）_ 构建卷积神经网络">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+
+      
+        
+          <hr>
+          <!--noindex-->
+
+
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/05/05/TensorFlow学习（一）_ 构建卷积神经网络/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1379,346 +1602,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/05/TensorFlow学习（三）—_实现自编码器/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="MR.C">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/1.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="蔡圣哲">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/05/TensorFlow学习（三）—_实现自编码器/" itemprop="url">TensorFlow学习（三）—_实现自编码器</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-05T10:08:58+08:00">
-                2018-05-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/机器学习/" itemprop="url" rel="index">
-                    <span itemprop="name">机器学习</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/05/05/TensorFlow学习（三）—_实现自编码器/" class="leancloud_visitors" data-flag-title="TensorFlow学习（三）—_实现自编码器">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-
-      
-        
-          <hr>
-          <!--noindex-->
-
-
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/05/05/TensorFlow学习（三）—_实现自编码器/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-
-          <!--/noindex-->
-        
-      
-    </div>
-
-<div>
-  		
-	</div>
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-<div>
-      
-</div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/05/LSTM/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="MR.C">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/1.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="蔡圣哲">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/05/LSTM/" itemprop="url">-原创翻译- 详解LSTM（Understanding LSTM Networks）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-05T10:08:58+08:00">
-                2018-05-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/深度学习/" itemprop="url" rel="index">
-                    <span itemprop="name">深度学习</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/05/05/LSTM/" class="leancloud_visitors" data-flag-title="-原创翻译- 详解LSTM（Understanding LSTM Networks）">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-
-      
-        
-          <hr>
-          <!--noindex-->
-
-
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/05/05/LSTM/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-
-          <!--/noindex-->
-        
-      
-    </div>
-
-<div>
-  		
-	</div>
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-<div>
-      
-</div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/05/Markdown的使用/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1889,7 +1772,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/05/index/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/05/GitHub搭建个人博客(Ubuntu版)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="MR.C">
@@ -1908,7 +1791,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/05/05/index/" itemprop="url">Hello Mr.C</a></h1>
+                <a class="post-title-link" href="/2018/05/05/GitHub搭建个人博客(Ubuntu版)/" itemprop="url">使用Github搭建个人博客（初级篇）</a></h1>
         
 
         <div class="post-meta">
@@ -1931,6 +1814,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/搭建博客/" itemprop="url" rel="index">
+                    <span itemprop="name">搭建博客</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -1938,7 +1843,7 @@
 
           
           
-             <span id="/2018/05/05/index/" class="leancloud_visitors" data-flag-title="Hello Mr.C">
+             <span id="/2018/05/05/GitHub搭建个人博客(Ubuntu版)/" class="leancloud_visitors" data-flag-title="使用Github搭建个人博客（初级篇）">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1971,10 +1876,17 @@
 
       
         
-          
-            <p>君不见，黄河之水天上来，奔流到海不复回。<br>君不见，高堂明镜悲白发，朝如青丝暮成雪。<br>人生得意须尽欢，    莫使金樽空对月。<br>天生我材必有用，    千金散尽还复来。</p>
+          <hr>
+          <!--noindex-->
 
-          
+
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/05/05/GitHub搭建个人博客(Ubuntu版)/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+
+          <!--/noindex-->
         
       
     </div>
