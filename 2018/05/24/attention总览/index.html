@@ -422,11 +422,11 @@
 </blockquote>
 <h3 id="2-图解-RNN-结构"><a href="#2-图解-RNN-结构" class="headerlink" title="2. 图解 RNN 结构"></a>2. 图解 <em>RNN</em> 结构</h3><p><em>RNN</em> 大都用来处理像一串句子、一段语音这种的序列化数据。展开的 <em>RNN</em> 结构图如下：</p>
 <p><img src="/images/attention/roolled rnn.png" alt="roolled RNN"></p>
-<p>由图可见，其当前时间 t 的输出依赖两部分：前一时刻的隐层 $h_{t-1}$ 和当前的输入 $x_{t}$ 。</p>
+<p>由图可见，其当前时间 t 的输出依赖两部分：前一时刻的隐层 $h<em>{t-1}$ 和当前的输入 $x</em>{t}$ 。</p>
 <p>下面主要介绍经典的三种 <em>RNN</em> 结构：</p>
 <h4 id="1-n-VS-1"><a href="#1-n-VS-1" class="headerlink" title="(1)  n VS 1"></a>(1)  <em>n VS 1</em></h4><p><img src="/images/attention/nvs1.png" alt="nvs1"></p>
 <blockquote>
-<p>注：圆圈代表给定的输入，箭头代表运算，矩形代表隐层，也就是箭头运算后的结果。其中参数 $W、U、V$ 都是一样的。在自然语言处理问题。$x_{1}$ 可以看做是第一个单词，$x_{2}$ 可以看做是第二个单词…</p>
+<p>注：圆圈代表给定的输入，箭头代表运算，矩形代表隐层，也就是箭头运算后的结果。其中参数 $W、U、V$ 都是一样的。在自然语言处理问题。$x<em>{1}$ 可以看做是第一个单词，$x</em>{2}$ 可以看做是第二个单词…</p>
 </blockquote>
 <p>这种结构可应用于情感分析、文本分类等等。</p>
 <h4 id="2-1-VS-n"><a href="#2-1-VS-n" class="headerlink" title="(2)  1 VS n"></a>(2)  <em>1 VS n</em></h4><p><img src="/images/attention/1vsn1.png" alt="1vsn1"></p>
@@ -439,7 +439,7 @@
 <h4 id="4-n-VS-m"><a href="#4-n-VS-m" class="headerlink" title="(4)  n VS m"></a>(4)  <em>n VS m</em></h4><p>在机器翻译中，源语言和目标语言的句子序列都是不等长的，而原始的 <em>n VS n</em>  结构都是要求序列等长的。为此，我们有了 <em>n VS m</em> 结构，这种结构又被称为 <strong>Encoder-Decoder模型</strong>  。具体请见下一部分。</p>
 <h2 id="三、Encoder-Decoder-模型"><a href="#三、Encoder-Decoder-模型" class="headerlink" title="三、Encoder-Decoder 模型"></a>三、<em>Encoder-Decoder</em> 模型</h2><h3 id="1-简介-1"><a href="#1-简介-1" class="headerlink" title="1. 简介"></a>1. 简介</h3><p>在第二节的第四部分，我们提出了 <em>RNN</em> 的 <em>n VS m</em> 结构：<em>Encoder-Decoder</em> 模型，<em>Encoder-Decoder</em> 模型是深度学习中常见的一种模型。在本文中，我们只简单介绍其在文本-文本的应用，比如将英语翻译成汉语，所以该模型也可以称为 <strong>Seq2Seq 模型</strong> 。下图为 <em>Encoder-Decoder</em> 模型的抽象图：</p>
 <p><img src="/images/attention/Encoder-Decoder框架.png" alt="Encoder-Decoder框架"></p>
-<h3 id="2-分析"><a href="#2-分析" class="headerlink" title="2. 分析"></a>2. 分析</h3><h4 id="1-Encoder"><a href="#1-Encoder" class="headerlink" title="1) Encoder"></a>1) <em>Encoder</em></h4><p>给定句子对 <em>&lt;X,Y&gt;</em> ，我们的目标是给定输入句子 <em>X</em> ，通过<em>Encoder-Decoder</em> 模型来翻译成目标句子 <em>Y</em> 。而 <em>X</em> 和 <em>Y</em> 分别由各自的单词序列构成：</p>
+<h3 id="2-分析"><a href="#2-分析" class="headerlink" title="2. 分析"></a>2. 分析</h3><h4 id="1-Encoder"><a href="#1-Encoder" class="headerlink" title="1) Encoder"></a>1) <em>Encoder</em></h4><p>给定句子对 <em><x,y></x,y></em> ，我们的目标是给定输入句子 <em>X</em> ，通过<em>Encoder-Decoder</em> 模型来翻译成目标句子 <em>Y</em> 。而 <em>X</em> 和 <em>Y</em> 分别由各自的单词序列构成：</p>
 <p><img src="/images/attention/xy.png" alt="x &amp;&amp; y"></p>
 <p>首先，<em>Encoder</em> 对输入语句 <em>X</em> 进行编码，经过函数变换为中间语义向量 <em>C</em> (可以通过多种方式得到) ：</p>
 <p><img src="/images/attention/e&amp;d1.png" alt="e&amp;d1"></p>
@@ -451,7 +451,7 @@
 <p>如果将 c 当作 <em>Decoder</em> 的每一时刻输入，则是 <em>Seq2Seq</em> 模型的第一种模型：</p>
 <p><img src="/images/attention/e&amp;d stru2.png" alt="e&amp;d stru2"></p>
 <ul>
-<li>中英翻译中， <em>&lt;X,Y&gt;</em> 是不同语言的句子，<em>X</em> 是英文句子，<em>Y</em> 是中文句子。</li>
+<li>中英翻译中， <em><x,y></x,y></em> 是不同语言的句子，<em>X</em> 是英文句子，<em>Y</em> 是中文句子。</li>
 <li><em>QA</em> 系统中，<em>X</em> 是问题，<em>Y</em> 是回答。</li>
 <li><p>……</p>
 <p><em>Encoder-Decoder</em> 模型是使用非常广泛的深度学习模型框架，与其说 <em>Encoder-Decoder</em> 是一种模型，不如称其为一种通用框架。因为 <em>Encoder</em> 和 <em>Decoder</em> 具体使用什么模型是根据任务而定义的。在自然语言处理研究中通常使用 <em>LSTM</em> 或者是 <em>GRU</em> 。</p>
@@ -463,24 +463,24 @@
 <li>随着输入信息长度的增加，由于向量长度固定，先前编码好的信息会被后来的信息覆盖，丢失很多信息。</li>
 </ul>
 <p>(2)大家看第三节的第二部分的第二个 <em>Decoder</em> 过程，其输出的产生如下：</p>
-<p>$y_{1}=g(C, h’_{0})$ </p>
-<p>$y_{2}=g(C, y_{1})$ </p>
-<p>$y_{3}=g(C, y_{1}, y_{2})$ </p>
-<p>明显可以发现在生成 $y_{1}、y_{2}、y_{3}$ 时，语义编码 <em>Ｃ</em> 对它们所产生的贡献都是一样的。例如翻译：<em>Cat chase mouse</em> ，<em>Encoder-Decoder</em> 模型逐字生成：“猫”、“捉”、“老鼠”。在翻译 <em>mouse</em> 单词时，每一个英语单词对“老鼠”的贡献都是相同的。如果引入了<em>Ａttention</em> 模型，那么 <em>mouse</em> 对于它的影响应该是最大的。</p>
+<p>$y<em>{1}=g(C, h’</em>{0})$ </p>
+<p>$y<em>{2}=g(C, y</em>{1})$ </p>
+<p>$y<em>{3}=g(C, y</em>{1}, y_{2})$ </p>
+<p>明显可以发现在生成 $y<em>{1}、y</em>{2}、y_{3}$ 时，语义编码 <em>Ｃ</em> 对它们所产生的贡献都是一样的。例如翻译：<em>Cat chase mouse</em> ，<em>Encoder-Decoder</em> 模型逐字生成：“猫”、“捉”、“老鼠”。在翻译 <em>mouse</em> 单词时，每一个英语单词对“老鼠”的贡献都是相同的。如果引入了<em>Ａttention</em> 模型，那么 <em>mouse</em> 对于它的影响应该是最大的。</p>
 <h3 id="2-图解-Attention"><a href="#2-图解-Attention" class="headerlink" title="2. 图解 Attention"></a>2. 图解 <em>Attention</em></h3><p>为了解决上面两个问题，于是引入了 <em>Ａttention</em> 模型。<em>Ａttention</em> 模型的特点是 <em>Decoder</em> 不再将整个输入序列编码为固定长度的中间语义向量 <em>Ｃ</em> ，而是根据当前生成的新单词计算新的 <em>$C_{i}$</em> ，使得每个时刻输入不同的 <em>Ｃ</em> ，这样就解决了单词信息丢失的问题。引入了 <em>Ａttention</em> 的 <em>Encoder-Decoder</em> 模型如下图：</p>
 <p><img src="/images/attention/am.png" alt="am"></p>
 <p>对于刚才提到的那个“猫捉老鼠”的翻译过程变成了如下：</p>
-<p>$y_{1}=g(C_{1}, h’_{0})$ </p>
-<p>$y_{2}=g(C_{2}, y_{1})$ </p>
-<p>$y_{3}=g(C_{3}, y_{1}, y_{2})$ </p>
+<p>$y<em>{1}=g(C</em>{1}, h’_{0})$ </p>
+<p>$y<em>{2}=g(C</em>{2}, y_{1})$ </p>
+<p>$y<em>{3}=g(C</em>{3}, y<em>{1}, y</em>{2})$ </p>
 <p>整个翻译流程如下：</p>
 <p><img src="/images/attention/h1.png" alt="h1"></p>
 <p>图中输入是 <em>Cat chase mouse</em> ，<em>Encoder</em> 中隐层 <em>h1、h2、h3</em> 可看作经过计算 <em>Cat、chase、mouse</em> 这些词的信息。</p>
 <p><img src="/images/attention/h2.png" alt="h2"></p>
-<p>使用 $a_{ij}$ 表示 <em>Encoder</em> 中第 <em>j</em> 阶段的 $h_{j}$ 和解码时第 <em>i</em> 阶段的相关性，计算出解码需要的中间语义向量 $C_{i}$ 。$C_{1}$ 和 “猫” 关系最近，相对应的 $a_{11}$ 要比 $a_{12}$ 、$a_{13}$ 大；而 $C_{2}$ 和 “捉” 关系最近，相对应的 $a_{22}$ 要比 $a_{21}$ 、$a_{23}$ 大；同理  $C_{3}$ 和 “老鼠” 关系最近，相对应的 $a_{33}$ 要比 $a_{31}$ 、$a_{32}$ 大。</p>
+<p>使用 $a<em>{ij}$ 表示 <em>Encoder</em> 中第 <em>j</em> 阶段的 $h</em>{j}$ 和解码时第 <em>i</em> 阶段的相关性，计算出解码需要的中间语义向量 $C<em>{i}$ 。$C</em>{1}$ 和 “猫” 关系最近，相对应的 $a<em>{11}$ 要比 $a</em>{12}$ 、$a<em>{13}$ 大；而 $C</em>{2}$ 和 “捉” 关系最近，相对应的 $a<em>{22}$ 要比 $a</em>{21}$ 、$a<em>{23}$ 大；同理  $C</em>{3}$ 和 “老鼠” 关系最近，相对应的 $a<em>{33}$ 要比 $a</em>{31}$ 、$a_{32}$ 大。</p>
 <p><img src="/images/attention/h3.png" alt="h3"></p>
 <p>那么<strong>参数 $a_{ij}$ 是如何得到呢？</strong> </p>
-<p><em>Encoder</em> 中第 <em>j</em> 个隐层单元 $h_{j}$ 和 <em>Decoder</em> 第 <em>i-1</em> 个隐层单元 $h’<em>{i-1}$ 经过运算得到  $a</em>{ij}$ 。</p>
+<p><em>Encoder</em> 中第 <em>j</em> 个隐层单元 $h<em>{j}$ 和 <em>Decoder</em> 第 <em>i-1</em> 个隐层单元 $h’</em>{i-1}$ 经过运算得到  $a_{ij}$ 。</p>
 <p>例如 $a_{1j}$ 的计算过程：</p>
 <p><img src="/images/attention/a11.png" alt="a1j"></p>
 <p> $a_{2j}$ 的计算过程：</p>
@@ -543,8 +543,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/05/区块链/" rel="next" title="-原创翻译- 使用python搭建一个属于自己的区块链">
-                <i class="fa fa-chevron-left"></i> -原创翻译- 使用python搭建一个属于自己的区块链
+              <a href="/2018/05/05/LSTM/" rel="next" title="-原创翻译- 详解LSTM（Understanding LSTM Networks）">
+                <i class="fa fa-chevron-left"></i> -原创翻译- 详解LSTM（Understanding LSTM Networks）
               </a>
             
           </div>
