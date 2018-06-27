@@ -377,7 +377,8 @@
       
         <hr>
 <a id="more"></a>
-<h2 id="一、基本操作"><a href="#一、基本操作" class="headerlink" title="一、基本操作"></a>一、基本操作</h2><p>创建仓库：</p>
+<h2 id="一、基本操作"><a class="header-anchor" href="#一、基本操作" aria-hidden="true">¶</a> 一、基本操作</h2>
+<p>创建仓库：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir learngit</span><br></pre></td></tr></table></figure>
 <p>打开仓库：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd learngit</span><br></pre></td></tr></table></figure>
@@ -395,7 +396,8 @@
 <blockquote>
 <p>-m 代表一个说明。</p>
 </blockquote>
-<h2 id="二、修改操作"><a href="#二、修改操作" class="headerlink" title="二、修改操作"></a>二、修改操作</h2><p>修改 <em>testgit.txt</em> 内容为：</p>
+<h2 id="二、修改操作"><a class="header-anchor" href="#二、修改操作" aria-hidden="true">¶</a> 二、修改操作</h2>
+<p>修改 <em>testgit.txt</em> 内容为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Git is a distributed version control system.</span><br><span class="line">Git is free software.</span><br></pre></td></tr></table></figure>
 <p>输入 <code>git status</code> 查看仓库当前的状态：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ha@haha:~/Code/learngit$ git status</span><br><span class="line">位于分支 master</span><br><span class="line">尚未暂存以备提交的变更：</span><br><span class="line">  （使用 &quot;git add &lt;文件&gt;...&quot; 更新要提交的内容）</span><br><span class="line">  （使用 &quot;git checkout -- &lt;文件&gt;...&quot; 丢弃工作区的改动）</span><br><span class="line"></span><br><span class="line">	修改：     readme.txt</span><br><span class="line"></span><br><span class="line">修改尚未加入提交（使用 &quot;git add&quot; 和/或 &quot;git commit -a&quot;）</span><br></pre></td></tr></table></figure>
@@ -406,7 +408,8 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ha@haha:~/Code/learngit$ git status</span><br><span class="line">位于分支 master</span><br><span class="line">要提交的变更：</span><br><span class="line">  （使用 &quot;git reset HEAD &lt;文件&gt;...&quot; 以取消暂存）</span><br><span class="line"></span><br><span class="line">	修改：     testgit.txt</span><br></pre></td></tr></table></figure>
 <p>提交：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ha@haha:~/Code/learngit$ git commit -m &quot;add distributed&quot;</span><br><span class="line">[master 96f9e99] add distributed</span><br><span class="line"> 1 file changed, 1 insertion(+), 1 deletion(-)</span><br></pre></td></tr></table></figure>
-<h2 id="三、回滚操作"><a href="#三、回滚操作" class="headerlink" title="三、回滚操作"></a>三、回滚操作</h2><p>再次熟悉一下修改操作，这次修改第二行为：</p>
+<h2 id="三、回滚操作"><a class="header-anchor" href="#三、回滚操作" aria-hidden="true">¶</a> 三、回滚操作</h2>
+<p>再次熟悉一下修改操作，这次修改第二行为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Git is a distributed version control system.</span><br><span class="line">Git is good free software.</span><br></pre></td></tr></table></figure>
 <p>添加、提交：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add testgit.txt</span><br><span class="line">git commit -m &quot;add good&quot;</span><br></pre></td></tr></table></figure>
@@ -431,7 +434,8 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ha@haha:~/Code/learngit$ git reset --hard 0a75a38</span><br><span class="line">HEAD 现在位于 0a75a38 write a readme file</span><br></pre></td></tr></table></figure>
 <p>查看一下文件：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ha@haha:~/Code/learngit$ cat testgit.txt </span><br><span class="line">Git is a version control system.</span><br><span class="line">Git is free software.</span><br></pre></td></tr></table></figure>
-<h2 id="四、“救命”-撤回-操作"><a href="#四、“救命”-撤回-操作" class="headerlink" title="四、“救命” (撤回) 操作"></a>四、“救命” (撤回) 操作</h2><p>当写文件时，不小心加了最后一句：</p>
+<h2 id="四、“救命” (撤回) 操作"><a class="header-anchor" href="#四、“救命” (撤回) 操作" aria-hidden="true">¶</a> 四、“救命” (撤回) 操作</h2>
+<p>当写文件时，不小心加了最后一句：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Git is a distributed version control system.</span><br><span class="line">Git is free software.</span><br><span class="line">I hate boss.</span><br></pre></td></tr></table></figure>
 <p>如果发现及时，还没有 <code>git add</code> 到仓库中，使用 <code>git status</code> 查看一下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ha@haha:~/Code/learngit$ git status</span><br><span class="line">On branch master</span><br><span class="line">Changes not staged for commit:</span><br><span class="line">  (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)</span><br><span class="line">  (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)</span><br><span class="line"></span><br><span class="line">	modified:   testgit.txt</span><br><span class="line"></span><br><span class="line">no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)</span><br></pre></td></tr></table></figure>
@@ -451,7 +455,8 @@
 <p>使用 <code>cat</code> 命令查看文件:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Git is a version control system.</span><br><span class="line">Git is free software.</span><br></pre></td></tr></table></figure>
 <p>发现已经删掉让你丢掉奖金的那句话了。</p>
-<h2 id="五、删除操作"><a href="#五、删除操作" class="headerlink" title="五、删除操作"></a>五、删除操作</h2><p>删除文件命令：</p>
+<h2 id="五、删除操作"><a class="header-anchor" href="#五、删除操作" aria-hidden="true">¶</a> 五、删除操作</h2>
+<p>删除文件命令：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rm testgit.txt</span><br></pre></td></tr></table></figure>
 <p>此时在文件夹下会发现 <em>testgit.txt</em> 文件也被删除了！</p>
 <hr>
@@ -467,7 +472,7 @@
 <p>请看第三个操作，回滚吧！</p>
 <p>首先：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reflog</span><br></pre></td></tr></table></figure>
-<p>会发现之前的一堆操作： </p>
+<p>会发现之前的一堆操作：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ha@haha:~/Code/learngit$ git reflog</span><br><span class="line">2620989 (HEAD -&gt; master) HEAD@&#123;0&#125;: commit: remove testgit.txt</span><br><span class="line">56e9350 HEAD@&#123;1&#125;: commit: add testgit.txt</span><br><span class="line">17fd25f HEAD@&#123;2&#125;: commit: rm testgit</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">.</span><br></pre></td></tr></table></figure>
 <p>找到添加 <em>testgit.txt</em> 的那一步操作，在我的日志上是第三行，记住最前边的编号：<em>56e9350</em> 。接下来 <em>reset</em> 一下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard 56e9350</span><br></pre></td></tr></table></figure>
@@ -475,7 +480,8 @@
 <blockquote>
 <p>博主真是操碎了心。</p>
 </blockquote>
-<h2 id="六、实践-与Github的互动"><a href="#六、实践-与Github的互动" class="headerlink" title="六、实践(与Github的互动)"></a>六、实践(与Github的互动)</h2><p>请先参考<a href="https://www.cnblogs.com/sunnypei/articles/5811283.html" target="_blank" rel="noopener">建立本地Git仓库和Github的连接</a> 。</p>
+<h2 id="六、实践(与Github的互动)"><a class="header-anchor" href="#六、实践(与Github的互动)" aria-hidden="true">¶</a> 六、实践(与Github的互动)</h2>
+<p>请先参考<a href="https://www.cnblogs.com/sunnypei/articles/5811283.html" target="_blank" rel="noopener">建立本地Git仓库和Github的连接</a> 。</p>
 <p><em>Github</em> 是基于 <em>Git</em> 的代码托管平台，上面我们都是建立的本地仓库，现在可以将这些仓库上传至 <em>Github</em> 网站，相当于将文件备份了一份。</p>
 <p>首先，在 <em>Github</em> 上面新建一个仓库，<em>New repository</em> ：</p>
 <p><img src="/images/git/new.png" alt="new"></p>
@@ -492,7 +498,7 @@
 <p><img src="/images/git/clone.png" alt="clone"></p>
 <p>接下来：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/.........</span><br></pre></td></tr></table></figure>
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css">
       
     </div>
 
@@ -639,7 +645,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -650,7 +656,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -724,7 +730,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、基本操作"><span class="nav-number">1.</span> <span class="nav-text">一、基本操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、修改操作"><span class="nav-number">2.</span> <span class="nav-text">二、修改操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、回滚操作"><span class="nav-number">3.</span> <span class="nav-text">三、回滚操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、“救命”-撤回-操作"><span class="nav-number">4.</span> <span class="nav-text">四、“救命” (撤回) 操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、删除操作"><span class="nav-number">5.</span> <span class="nav-text">五、删除操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、实践-与Github的互动"><span class="nav-number">6.</span> <span class="nav-text">六、实践(与Github的互动)</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、基本操作"><span class="nav-number">1.</span> <span class="nav-text">¶ 一、基本操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、修改操作"><span class="nav-number">2.</span> <span class="nav-text">¶ 二、修改操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、回滚操作"><span class="nav-number">3.</span> <span class="nav-text">¶ 三、回滚操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、“救命” (撤回) 操作"><span class="nav-number">4.</span> <span class="nav-text">¶ 四、“救命” (撤回) 操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、删除操作"><span class="nav-number">5.</span> <span class="nav-text">¶ 五、删除操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、实践(与Github的互动)"><span class="nav-number">6.</span> <span class="nav-text">¶ 六、实践(与Github的互动)</span></a></li></ol></div>
             
 
           </div>
