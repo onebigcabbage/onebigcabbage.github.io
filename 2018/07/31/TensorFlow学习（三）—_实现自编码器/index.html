@@ -1,389 +1,818 @@
 <!DOCTYPE html>
-<html lang="en">
 
-<!-- Head tag -->
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
 <head>
-    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="keyword" content="">
-    <meta name="theme-color" content="#600090">
-    <meta name="msapplication-navbutton-color" content="#600090">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
-    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
-    <link rel="alternate" type="application/atom+xml" title="蔡圣哲" href="/atom.xml">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
-    <title>
-        
-        TensorFlow学习（三）— 自编码器｜undefined
-        
-    </title>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
 
-    <link rel="canonical" href="http://yoursite.com/2018/07/31/TensorFlow学习（三）—_实现自编码器/">
 
-    <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css">
 
-    <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-</head>
 
-<style>
 
-    header.intro-header {
-        background-image: url('')
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.4.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     }
-</style>
-<!-- hack iOS CSS :active style -->
-<body ontouchstart="" class="animated fadeIn">
-<!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
-" data-ishome = "false" >
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand animated pulse" href="/">
-                <span class="brand-logo">
-                    蔡圣哲
-                </span>
-                's Blog
-            </a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <!-- Known Issue, found by Hux:
-            <nav>'s height woule be hold on by its content.
-            so, when navbar scale out, the <nav> will cover tags.
-            also mask any touch event of tags, unfortunately.
-        -->
-        <!-- /.navbar-collapse -->
-        <div id="huxblog_navbar">
-            <div class="navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="/">Home</a>
-                    </li>
-					
-                    
-                        
-							
-								
-							
-						
-                    
-                        
-							
-                        <li>
-                            <a href="/categories/">categories</a>
-                        </li>
-							
-						
-                    
-                        
-                    
-                        
-							
-                        <li>
-                            <a href="/leisure/">博主推荐</a>
-                        </li>
-							
-						
-                    
-                        
-							
-                        <li>
-                            <a href="/tags/">tags</a>
-                        </li>
-							
-						
-                    
-                        
-							
-                        <li>
-                            <a href="/study/">学习收藏</a>
-                        </li>
-							
-						
-                    
-                        
-							
-                        <li>
-                            <a href="/works/">My Works</a>
-                        </li>
-							
-						
-                    
-					
-					
-						<li>
-							<a href="/about">About</a>
-						</li>
-					
-                </ul>
-            </div>
-        </div>
-    </div>
-    <!-- /.container -->
-</nav>
-<script>
-    // Drop Bootstarp low-performance Navbar
-    // Use customize navbar with high-quality material design animation
-    // in high-perf jank-free CSS3 implementation
-//    var $body   = document.body;
-    var $toggle = document.querySelector('.navbar-toggle');
-    var $navbar = document.querySelector('#huxblog_navbar');
-    var $collapse = document.querySelector('.navbar-collapse');
-
-    $toggle.addEventListener('click', handleMagic)
-    function handleMagic(e){
-        if ($navbar.className.indexOf('in') > 0) {
-        // CLOSE
-            $navbar.className = " ";
-            // wait until animation end.
-            setTimeout(function(){
-                // prevent frequently toggle
-                if($navbar.className.indexOf('in') < 0) {
-                    $collapse.style.height = "0px"
-                }
-            },400)
-        }else{
-        // OPEN
-            $collapse.style.height = "auto"
-            $navbar.className += " in";
-        }
-    }
+  };
 </script>
 
-<!-- Main Content -->
 
-<!--only post-->
-
-
-<img class="wechat-title-img"
-     src="">
+  
 
 
-<style>
-    
-    header.intro-header {
-        background-image: url('')
+
+
+  <meta name="keywords" content="TensorFlow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TensorFlow学习（三）— 自编码器">
+<meta property="og:url" content="http://caicai.science/2018/07/31/TensorFlow学习（三）—_实现自编码器/index.html">
+<meta property="og:site_name" content="蔡圣哲">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-07-30T23:24:48.374Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TensorFlow学习（三）— 自编码器">
+
+
+
+
+
+
+  <link rel="canonical" href="http://caicai.science/2018/07/31/TensorFlow学习（三）—_实现自编码器/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>TensorFlow学习（三）— 自编码器 | 蔡圣哲</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
     }
 
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
     
-</style>
+  
 
-<header class="intro-header">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
-                <div class="post-heading">
-                    <h1>TensorFlow学习（三）— 自编码器</h1>
-                    
-                    <span class="meta">
-                         作者 MR.C
-                        <span>
-                          日期 2018-07-31
-                         </span>
-                    </span>
-                    <div class="tags text-center">
-                        
-                        <a class="tag" href="/tags/#TensorFlow"
-                           title="TensorFlow">TensorFlow</a>
-                        
-                    </div>
-                </div>
-            </div>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">蔡圣哲</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">不积跬步，无以至千里</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://caicai.science/2018/07/31/TensorFlow学习（三）—_实现自编码器/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MR.C">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="蔡圣哲">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">TensorFlow学习（三）— 自编码器
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-07-31 07:24:48" itemprop="dateCreated datePublished" datetime="2018-07-31T07:24:48+08:00">2018-07-31</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/机器学习/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
         </div>
-    </div>
-    <div class="post-title-haojen">
-        <span>
-            TensorFlow学习（三）— 自编码器
-        </span>
-    </div>
-</header>
+      </header>
+    
 
-<!-- Post Content -->
-<article>
-    <div class="container">
-        <div class="row">
-            <!-- Post Container -->
-            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <hr>
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <hr>
 <a id="more"></a>
 <p>自编码器的介绍请参考<a href="">这里</a></p>
-<h2 id="准备"><a class="header-anchor" href="#准备" aria-hidden="true">¶</a> 准备</h2>
-<p>​	导入所需要的包。</p>
+<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>​    导入所需要的包。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> sklearn.preprocessing <span class="keyword">as</span> pre</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">from</span> tensorflow.example.tutorials.mnist <span class="keyword">import</span> input_data</span><br></pre></td></tr></table></figure>
 <hr>
-<h2 id="定义函数"><a class="header-anchor" href="#定义函数" aria-hidden="true">¶</a> 定义函数</h2>
-<h3 id="参数初始化方法 xavier initialization"><a class="header-anchor" href="#参数初始化方法 xavier initialization" aria-hidden="true">¶</a> 参数初始化方法 <code>xavier initialization</code></h3>
-<blockquote>
+<h2 id="定义函数"><a href="#定义函数" class="headerlink" title="定义函数"></a>定义函数</h2><h3 id="参数初始化方法-xavier-initialization"><a href="#参数初始化方法-xavier-initialization" class="headerlink" title="参数初始化方法 xavier initialization"></a>参数初始化方法 <code>xavier initialization</code></h3><blockquote>
 <p>这里是初始化参数的方法，不是初始化参数！</p>
 </blockquote>
 <p><strong>为什么要参数初始化？</strong></p>
-<p>​	如果神经网络的权重初始化太小，那么我们的输入在经过每层计算后，逐渐缩小而难以产生作用，如果权重初始化太大，则计算后将逐渐增大并导致发散和失效。</p>
-<p>​	不适合的权重似的隐含层的输入方差过大，经过 <code>sigmoid</code>  激活函数时离中心较远，导数接近于零，从而导致提督弥散。</p>
-<p>** xavier权重初始化 **</p>
-<p>​	xavier权重初始化可以减少梯度弥散，使输入可以传递的更深。</p>
-<p>​	xavier根据某一层网络的输入、输出节点数量自动调整最合适的分布，让权重满足0均值，同时方差为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mfrac><mrow><mn>2</mn></mrow><mrow><msub><mi>n</mi><mrow><mi>i</mi><mi>n</mi></mrow></msub><mo>+</mo><msub><mi>n</mi><mrow><mi>o</mi><mi>u</mi><mi>t</mi></mrow></msub></mrow></mfrac></mrow><annotation encoding="application/x-tex">\frac{2}{n_{in}+n_{out}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.845108em;"></span><span class="strut bottom" style="height:1.295108em;vertical-align:-0.44999999999999996em;"></span><span class="base textstyle uncramped"><span class="mord reset-textstyle textstyle uncramped"><span class="sizing reset-size5 size5 reset-textstyle textstyle uncramped nulldelimiter"></span><span class="mfrac"><span class="vlist"><span style="top:0.345em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord"><span class="mord mathit">n</span><span class="vlist"><span style="top:0.15em;margin-right:0.07142857142857144em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-scriptstyle scriptscriptstyle cramped"><span class="mord scriptscriptstyle cramped"><span class="mord mathit">i</span><span class="mord mathit">n</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mbin">+</span><span class="mord"><span class="mord mathit">n</span><span class="vlist"><span style="top:0.15em;margin-right:0.07142857142857144em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-scriptstyle scriptscriptstyle cramped"><span class="mord scriptscriptstyle cramped"><span class="mord mathit">o</span><span class="mord mathit">u</span><span class="mord mathit">t</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span><span style="top:-0.22999999999999998em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle textstyle uncramped frac-line"></span></span><span style="top:-0.394em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord scriptstyle uncramped"><span class="mord mathrm">2</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="sizing reset-size5 size5 reset-textstyle textstyle uncramped nulldelimiter"></span></span></span></span></span> ，分布可以使用均匀分布或者高斯分布。</p>
-<p>​	下面我们创建一个 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>⟮</mo><mo>−</mo><msqrt><mrow><mfrac><mrow><mn>6</mn></mrow><mrow><msub><mi>n</mi><mrow><mi>i</mi><mi>n</mi></mrow></msub><mo>+</mo><msub><mi>n</mi><mrow><mi>o</mi><mi>u</mi><mi>t</mi></mrow></msub></mrow></mfrac></mrow></msqrt><mo separator="true">,</mo><msqrt><mrow><mfrac><mrow><mn>6</mn></mrow><mrow><msub><mi>n</mi><mrow><mi>i</mi><mi>n</mi></mrow></msub><mo>+</mo><msub><mi>n</mi><mrow><mi>o</mi><mi>u</mi><mi>t</mi></mrow></msub></mrow></mfrac></mrow></msqrt><mo>⟯</mo></mrow><annotation encoding="application/x-tex">\lgroup  -\sqrt{\frac{6}{n_{in}+n_{out}}}, \sqrt{\frac{6}{n_{in}+n_{out}}} \rgroup</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:1.1825640000000002em;"></span><span class="strut bottom" style="height:1.84002em;vertical-align:-0.6574559999999998em;"></span><span class="base textstyle uncramped"><span class="mopen">⟮</span><span class="mord">−</span><span class="sqrt mord"><span class="sqrt-sign" style="top:0.007435999999999776em;"><span class="style-wrap reset-textstyle textstyle uncramped"><span class="delimsizing size2">√</span></span></span><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1em;">​</span></span><span class="mord textstyle cramped"><span class="mord reset-textstyle textstyle cramped"><span class="sizing reset-size5 size5 reset-textstyle textstyle uncramped nulldelimiter"></span><span class="mfrac"><span class="vlist"><span style="top:0.345em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord"><span class="mord mathit">n</span><span class="vlist"><span style="top:0.15em;margin-right:0.07142857142857144em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-scriptstyle scriptscriptstyle cramped"><span class="mord scriptscriptstyle cramped"><span class="mord mathit">i</span><span class="mord mathit">n</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mbin">+</span><span class="mord"><span class="mord mathit">n</span><span class="vlist"><span style="top:0.15em;margin-right:0.07142857142857144em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-scriptstyle scriptscriptstyle cramped"><span class="mord scriptscriptstyle cramped"><span class="mord mathit">o</span><span class="mord mathit">u</span><span class="mord mathit">t</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span><span style="top:-0.22999999999999998em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle textstyle uncramped frac-line"></span></span><span style="top:-0.394em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathrm">6</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="sizing reset-size5 size5 reset-textstyle textstyle uncramped nulldelimiter"></span></span></span></span><span style="top:-1.102564em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1em;">​</span></span><span class="reset-textstyle textstyle uncramped sqrt-line"></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1em;">​</span></span>​</span></span></span><span class="mpunct">,</span><span class="sqrt mord"><span class="sqrt-sign" style="top:0.007435999999999776em;"><span class="style-wrap reset-textstyle textstyle uncramped"><span class="delimsizing size2">√</span></span></span><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1em;">​</span></span><span class="mord textstyle cramped"><span class="mord reset-textstyle textstyle cramped"><span class="sizing reset-size5 size5 reset-textstyle textstyle uncramped nulldelimiter"></span><span class="mfrac"><span class="vlist"><span style="top:0.345em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord"><span class="mord mathit">n</span><span class="vlist"><span style="top:0.15em;margin-right:0.07142857142857144em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-scriptstyle scriptscriptstyle cramped"><span class="mord scriptscriptstyle cramped"><span class="mord mathit">i</span><span class="mord mathit">n</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mbin">+</span><span class="mord"><span class="mord mathit">n</span><span class="vlist"><span style="top:0.15em;margin-right:0.07142857142857144em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-scriptstyle scriptscriptstyle cramped"><span class="mord scriptscriptstyle cramped"><span class="mord mathit">o</span><span class="mord mathit">u</span><span class="mord mathit">t</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span><span style="top:-0.22999999999999998em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle textstyle uncramped frac-line"></span></span><span style="top:-0.394em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord mathrm">6</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="sizing reset-size5 size5 reset-textstyle textstyle uncramped nulldelimiter"></span></span></span></span><span style="top:-1.102564em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1em;">​</span></span><span class="reset-textstyle textstyle uncramped sqrt-line"></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:1em;">​</span></span>​</span></span></span><span class="mclose">⟯</span></span></span></span> 范围内的均匀分布，而它的方差根据 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>D</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mrow><mo>(</mo><mi>m</mi><mi>a</mi><mi>x</mi><mo>−</mo><mi>m</mi><mi>i</mi><mi>n</mi><msup><mo>)</mo><mn>2</mn></msup><mi mathvariant="normal">/</mi><mn>1</mn><mn>2</mn></mrow></mrow><annotation encoding="application/x-tex">D(x)={(max-min)^2/12}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.8141079999999999em;"></span><span class="strut bottom" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.02778em;">D</span><span class="mopen">(</span><span class="mord mathit">x</span><span class="mclose">)</span><span class="mrel">=</span><span class="mord textstyle uncramped"><span class="mopen">(</span><span class="mord mathit">m</span><span class="mord mathit">a</span><span class="mord mathit">x</span><span class="mbin">−</span><span class="mord mathit">m</span><span class="mord mathit">i</span><span class="mord mathit">n</span><span class="mclose"><span class="mclose">)</span><span class="vlist"><span style="top:-0.363em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord mathrm">2</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mord mathrm">/</span><span class="mord mathrm">1</span><span class="mord mathrm">2</span></span></span></span></span> 正好等于 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mfrac><mrow><mn>2</mn></mrow><mrow><msub><mi>n</mi><mrow><mi>i</mi><mi>n</mi></mrow></msub><mo>+</mo><msub><mi>n</mi><mrow><mi>o</mi><mi>u</mi><mi>t</mi></mrow></msub></mrow></mfrac></mrow><annotation encoding="application/x-tex">\frac{2}{n_{in}+n_{out}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.845108em;"></span><span class="strut bottom" style="height:1.295108em;vertical-align:-0.44999999999999996em;"></span><span class="base textstyle uncramped"><span class="mord reset-textstyle textstyle uncramped"><span class="sizing reset-size5 size5 reset-textstyle textstyle uncramped nulldelimiter"></span><span class="mfrac"><span class="vlist"><span style="top:0.345em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord scriptstyle cramped"><span class="mord"><span class="mord mathit">n</span><span class="vlist"><span style="top:0.15em;margin-right:0.07142857142857144em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-scriptstyle scriptscriptstyle cramped"><span class="mord scriptscriptstyle cramped"><span class="mord mathit">i</span><span class="mord mathit">n</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="mbin">+</span><span class="mord"><span class="mord mathit">n</span><span class="vlist"><span style="top:0.15em;margin-right:0.07142857142857144em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-scriptstyle scriptscriptstyle cramped"><span class="mord scriptscriptstyle cramped"><span class="mord mathit">o</span><span class="mord mathit">u</span><span class="mord mathit">t</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span></span></span></span><span style="top:-0.22999999999999998em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle textstyle uncramped frac-line"></span></span><span style="top:-0.394em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span><span class="reset-textstyle scriptstyle uncramped"><span class="mord scriptstyle uncramped"><span class="mord mathrm">2</span></span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">​</span></span>​</span></span></span><span class="sizing reset-size5 size5 reset-textstyle textstyle uncramped nulldelimiter"></span></span></span></span></span> 。</p>
+<p>​    如果神经网络的权重初始化太小，那么我们的输入在经过每层计算后，逐渐缩小而难以产生作用，如果权重初始化太大，则计算后将逐渐增大并导致发散和失效。</p>
+<p>​    不适合的权重似的隐含层的输入方差过大，经过 <code>sigmoid</code>  激活函数时离中心较远，导数接近于零，从而导致提督弥散。</p>
+<p><strong> xavier权重初始化 </strong></p>
+<p>​    xavier权重初始化可以减少梯度弥散，使输入可以传递的更深。</p>
+<p>​    xavier根据某一层网络的输入、输出节点数量自动调整最合适的分布，让权重满足0均值，同时方差为 $\frac{2}{n_{in}+n_{out}}$ ，分布可以使用均匀分布或者高斯分布。</p>
+<p>​    下面我们创建一个 $\lgroup  -\sqrt{\frac{6}{n_{in}+n_{out}}}, \sqrt{\frac{6}{n_{in}+n_{out}}} \rgroup$ 范围内的均匀分布，而它的方差根据 $D(x)={(max-min)^2/12}$ 正好等于 $\frac{2}{n_{in}+n_{out}}$ 。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># fan_in：输入节点的数量，fan_out: 输出节点的数量</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">xavier_init</span><span class="params">(fan_in, fan_out, constant=<span class="number">1</span>)</span>:</span></span><br><span class="line">    low = -constant * np.sqrt(<span class="number">6.0</span> / (fan_in + fan_out))</span><br><span class="line">    high = constant * np.sqrt(<span class="number">6.0</span> / (fan_in + fan_out))</span><br><span class="line">    <span class="keyword">return</span> tf.random.unifom((fan_in, fan_out), minval=low, maxval=high, dtype=tf.float32)</span><br></pre></td></tr></table></figure>
-<h3 id="定义自编码器类的构建函数"><a class="header-anchor" href="#定义自编码器类的构建函数" aria-hidden="true">¶</a> 定义自编码器类的构建函数</h3>
-<p>参数解释：</p>
-<p>n_input: 输入层个数	n_hidden: 隐含层个数	transfer_function: 隐含层的激活函数，设为softplus</p>
-<p>optimizer：优化器，设为Adam	scale：高斯噪声系数，设为0.1</p>
-<p>class内的scale参数设为一个placeholder	权重初始化使用定义的init_weights函数</p>
+<h3 id="定义自编码器类的构建函数"><a href="#定义自编码器类的构建函数" class="headerlink" title="定义自编码器类的构建函数"></a>定义自编码器类的构建函数</h3><p>参数解释：</p>
+<p>n_input: 输入层个数    n_hidden: 隐含层个数    transfer_function: 隐含层的激活函数，设为softplus</p>
+<p>optimizer：优化器，设为Adam    scale：高斯噪声系数，设为0.1    </p>
+<p>class内的scale参数设为一个placeholder    权重初始化使用定义的init_weights函数</p>
 <blockquote>
 <p>这里我们只定义了一层隐含层，可以继续添加！</p>
 </blockquote>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AdditiveGaussianNoiseAutoencoder</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, n_input, n_hidden, transfer_function=tf.nn.softplus,</span></span></span><br><span class="line"><span class="function"><span class="params">                 optimizer=tf.train.AdamOptimizer<span class="params">()</span>, scale=<span class="number">0.1</span>)</span>:</span></span><br><span class="line">        self.n_input = n_input</span><br><span class="line">        self.n_hidden = n_hidden</span><br><span class="line">        self.transfer = transfer_function</span><br><span class="line">        self.scale = tf.placeholder(tf.float32)</span><br><span class="line">        self.training_scale = scale</span><br><span class="line">        weights = self.init_weights()</span><br><span class="line">        self.weights = weights</span><br></pre></td></tr></table></figure>
-<h3 id="定义权重初始化函数 init_weights"><a class="header-anchor" href="#定义权重初始化函数 init_weights" aria-hidden="true">¶</a> 定义权重初始化函数 <code>init_weights</code></h3>
-<p>w1经过 <em>xavier_init</em> 函数初始化，传入输入层和隐含层的节点数，xavier会返回一个适合 <em>softplus</em> 等激活函数的权重初始分布，偏置 <code>b1</code> 全部置为0即可。对于输出层，因为没有使用激活函数，<em>w2、b2</em> 全部初始化为0。</p>
+<h3 id="定义权重初始化函数-init-weights"><a href="#定义权重初始化函数-init-weights" class="headerlink" title="定义权重初始化函数 init_weights"></a>定义权重初始化函数 <code>init_weights</code></h3><p>w1经过 <em>xavier_init</em> 函数初始化，传入输入层和隐含层的节点数，xavier会返回一个适合 <em>softplus</em> 等激活函数的权重初始分布，偏置 <code>b1</code> 全部置为0即可。对于输出层，因为没有使用激活函数，<em>w2、b2</em> 全部初始化为0。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">init_weights</span><span class="params">(self)</span>:</span></span><br><span class="line">    all_weights = dict()</span><br><span class="line">    all_weights[<span class="string">'w1'</span>] = tf.Variable(xavier_init(self.n_input, self.n_hidden))</span><br><span class="line">    all_weights[<span class="string">'b1'</span>] = tf.Variable(tf.zeros([self.n_hidden], dtype=tf.float32))</span><br><span class="line">    all_weights[<span class="string">'w2'</span>] = tf.Variable(tf.zeros([self.n_hidden, self.n_input], dtype=tf.float32))</span><br><span class="line">    sll_weights[<span class="string">'b2'</span>] = tf.Variable(tf.zeros([n_input], dtype=tf.float32))</span><br><span class="line">    <span class="keyword">return</span> all_weights</span><br></pre></td></tr></table></figure>
-<h3 id="定义网络结构"><a class="header-anchor" href="#定义网络结构" aria-hidden="true">¶</a> 定义网络结构</h3>
-<ul>
+<h3 id="定义网络结构"><a href="#定义网络结构" class="headerlink" title="定义网络结构"></a>定义网络结构</h3><ul>
 <li>输入层： <code>self.x</code></li>
 <li>隐含层：首先计算 <code>w1 * x + b</code> ，然后带入激活函数 <code>transfer</code> 中计算。其中 <code>x</code> 为输入加上噪声即 <code>self.x + scale * tf.random_normal({n_input,})</code> 。</li>
 <li>重建层（输出层）：将数据尽大的复原为输入的数据</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">self.x = tf.placeholder(tf.float, [<span class="keyword">None</span>, self.n_input])</span><br><span class="line">self.hidden = self.transfer(tf.add(tf.matmul(</span><br><span class="line">    self.x + scale * tf.random_normal(&#123;n_input,&#125;), </span><br><span class="line">    self.weights[<span class="string">'w1'</span>]), self.weights[<span class="string">'b1'</span>]))</span><br><span class="line">self.reconstruction = tf.add(tf.matmul(</span><br><span class="line">    self.hidden, self.weights[<span class="string">'w2'</span>]), self.weights[<span class="string">'b3'</span>])</span><br></pre></td></tr></table></figure>
-<h3 id="定义损失函数"><a class="header-anchor" href="#定义损失函数" aria-hidden="true">¶</a> 定义损失函数</h3>
-<p>使用平方误差函数（SSE）</p>
+<h3 id="定义损失函数"><a href="#定义损失函数" class="headerlink" title="定义损失函数"></a>定义损失函数</h3><p>使用平方误差函数（SSE）</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">self.cost = <span class="number">0.5</span> * tf.reduce_sum(tf.pow(tf.subtract(</span><br><span class="line">    							self.reconstruction, self.x), <span class="number">2.0</span>))</span><br><span class="line">self.optimizer = optimizer.minimize(self.cost)</span><br></pre></td></tr></table></figure>
-<h3 id="初始化全部参数"><a class="header-anchor" href="#初始化全部参数" aria-hidden="true">¶</a> 初始化全部参数</h3>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">init = tf.global_variables_initializer()</span><br><span class="line">self.sess = tf.Session()</span><br><span class="line">self.sess.run(init)</span><br></pre></td></tr></table></figure>
-<h3 id="定义计算损失 cost 及执行进一步训练的函数 partial_fit"><a class="header-anchor" href="#定义计算损失 cost 及执行进一步训练的函数 partial_fit" aria-hidden="true">¶</a> 定义计算损失 <code>cost</code> 及执行进一步训练的函数 <code>partial_fit</code></h3>
-<blockquote>
+<h3 id="初始化全部参数"><a href="#初始化全部参数" class="headerlink" title="初始化全部参数"></a>初始化全部参数</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">init = tf.global_variables_initializer()</span><br><span class="line">self.sess = tf.Session()</span><br><span class="line">self.sess.run(init)</span><br></pre></td></tr></table></figure>
+<h3 id="定义计算损失-cost-及执行进一步训练的函数-partial-fit"><a href="#定义计算损失-cost-及执行进一步训练的函数-partial-fit" class="headerlink" title="定义计算损失 cost 及执行进一步训练的函数 partial_fit"></a>定义计算损失 <code>cost</code> 及执行进一步训练的函数 <code>partial_fit</code></h3><blockquote>
 <p>功能：触发训练操作，对一个 <code>batch</code> 的数据进行训练并计算当前的损失！</p>
 </blockquote>
-<p>​	函数里只需让Session执行两个计算图的节点，分别是损失 <code>cost</code> 和训练过程 <code>optimizer</code> ，输入的 <code>feed_dict</code> 包括输入数据 <code>x</code> 、噪声的系数 <code>scale</code> 。</p>
+<p>​    函数里只需让Session执行两个计算图的节点，分别是损失 <code>cost</code> 和训练过程 <code>optimizer</code> ，输入的 <code>feed_dict</code> 包括输入数据 <code>x</code> 、噪声的系数 <code>scale</code> 。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">partial_fit</span><span class="params">(self, x)</span>:</span></span><br><span class="line">    cost, opt = self.sess.run((self.cost, self.optimizer),</span><br><span class="line">                             feed_Dict=&#123;self.x: x, self.scale: self.training_scale&#125;)</span><br><span class="line">    <span class="keyword">return</span> cost</span><br></pre></td></tr></table></figure>
-<h3 id="定义总损失函数 calc_total_cost"><a class="header-anchor" href="#定义总损失函数 calc_total_cost" aria-hidden="true">¶</a> 定义总损失函数 <code>calc_total_cost</code></h3>
-<blockquote>
+<h3 id="定义总损失函数-calc-total-cost"><a href="#定义总损失函数-calc-total-cost" class="headerlink" title="定义总损失函数 calc_total_cost"></a>定义总损失函数 <code>calc_total_cost</code></h3><blockquote>
 <p>自编码器训练完后，用来在测试集数据上对数据模型进行评测</p>
 </blockquote>
-<p>​	与  <code>partial_fit</code> 函数不同，这里只让Session执行一个计算图节点 <code>self.cost</code> ，传入的参数和上一个函数一样。</p>
+<p>​    与  <code>partial_fit</code> 函数不同，这里只让Session执行一个计算图节点 <code>self.cost</code> ，传入的参数和上一个函数一样。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cal_total_cost</span><span class="params">(self, x)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> self.sess.run(self.cost, feed_dict=&#123;self.x: x, </span><br><span class="line">                                               self.scale: self.training.scale&#125;)</span><br></pre></td></tr></table></figure>
-<h3 id="定义 transform 函数"><a class="header-anchor" href="#定义 transform 函数" aria-hidden="true">¶</a> 定义 <code>transform</code> 函数</h3>
-<blockquote>
+<h3 id="定义-transform-函数"><a href="#定义-transform-函数" class="headerlink" title="定义 transform 函数"></a>定义 <code>transform</code> 函数</h3><blockquote>
 <p>功能：返回自编码器隐含层的输出结果。隐含层的主要功能是学习处数据中的高级特征，该函数目的是提供一个接口来得到经过隐含层抽象后的特征！</p>
 </blockquote>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">transform</span><span class="params">(self, x)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> self.sess.run(self.hidden, feed_dict=&#123;self.x: x, </span><br><span class="line">                                                self.scale: self.training_scale&#125;)</span><br></pre></td></tr></table></figure>
-<h3 id="定义 generate 函数"><a class="header-anchor" href="#定义 generate 函数" aria-hidden="true">¶</a> 定义 <code>generate</code> 函数</h3>
-<blockquote>
+<h3 id="定义-generate-函数"><a href="#定义-generate-函数" class="headerlink" title="定义 generate 函数"></a>定义 <code>generate</code> 函数</h3><blockquote>
 <p>功能：返回自编码器重构层的输出结果。重构层的主要功能是将隐含层提取的高阶特征复原为原输入数据。</p>
 </blockquote>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">generaate</span><span class="params">(self, hidden = None)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> hidden == <span class="keyword">None</span>:</span><br><span class="line">        hidden = np.random.normal(size = self.weights[<span class="string">'b1'</span>])</span><br><span class="line">     <span class="keyword">return</span> self.sess.run(self.reconstruction, feed_dict=&#123;self.hidden: hidden&#125;)</span><br></pre></td></tr></table></figure>
-<h3 id="定义reconstruct 函数"><a class="header-anchor" href="#定义reconstruct 函数" aria-hidden="true">¶</a> 定义<code>reconstruct</code> 函数</h3>
-<blockquote>
-<p>功能：完整运行 输入数据 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\to</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.36687em;"></span><span class="strut bottom" style="height:0.36687em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mrel">→</span></span></span></span> 提取高级特征 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\to</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.36687em;"></span><span class="strut bottom" style="height:0.36687em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mrel">→</span></span></span></span> 复原数据 ，即同时包括 <code>transform</code> 、 <code>generate</code> 函数。</p>
+<h3 id="定义reconstruct-函数"><a href="#定义reconstruct-函数" class="headerlink" title="定义reconstruct 函数"></a>定义<code>reconstruct</code> 函数</h3><blockquote>
+<p>功能：完整运行 输入数据 $\to$ 提取高级特征 $\to$ 复原数据 ，即同时包括 <code>transform</code> 、 <code>generate</code> 函数。</p>
 </blockquote>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">reconstruct</span><span class="params">(self, x)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> self.sess.run(self.reconstruction, feed_dict=&#123;self.x: x,</span><br><span class="line">                                                       self.scale: self.training_scale&#125;)</span><br></pre></td></tr></table></figure>
-<h3 id="定义获取参数函数"><a class="header-anchor" href="#定义获取参数函数" aria-hidden="true">¶</a> 定义获取参数函数</h3>
-<blockquote>
+<h3 id="定义获取参数函数"><a href="#定义获取参数函数" class="headerlink" title="定义获取参数函数"></a>定义获取参数函数</h3><blockquote>
 <p>功能：得到隐含层的权重 <code>w1</code> 和偏置 <code>b1</code> ！</p>
 </blockquote>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getWeight</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> self.sess.run(self.weights[<span class="string">'w1'</span>])</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getBias</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> self.sess.run(self.weights[<span class="string">'b1'</span>])</span><br></pre></td></tr></table></figure>
 <p>去噪编码器类已经定义完成，包括对神经网络的设计、权重的初始化以及几个成员函数。</p>
 <hr>
-<h2 id="测试"><a class="header-anchor" href="#测试" aria-hidden="true">¶</a> 测试</h2>
-<p>我们使用TensorFlow提供的 <code>MNIST</code> 数据集进行测试。</p>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>我们使用TensorFlow提供的 <code>MNIST</code> 数据集进行测试。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">input_data.read_data_sets(<span class="string">'MNIST_data'</span>, one_hot=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
-<h3 id="定义数据标准化函数"><a class="header-anchor" href="#定义数据标准化函数" aria-hidden="true">¶</a> 定义数据标准化函数</h3>
-<blockquote>
+<h3 id="定义数据标准化函数"><a href="#定义数据标准化函数" class="headerlink" title="定义数据标准化函数"></a>定义数据标准化函数</h3><blockquote>
 <p>即将数据变为均值为0, 便准差为1的分布。将数据减去均值，然后除以方差。</p>
 </blockquote>
-<p>​	使用 <code>sklearn.preprocessing</code> 的 <code>StandardScaler</code> 类现在训练集上进行 <code>fit</code> ，再将这个 <code>Scale</code> 用在训练数据和测试数据上。保证训练数据和测试数据使用同一个 <code>Scale</code> ，使得后面模型处理数据时的一致性。</p>
+<p>​    使用 <code>sklearn.preprocessing</code> 的 <code>StandardScaler</code> 类现在训练集上进行 <code>fit</code> ，再将这个 <code>Scale</code> 用在训练数据和测试数据上。保证训练数据和测试数据使用同一个 <code>Scale</code> ，使得后面模型处理数据时的一致性。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Standard_scale</span><span class="params">(x_train, x_test)</span>:</span></span><br><span class="line">    preprocessor = prep.Stap yndardScale().fit(x_train)</span><br><span class="line">    x_train = preprocessor.transform(x_train)</span><br><span class="line">    x_test = preprocessor.transform(x_test)</span><br><span class="line">    retutn x_train, x_test</span><br></pre></td></tr></table></figure>
-<h3 id="定义获取随机 batch_size 大小的数据函数"><a class="header-anchor" href="#定义获取随机 batch_size 大小的数据函数" aria-hidden="true">¶</a> 定义获取随机 <code>batch_size</code> 大小的数据函数</h3>
-<blockquote>
+<h3 id="定义获取随机-batch-size-大小的数据函数"><a href="#定义获取随机-batch-size-大小的数据函数" class="headerlink" title="定义获取随机 batch_size 大小的数据函数"></a>定义获取随机 <code>batch_size</code> 大小的数据函数</h3><blockquote>
 <p>不放回的每次抽样！</p>
 </blockquote>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_random_block_from_data</span><span class="params">(data, batch_seze)</span>:</span></span><br><span class="line">    start_index = np.random.randint(<span class="number">0</span>, len(data)-batch_size)</span><br><span class="line">    <span class="keyword">return</span> data[start_index : (start_index + batch_size)]</span><br></pre></td></tr></table></figure>
-<h3 id="标准化训练集、测试集"><a class="header-anchor" href="#标准化训练集、测试集" aria-hidden="true">¶</a> 标准化训练集、测试集</h3>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x_train, x_test = Standard_scale(mnist.train.images, mnist.test.images)</span><br></pre></td></tr></table></figure>
-<h3 id="定义常用参数"><a class="header-anchor" href="#定义常用参数" aria-hidden="true">¶</a> 定义常用参数</h3>
-<p>参数解释：</p>
-<p>n_samples：总训练样本数		training_epoches：最大训练轮数	batch_size：批数据样本大小，设为128</p>
+<h3 id="标准化训练集、测试集"><a href="#标准化训练集、测试集" class="headerlink" title="标准化训练集、测试集"></a>标准化训练集、测试集</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x_train, x_test = Standard_scale(mnist.train.images, mnist.test.images)</span><br></pre></td></tr></table></figure>
+<h3 id="定义常用参数"><a href="#定义常用参数" class="headerlink" title="定义常用参数"></a>定义常用参数</h3><p>参数解释：</p>
+<p>n_samples：总训练样本数        training_epoches：最大训练轮数    batch_size：批数据样本大小，设为128</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">n_samples = int(mnist.train.num_examples)</span><br><span class="line">training_epoches = <span class="number">20</span></span><br><span class="line">batch_size = <span class="number">128</span></span><br><span class="line">display_step = <span class="number">1</span></span><br></pre></td></tr></table></figure>
-<h2 id="训练"><a class="header-anchor" href="#训练" aria-hidden="true">¶</a> 训练</h2>
-<h3 id="实例化自编码器类"><a class="header-anchor" href="#实例化自编码器类" aria-hidden="true">¶</a> 实例化自编码器类</h3>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">autoencoder = AdditiveGaussianNoiseAutoencoder(n_input=<span class="number">784</span>,</span><br><span class="line">                                              n_hidden=<span class="number">200</span>,</span><br><span class="line">                                              transfer_function = tf.nn.softplus,</span><br><span class="line">                                              optimizer=tf.train.AdamOptimizer(learning_rate=<span class="number">0.001</span>),</span><br><span class="line">                                              scale=<span class="number">0.01</span>)</span><br></pre></td></tr></table></figure>
-<h3 id="开始训练"><a class="header-anchor" href="#开始训练" aria-hidden="true">¶</a> 开始训练</h3>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(training_epochs):</span><br><span class="line">    avg_cost = <span class="number">0.</span></span><br><span class="line">    total_batch = int(n_samples / batch_size)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(total_size):</span><br><span class="line">        batch_xs = get_random_block_from_data(x_train, batch_size)</span><br><span class="line">        cost = autoencoder.partial_fit(batch_xs)</span><br><span class="line">        avg_cost += cost / n_sample * batch_size</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> epoch % display_step == <span class="number">0</span>:</span><br><span class="line">        print(<span class="string">"Epoch:"</span>, <span class="string">'%04d'</span> %(epoch + <span class="number">1</span>), <span class="string">"cost="</span>, <span class="string">":.9f"</span>.format(avg_cost))</span><br></pre></td></tr></table></figure>
-<h2 id="评测"><a class="header-anchor" href="#评测" aria-hidden="true">¶</a> 评测</h2>
-<p>​	使用平方误差和来</p>
+<h2 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h2><h3 id="实例化自编码器类"><a href="#实例化自编码器类" class="headerlink" title="实例化自编码器类"></a>实例化自编码器类</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">autoencoder = AdditiveGaussianNoiseAutoencoder(n_input=<span class="number">784</span>,</span><br><span class="line">                                              n_hidden=<span class="number">200</span>,</span><br><span class="line">                                              transfer_function = tf.nn.softplus,</span><br><span class="line">                                              optimizer=tf.train.AdamOptimizer(learning_rate=<span class="number">0.001</span>),</span><br><span class="line">                                              scale=<span class="number">0.01</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="开始训练"><a href="#开始训练" class="headerlink" title="开始训练"></a>开始训练</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(training_epochs):</span><br><span class="line">    avg_cost = <span class="number">0.</span></span><br><span class="line">    total_batch = int(n_samples / batch_size)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(total_size):</span><br><span class="line">        batch_xs = get_random_block_from_data(x_train, batch_size)</span><br><span class="line">        cost = autoencoder.partial_fit(batch_xs)</span><br><span class="line">        avg_cost += cost / n_sample * batch_size</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> epoch % display_step == <span class="number">0</span>:</span><br><span class="line">        print(<span class="string">"Epoch:"</span>, <span class="string">'%04d'</span> %(epoch + <span class="number">1</span>), <span class="string">"cost="</span>, <span class="string">":.9f"</span>.format(avg_cost))</span><br></pre></td></tr></table></figure>
+<h2 id="评测"><a href="#评测" class="headerlink" title="评测"></a>评测</h2><p>​    使用平方误差和来</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">"total cost:"</span> + autoencoder.cal_total_cost(x_test))</span><br></pre></td></tr></table></figure>
-<p>​</p>
+<p>​    </p>
 <p>去噪自编码器的TensorFlow实现完成。</p>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css">
-                <hr>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/TensorFlow/" rel="tag"># TensorFlow</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/31/自然语言处理笔记/" rel="next" title="自然语言处理笔记">
+                <i class="fa fa-chevron-left"></i> 自然语言处理笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/31/TensorFlow学习（一）_ 构建卷积神经网络/" rel="prev" title="TensorFlow学习（一）- 构建卷积神经网络">
+                TensorFlow学习（一）- 构建卷积神经网络 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">MR.C</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
                 
-
-                <ul class="pager">
-                    
-                    <li class="previous">
-                        <a href="/2018/07/31/TensorFlow学习（一）_ 构建卷积神经网络/" data-toggle="tooltip" data-placement="top"
-                           title="TensorFlow学习（一）- 构建卷积神经网络">&larr; Previous Post</a>
-                    </li>
-                    
-                    
-                    <li class="next">
-                        <a href="/2018/07/31/自然语言处理笔记/" data-toggle="tooltip" data-placement="top"
-                           title="自然语言处理笔记">Next Post &rarr;</a>
-                    </li>
-                    
-                </ul>
-
+                  <a href="/archives/">
                 
-
-                
-
-
-                <!--加入新的评论系统-->
-                
-
-                
-
-            </div>
-
-            <div class="hidden-xs col-sm-3 toc-col">
-                <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#准备"><span class="toc-text">¶ 准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#定义函数"><span class="toc-text">¶ 定义函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#参数初始化方法 xavier initialization"><span class="toc-text">¶ 参数初始化方法 xavier initialization</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定义自编码器类的构建函数"><span class="toc-text">¶ 定义自编码器类的构建函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定义权重初始化函数 init_weights"><span class="toc-text">¶ 定义权重初始化函数 init_weights</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定义网络结构"><span class="toc-text">¶ 定义网络结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定义损失函数"><span class="toc-text">¶ 定义损失函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#初始化全部参数"><span class="toc-text">¶ 初始化全部参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定义计算损失 cost 及执行进一步训练的函数 partial_fit"><span class="toc-text">¶ 定义计算损失 cost 及执行进一步训练的函数 partial_fit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定义总损失函数 calc_total_cost"><span class="toc-text">¶ 定义总损失函数 calc_total_cost</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定义 transform 函数"><span class="toc-text">¶ 定义 transform 函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定义 generate 函数"><span class="toc-text">¶ 定义 generate 函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定义reconstruct 函数"><span class="toc-text">¶ 定义reconstruct 函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定义获取参数函数"><span class="toc-text">¶ 定义获取参数函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试"><span class="toc-text">¶ 测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定义数据标准化函数"><span class="toc-text">¶ 定义数据标准化函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定义获取随机 batch_size 大小的数据函数"><span class="toc-text">¶ 定义获取随机 batch_size 大小的数据函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#标准化训练集、测试集"><span class="toc-text">¶ 标准化训练集、测试集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定义常用参数"><span class="toc-text">¶ 定义常用参数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#训练"><span class="toc-text">¶ 训练</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#实例化自编码器类"><span class="toc-text">¶ 实例化自编码器类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开始训练"><span class="toc-text">¶ 开始训练</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#评测"><span class="toc-text">¶ 评测</span></a></li></ol>
+                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
                 </div>
-            </div>
-        </div>
+              
 
-        <div class="row">
-            <!-- Sidebar Container -->
-
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                sidebar-container">
-
-                <!-- Featured Tags -->
+              
                 
-
-                <!-- Friends Blog -->
                 
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="undefined" target="_blank" title="GitHub"><i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="undefined" target="_blank" title="Twitter"><i class="fa fa-fw fa-globe"></i>Twitter</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="undefined" target="_blank" title="Weibo"><i class="fa fa-fw fa-globe"></i>Weibo</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="undefined" target="_blank" title="ZhiHu"><i class="fa fa-fw fa-globe"></i>ZhiHu</a>
+                  
+                </span>
+              
             </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
         </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#准备"><span class="nav-number">1.</span> <span class="nav-text">准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定义函数"><span class="nav-number">2.</span> <span class="nav-text">定义函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参数初始化方法-xavier-initialization"><span class="nav-number">2.1.</span> <span class="nav-text">参数初始化方法 xavier initialization</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定义自编码器类的构建函数"><span class="nav-number">2.2.</span> <span class="nav-text">定义自编码器类的构建函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定义权重初始化函数-init-weights"><span class="nav-number">2.3.</span> <span class="nav-text">定义权重初始化函数 init_weights</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定义网络结构"><span class="nav-number">2.4.</span> <span class="nav-text">定义网络结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定义损失函数"><span class="nav-number">2.5.</span> <span class="nav-text">定义损失函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化全部参数"><span class="nav-number">2.6.</span> <span class="nav-text">初始化全部参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定义计算损失-cost-及执行进一步训练的函数-partial-fit"><span class="nav-number">2.7.</span> <span class="nav-text">定义计算损失 cost 及执行进一步训练的函数 partial_fit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定义总损失函数-calc-total-cost"><span class="nav-number">2.8.</span> <span class="nav-text">定义总损失函数 calc_total_cost</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定义-transform-函数"><span class="nav-number">2.9.</span> <span class="nav-text">定义 transform 函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定义-generate-函数"><span class="nav-number">2.10.</span> <span class="nav-text">定义 generate 函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定义reconstruct-函数"><span class="nav-number">2.11.</span> <span class="nav-text">定义reconstruct 函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定义获取参数函数"><span class="nav-number">2.12.</span> <span class="nav-text">定义获取参数函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试"><span class="nav-number">3.</span> <span class="nav-text">测试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义数据标准化函数"><span class="nav-number">3.1.</span> <span class="nav-text">定义数据标准化函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定义获取随机-batch-size-大小的数据函数"><span class="nav-number">3.2.</span> <span class="nav-text">定义获取随机 batch_size 大小的数据函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标准化训练集、测试集"><span class="nav-number">3.3.</span> <span class="nav-text">标准化训练集、测试集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定义常用参数"><span class="nav-number">3.4.</span> <span class="nav-text">定义常用参数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#训练"><span class="nav-number">4.</span> <span class="nav-text">训练</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实例化自编码器类"><span class="nav-number">4.1.</span> <span class="nav-text">实例化自编码器类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开始训练"><span class="nav-number">4.2.</span> <span class="nav-text">开始训练</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#评测"><span class="nav-number">5.</span> <span class="nav-text">评测</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
 
     </div>
-</article>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">MR.C</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Muse</a> v6.4.0</div>
+
+
+
+
+        
 
 
 
@@ -391,104 +820,450 @@
 
 
 
-<!-- Footer -->
-<!-- Footer -->
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
-                <br>
-                <ul class="list-inline text-center">
-                
-                
-                
 
-                
+        
+      </div>
+    </footer>
 
-                
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
 
-                
+    
+	
+    
 
-                
+    
+  </div>
 
-                </ul>
-                <p class="copyright text-muted">
-                    Copyright &copy; 蔡圣哲 2018
-                    <br>
-                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
-                    <br>
-                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
-                </p>
+  
 
-            </div>
-        </div>
-    </div>
-</footer>
-
-<!-- jQuery -->
-<script src="/js/jquery.min.js"></script>
-
-<!-- Bootstrap Core JavaScript -->
-<script src="/js/bootstrap.min.js"></script>
-
-<!-- Custom Theme JavaScript -->
-<script src="/js/blog.js"></script>
-
-<!-- async load function -->
-<script>
-    function async(u, c) {
-      var d = document, t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      o.src = u;
-      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-      s.parentNode.insertBefore(o, s);
-    }
-</script>
-
-<!-- jquery.tagcloud.js -->
-<script>
-    // only load tagcloud.js in tag.html
-    if($('#tag_cloud').length !== 0){
-        async("http://yoursite.com/js/jquery.tagcloud.js",function(){
-            $.fn.tagcloud.defaults = {
-                //size: {start: 1, end: 1, unit: 'em'},
-                color: {start: '#bbbbee', end: '#0085a1'},
-            };
-            $('#tag_cloud a').tagcloud();
-        })
-    }
-</script>
-
-<!--fastClick.js -->
-<script>
-    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
-        var $nav = document.querySelector("nav");
-        if($nav) FastClick.attach($nav);
-    })
-</script>
-
-<!-- Google Analytics -->
-
-
-
-<!-- Baidu Tongji -->
-
-
-<!-- swiftype -->
 <script type="text/javascript">
-  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
-  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
-  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
-  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
-
-  _st('install','','2.0.0');
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
 </script>
 
-<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
-<!--wechat title img-->
-<img class="wechat-title-img" src=""><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+        // ref: https://github.com/ForbesLindesay/unescape-html
+        var unescapeHtml = function(html) {
+          return String(html)
+            .replace(/&quot;/g, '"')
+            .replace(/&#39;/g, '\'')
+            .replace(/&#x3A;/g, ':')
+            // replace all the other &#x; chars
+            .replace(/&#(\d+);/g, function (m, p) { return String.fromCharCode(p); })
+            .replace(/&lt;/g, '<')
+            .replace(/&gt;/g, '>')
+            .replace(/&amp;/g, '&');
+        };
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                content = unescapeHtml(content);
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('-1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -506,6 +1281,31 @@
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
-</body>
 
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
 </html>
