@@ -26,6 +26,13 @@
 
 
 
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
 
 
 
@@ -229,17 +236,25 @@
         
         
           
-          <li class="menu-item menu-item-about">
-    <a href="/about/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
   </li>
         
         
         
           
-          <li class="menu-item menu-item-tags">
-    <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+          <li class="menu-item menu-item-leisure">
+    <a href="/leisure/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-headphones"></i> <br />leisure</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-recomments">
+    <a href="/study/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-leanpub"></i> <br />recomments</a>
   </li>
         
         
@@ -256,6 +271,14 @@
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
   </li>
 
       
@@ -342,7 +365,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="MR.C">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/uploads/1.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -427,6 +450,17 @@
 
           
           
+             <span id="/2018/10/06/Ubuntu安装Mysql/" class="leancloud_visitors" data-flag-title="Ubuntu安装Mysql">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Views: </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
           
 
@@ -449,8 +483,10 @@
       
         <hr>
 <a id="more"></a>
-<h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><p>在官网下载 <a href="https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-server_8.0.11-1ubuntu18.04_amd64.deb-bundle.tar" target="_blank" rel="noopener">mysql-server_8.0.11-1ubuntu18.04_amd64.deb-bundle.tar</a> 文件。</p>
-<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>将文件放到 <code>/usr/local/src</code> 中：</p>
+<h2 id="下载"><a class="header-anchor" href="#下载" aria-hidden="true">¶</a> 下载</h2>
+<p>在官网下载 <a href="https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-server_8.0.11-1ubuntu18.04_amd64.deb-bundle.tar" target="_blank" rel="noopener">mysql-server_8.0.11-1ubuntu18.04_amd64.deb-bundle.tar</a> 文件。</p>
+<h2 id="准备"><a class="header-anchor" href="#准备" aria-hidden="true">¶</a> 准备</h2>
+<p>将文件放到 <code>/usr/local/src</code> 中：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mv mysql-server_8.0.11-1ubuntu18.04_amd64.deb-bundle.tar /usr/local/src</span><br></pre></td></tr></table></figure>
 <p>切换到该文件夹：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/src</span><br></pre></td></tr></table></figure>
@@ -459,22 +495,23 @@
 <p>解压 <em>tar</em> 文件：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -xf mysql-server_8.0.11-1ubuntu18.04_amd64.deb-bundle.tar</span><br></pre></td></tr></table></figure>
 <p>执行完成所有步骤后，将会多出以下几个文件：</p>
-<p><code>libmysqlclient21_8.0.11-1ubuntu18.04_amd64.deb</code>  </p>
-<p><code>libmysqlclient-dev_8.0.11-1ubuntu18.04_amd64.deb</code> </p>
-<p><code>mysql-client_8.0.11-1ubuntu18.04_amd64.deb</code> </p>
-<p><code>mysql-common_8.0.11-1ubuntu18.04_amd64.deb</code> </p>
-<p><code>libmysqlclient21_8.0.11-1ubuntu18.04_amd64.deb</code> </p>
-<p><code>libmysqlclient-dev_8.0.11-1ubuntu18.04_amd64.deb</code> </p>
-<p><code>mysql-client_8.0.11-1ubuntu18.04_amd64.deb</code> </p>
+<p><code>libmysqlclient21_8.0.11-1ubuntu18.04_amd64.deb</code></p>
+<p><code>libmysqlclient-dev_8.0.11-1ubuntu18.04_amd64.deb</code></p>
+<p><code>mysql-client_8.0.11-1ubuntu18.04_amd64.deb</code></p>
 <p><code>mysql-common_8.0.11-1ubuntu18.04_amd64.deb</code></p>
-<p><code>mysql-community-client_8.0.11-1ubuntu18.04_amd64.deb</code> </p>
-<p><code>mysql-community-client-core_8.0.11-1ubuntu18.04_amd64.deb</code> </p>
-<p><code>mysql-community-server-core_8.0.11-1ubuntu18.04_amd64.deb</code> </p>
-<p><code>mysql-community-server_8.0.11-1ubuntu18.04_amd64.deb</code> </p>
-<p><code>mysql-community-test_8.0.11-1ubuntu18.04_amd64.deb</code> </p>
-<p><code>mysql-server_8.0.11-1ubuntu18.04_amd64.deb</code> </p>
+<p><code>libmysqlclient21_8.0.11-1ubuntu18.04_amd64.deb</code></p>
+<p><code>libmysqlclient-dev_8.0.11-1ubuntu18.04_amd64.deb</code></p>
+<p><code>mysql-client_8.0.11-1ubuntu18.04_amd64.deb</code></p>
+<p><code>mysql-common_8.0.11-1ubuntu18.04_amd64.deb</code></p>
+<p><code>mysql-community-client_8.0.11-1ubuntu18.04_amd64.deb</code></p>
+<p><code>mysql-community-client-core_8.0.11-1ubuntu18.04_amd64.deb</code></p>
+<p><code>mysql-community-server-core_8.0.11-1ubuntu18.04_amd64.deb</code></p>
+<p><code>mysql-community-server_8.0.11-1ubuntu18.04_amd64.deb</code></p>
+<p><code>mysql-community-test_8.0.11-1ubuntu18.04_amd64.deb</code></p>
+<p><code>mysql-server_8.0.11-1ubuntu18.04_amd64.deb</code></p>
 <p><code>mysql-testsuite_8.0.11-1ubuntu18.04_amd64.deb</code>    无用</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>按下面命令运行：</p>
+<h2 id="安装"><a class="header-anchor" href="#安装" aria-hidden="true">¶</a> 安装</h2>
+<p>按下面命令运行：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dpkg-preconfigure mysql-community-server</span><br></pre></td></tr></table></figure>
 <p>运行后会出现让输入密码，输入密码后按 <code>Tab</code> 和回车，再次输入密码按 <code>Tab</code> 和回车，回到命令行。</p>
 <p>将文件夹中的所有文件名挨个输入到下面语句中替代*，有可能会出现先后顺序问题：</p>
@@ -484,7 +521,8 @@
 <p>安装完成后，输入：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -u root -p</span><br></pre></td></tr></table></figure>
 <p>输入密码。</p>
-<h2 id="完成。"><a href="#完成。" class="headerlink" title="完成。"></a>完成。</h2>
+<h2 id="完成。"><a class="header-anchor" href="#完成。" aria-hidden="true">¶</a> 完成。</h2>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css">
       
     </div>
 
@@ -587,6 +625,10 @@
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/1.jpg"
+                alt="MR.C" />
             
               <p class="site-author-name" itemprop="name">MR.C</p>
               <p class="site-description motion-element" itemprop="description"></p>
@@ -693,22 +735,12 @@
             <div class="links-of-author motion-element">
               
                 <span class="links-of-author-item">
-                  <a href="undefined" target="_blank" title="GitHub"><i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  <a href="https://github.com/onebigcabbage" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
                   
                 </span>
               
                 <span class="links-of-author-item">
-                  <a href="undefined" target="_blank" title="Twitter"><i class="fa fa-fw fa-globe"></i>Twitter</a>
-                  
-                </span>
-              
-                <span class="links-of-author-item">
-                  <a href="undefined" target="_blank" title="Weibo"><i class="fa fa-fw fa-globe"></i>Weibo</a>
-                  
-                </span>
-              
-                <span class="links-of-author-item">
-                  <a href="undefined" target="_blank" title="ZhiHu"><i class="fa fa-fw fa-globe"></i>ZhiHu</a>
+                  <a href="mailto:caizx_ucas@foxmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
                   
                 </span>
               
@@ -719,6 +751,20 @@
           
 
           
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://o--o.win" title="杉哥" target="_blank">杉哥</a>
+                  </li>
+                
+              </ul>
+            </div>
           
 
           
@@ -739,7 +785,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#下载"><span class="nav-number">1.</span> <span class="nav-text">下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#准备"><span class="nav-number">2.</span> <span class="nav-text">准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">3.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完成。"><span class="nav-number">4.</span> <span class="nav-text">完成。</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#下载"><span class="nav-number">1.</span> <span class="nav-text">¶ 下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#准备"><span class="nav-number">2.</span> <span class="nav-text">¶ 准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">3.</span> <span class="nav-text">¶ 安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完成。"><span class="nav-number">4.</span> <span class="nav-text">¶ 完成。</span></a></li></ol></div>
             
 
           </div>
@@ -773,15 +819,9 @@
 
 
 
-  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.0</div>
 
 
 
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">Theme – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Muse</a> v6.4.0</div>
 
 
 
@@ -1237,6 +1277,79 @@
         onPopupClose();
       }
     });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script>
+    
+    function showTime(Counter) {
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      Counter('get', '/classes/Counter', { where: JSON.stringify({ url: { "$in": entries } }) })
+        .done(function ({ results }) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.url;
+            var time = item.time;
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function ({ responseJSON }) {
+          console.log("LeanCloud Counter Error: " + responseJSON.code + " " + responseJSON.error);
+        });
+    }
+    
+
+    $(function() {
+      $.get('https://app-router.leancloud.cn/2/route?appId=' + "V45POMeDep7sBWQCkkM2ypKN-gzGzoHsz")
+        .done(function ({ api_server }) {
+          var Counter = function (method, url, data) {
+            return $.ajax({
+              method: method,
+              url: `https://${api_server}/1.1${url}`,
+              headers: {
+                'X-LC-Id': "V45POMeDep7sBWQCkkM2ypKN-gzGzoHsz",
+                'X-LC-Key': "hMstczlxL21OL84n4sfkv4pm",
+                'Content-Type': 'application/json',
+              },
+              data: data,
+            });
+          };
+          
+          if ($('.post-title-link').length >= 1) {
+            showTime(Counter);
+          }
+          
+        })
+    });
   </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
@@ -1258,15 +1371,18 @@
 
 
 
-
-
   
 
   
 
   
+  
 
   
+  
+
+  
+
 
   
   
