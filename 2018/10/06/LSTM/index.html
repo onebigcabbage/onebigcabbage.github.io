@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.4.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="keywords" content="Deep Learning,LSTM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="-原创翻译- 详解LSTM（Understanding LSTM Networks）">
+<meta property="og:url" content="http://caicai.science/2018/10/06/LSTM/index.html">
+<meta property="og:site_name" content="蔡圣哲">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://caicai.science/images/RNN/RNN-rolled.png">
+<meta property="og:image" content="http://caicai.science/images/RNN/RNN-unrolled.png">
+<meta property="og:image" content="http://caicai.science/images/RNN/RNN-shorttermdepdencies.png">
+<meta property="og:image" content="http://caicai.science/images/RNN/RNN-longtermdependencies.png">
+<meta property="og:image" content="http://caicai.science/images/RNN/LSTM3-SimpleRNN.png">
+<meta property="og:image" content="http://caicai.science/images/RNN/LSTM3-chain.png">
+<meta property="og:image" content="http://caicai.science/images/RNN/LSTM2-notation.png">
+<meta property="og:image" content="http://caicai.science/images/RNN/LSTM3-C-line.png">
+<meta property="og:image" content="http://caicai.science/images/RNN/LSTM3-gate.png">
+<meta property="og:image" content="http://caicai.science/images/RNN/LSTM3-focus-f.png">
+<meta property="og:image" content="http://caicai.science/images/RNN/LSTM3-focus-i.png">
+<meta property="og:image" content="http://caicai.science/images/RNN/LSTM3-focus-C.png">
+<meta property="og:image" content="http://caicai.science/images/RNN/LSTM3-focus-o.png">
+<meta property="og:updated_time" content="2018-04-19T12:17:37.371Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="-原创翻译- 详解LSTM（Understanding LSTM Networks）">
+<meta name="twitter:image" content="http://caicai.science/images/RNN/RNN-rolled.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://caicai.science/2018/10/06/LSTM/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>-原创翻译- 详解LSTM（Understanding LSTM Networks） | 蔡圣哲</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">蔡圣哲</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">不积跬步，无以至千里</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://caicai.science/2018/10/06/LSTM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MR.C">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="蔡圣哲">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">-原创翻译- 详解LSTM（Understanding LSTM Networks）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-10-06 11:22:17" itemprop="dateCreated datePublished" datetime="2018-10-06T11:22:17+08:00">2018-10-06</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-04-19 20:17:37" itemprop="dateModified" datetime="2018-04-19T20:17:37+08:00">2018-04-19</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/深度学习/" itemprop="url" rel="index"><span itemprop="name">深度学习</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <hr>
+<a id="more"></a>
+<h2 id="循环神经网络（RNNs）"><a href="#循环神经网络（RNNs）" class="headerlink" title="循环神经网络（RNNs）"></a>循环神经网络（RNNs）</h2><p>&emsp;&emsp;  人们思考的时候往往会依据之前的经验，正如读这篇文章的时候，在读第二段的时候你会回忆第一段相关的内容，而不是将每一段单独来进行学习。正是因为这具有连贯性。</p>
+<p>&emsp;&emsp;  这也恰好是传统神经网络的缺点。例如，你想要分辨一个电影在每个时刻想要发生什么情节。传统神经网络不能根据前一刻的情节来判断下一刻发生的情节。</p>
+<p>&emsp;&emsp;  但是，RNN可以解决这个问题。因为RNN的网络结构中有很多循环，可以让信息持久下去。</p>
+<p><img src="/images/RNN/RNN-rolled.png" alt="Recurrent Neural Networks have loops."></p>
+<p>&emsp;&emsp;  如图所示，$x_{t}$ 是输入, $h_{t}$ 是输出，中间的循环则允许信息从网络的前一个步骤传递到下一个步骤。</p>
+<p>&emsp;&emsp;  这样看可能不太明显，我们将RNN网络展开如下图，它其实可以看作多个传统的神经网络结构连接而成，只是前一个网络将一些信息传递给下一个网络。</p>
+<p><img src="/images/RNN/RNN-unrolled.png" alt="**An unrolled recurrent neural network.**"></p>
+<p>&emsp;&emsp;  这种链式结构很明显的适用于序列型数据。近几年，将RNNs应用在语音识别、语言模型、机器翻译、图像描述等等领域都取得了很大的成功。具体的可以参考 <em>Andrej Karpathy</em> 的文章 <em><a href="http://karpathy.github.io/2015/05/21/rnn-effectiveness/" target="_blank" rel="noopener">The Unreasonable Effectiveness of Recurrent Neural Networks</a></em> 。</p>
+<p>&emsp;&emsp;  <strong>重点是，这些取得的成果使用的是RNN的一个变种结构——- “LSTMs”，它的效果要比传统的RNN网络结构好的多。</strong></p>
+<h2 id="长期依赖的问题"><a href="#长期依赖的问题" class="headerlink" title="长期依赖的问题"></a>长期依赖的问题</h2><p>&emsp;&emsp;  RNN的一个很大优点是可以将之前的信息连接到当前的任务中，例如你可以联想看过的电影情节来预测接下来要发生的故事情节。如果RNN能够真正做到这样，那对很多领域非常有用。但是事实并非这样，它视情况而定。</p>
+<p>&emsp;&emsp;   有时我们当前的任务只需要最近的信息就可以了。例如，语言模型基于之前的几个词就可以预测接下来的词。假设想要预测 <em>the clouds are in the </em>sky<em>,</em> 的最后一个单词，我们不需要太多的上下文语境就可以推测出是 <em>sky</em> 。在这种语境很简单，并且相关信息与其位置差距很小的情况下，RNNs可以很好的从之前的语境推测出答案。</p>
+<p><img src="/images/RNN/RNN-shorttermdepdencies.png" alt="RNN-shorttermdepdencies"></p>
+<p>&emsp;&emsp;  但是很多情况下我们需要更多的上下文情节。假如我们想要推测 <em>I grew up in France… I speak fluent </em>French<em>.</em> 的最后一个词， 根据最近的词的语境，最后一个词最可能的是一种语言，但是想要知道是什么语言，我们需要知道很靠前的 <em>France</em> 这个词。很有可能相关信息和我们需要的关键信息相隔非常远。</p>
+<p>&emsp; &emsp;然而，随着间隔的增大，RNNs也越来越不能从之前的信息学到东西。</p>
+<p>&emsp;&emsp; 然而，随着间隔的增大，RNNs也越来越不能从之前的信息学到东西。</p>
+<p><img src="/images/RNN/RNN-longtermdependencies.png" alt="RNN-longtermdependencies"></p>
+<p>&emsp;&emsp; 理论上，RNNs可以通过人工调节参数来解决这种”长期依赖“问题。但是实践证明，RNNs并不能很好的学习很长的句子。<strong>不过，LSTMs可以解决这个问题。</strong></p>
+<h2 id="LSTM网络"><a href="#LSTM网络" class="headerlink" title="LSTM网络"></a>LSTM网络</h2><p>&emsp;&emsp; <strong>LSTMs</strong> 是RNN的一种特殊网络结构，通常也被称为长短期记忆网络，它可以有效解决长期依赖问题。有关介绍可参见<a href="http://www.bioinf.jku.at/publications/older/2604.pdf" target="_blank" rel="noopener">Hochreiter &amp; Schmidhuber (1997)</a> 。LSTM被明确的设计出来解决长期依赖问题，它很大的功能就是嫩记住很长时间之前的信息。所有的RNNs网络结构都是由一串相同的神经网络单元构成。标准的RNN神经单元都很简单，比如只有一个 <em>tanh</em> 层。</p>
+<p><img src="/images/RNN/LSTM3-SimpleRNN.png" alt="The repeating module in a standard RNN contains a single layer."></p>
+<p>&emsp;&emsp; LSTM同样也是这种链式结构，但是其神经网络单元不同。它拥有四个层而不是一层，并且这四层相互作用。</p>
+<p><img src="/images/RNN/LSTM3-chain.png" alt="The repeating module in an LSTM contains four interacting layers"></p>
+<p>&emsp; &emsp;  不用担心上面复杂的流程图，接下来我们一步步讲述。首先看下图，流程图中的每一条黑线表示将一个向量从一个节点的输出传输到另一个节点的输入；红色圆圈表示向量运算，比如向量相加、向量相乘等；黄色的方块表示学习神经网络层；合并线表示将数据合并；分叉线表示其内容被复制为多份并且转移到不同的地方。</p>
+<p><img src="/images/RNN/LSTM2-notation.png" alt=""></p>
+<h2 id="LSTM核心思想"><a href="#LSTM核心思想" class="headerlink" title="LSTM核心思想"></a>LSTM核心思想</h2><p>&emsp;&emsp; LSTM最重要的就是 <em>Cell State</em> （细胞状态）: $C_{t}$ ，它就像一种传输带，仅仅通过一些少量的线性运算，通过水平线贯穿作用在整个流程图中。</p>
+<blockquote>
+<p>Cell：相当于一个记事本，有个叫State的参数记东西。</p>
+</blockquote>
+<p><img src="/images/RNN/LSTM3-C-line.png" alt=""></p>
+<p>&emsp;&emsp; LSTM还可以通过调节 一种被称为”门“的结构在神经单元上增加或者减少信息。”门“可以让信息选择性的通过，由 <em>sigmoid</em> 神经网络层和点乘运算操作构成。</p>
+<p><img src="/images/RNN/LSTM3-gate.png" alt=""></p>
+<p>&emsp;&emsp; <em>sigmoid</em> 层的输出是一个介于0到1之间的数，表示可以通过的信息量。0表示丢弃所有的信息，1表示让所有的信息全部通过。LSTM一共有三个”门“用来控制 <em>Cell State</em> 。</p>
+<h2 id="LSTM工作步骤详解"><a href="#LSTM工作步骤详解" class="headerlink" title="LSTM工作步骤详解"></a>LSTM工作步骤详解</h2><p>&emsp; &emsp;  LSTM首先确定从 <em>Cell State</em> 中丢弃哪些信息，这个决定是由被称为”遗忘门“的 <em>sigmoid</em> 层所决定的。输入 <em>$h_{t-1}​$</em> 和 <em>$x_{t}​$</em> ，输出一个介于0到1的数至单元状态 <em>$C_{t-1}​$</em> 。1代表全部保留，0代表全部丢弃。</p>
+<p>&emsp; &emsp;  让我们继续看基于所有之前词语来预测新词的语言模型，<em>Cell State</em> 也许包含了当前主语的类别，所以可以选择正确的代词。当看到一个新的主语时，我们就会忘记之前旧的那个。</p>
+<p><img src="/images/RNN/LSTM3-focus-f.png" alt=""></p>
+<p>&emsp;&emsp; 接下来，我们要确定在 <em>Cell State</em> 中存储哪些新信息，两部分完成。第一步：由 <em>sigmoid</em> 层构成的”更新门“确定我们需要更新的值。接着，由 <em>tanh</em> 层建立一个能够和 <em>$C_{t-1}$</em> 相加的候选集向量 <em>$\tilde{C_{t}}$</em>；第二步：将这第一步中的东西结合产生新的更新状态。</p>
+<p>&emsp; &emsp;  在语言模型中，我们想要添加新的主语到 <em>Cell State</em> ，来取代要遗忘的旧的主语。</p>
+<p><img src="/images/RNN/LSTM3-focus-i.png" alt=""></p>
+<p>&emsp;&emsp; 现在利用旧的  <em>Cell State</em> ：$C_{t-1}$ 更新新的  <em>Cell State</em> ：$C_{t-1}$ 。使用 $C_{t-1}$ 乘以 $f_{t}$ ，表示忘掉我们决定丢弃之前的那些信息。然后加上 $i_{t} <em> \tilde{C_{t}}$ ，这就是新的 </em>Cell State*。在语言模型中，这就是我们丢弃旧的主语，添加新信息的步骤。</p>
+<p><img src="/images/RNN/LSTM3-focus-C.png" alt=""></p>
+<p>&emsp;&emsp; 最终的输出基于 <em>Cell State</em>：$C_{t}$ 。首先经过 <em>sigmoid</em> 层来确定 $C_{t}$ 的哪些部分需要输出，然后将  $C_{t}$ 通过 <em>tanh</em> 层变为一个介于-1到1的值，乘上 <em>sigmoid</em> 层的输出，这就是我们需要的输出。</p>
+<p><img src="/images/RNN/LSTM3-focus-o.png" alt=""></p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p><em><a href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/" target="_blank" rel="noopener">Understanding LSTM Networks</a></em></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Deep-Learning/" rel="tag"># Deep Learning</a>
+          
+            <a href="/tags/LSTM/" rel="tag"># LSTM</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/06/基于RNNEncoder–Decoder的机器翻译/" rel="next" title="基于RNNEncoder–Decoder的机器翻译">
+                <i class="fa fa-chevron-left"></i> 基于RNNEncoder–Decoder的机器翻译
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/06/Sara_Qlearn/" rel="prev" title="Q-Learning算法和Sarsa算法的区别">
+                Q-Learning算法和Sarsa算法的区别 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">MR.C</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">21</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="undefined" target="_blank" title="GitHub"><i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="undefined" target="_blank" title="Twitter"><i class="fa fa-fw fa-globe"></i>Twitter</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="undefined" target="_blank" title="Weibo"><i class="fa fa-fw fa-globe"></i>Weibo</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="undefined" target="_blank" title="ZhiHu"><i class="fa fa-fw fa-globe"></i>ZhiHu</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#循环神经网络（RNNs）"><span class="nav-number">1.</span> <span class="nav-text">循环神经网络（RNNs）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#长期依赖的问题"><span class="nav-number">2.</span> <span class="nav-text">长期依赖的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LSTM网络"><span class="nav-number">3.</span> <span class="nav-text">LSTM网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LSTM核心思想"><span class="nav-number">4.</span> <span class="nav-text">LSTM核心思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LSTM工作步骤详解"><span class="nav-number">5.</span> <span class="nav-text">LSTM工作步骤详解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">6.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">MR.C</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Muse</a> v6.4.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+        // ref: https://github.com/ForbesLindesay/unescape-html
+        var unescapeHtml = function(html) {
+          return String(html)
+            .replace(/&quot;/g, '"')
+            .replace(/&#39;/g, '\'')
+            .replace(/&#x3A;/g, ':')
+            // replace all the other &#x; chars
+            .replace(/&#(\d+);/g, function (m, p) { return String.fromCharCode(p); })
+            .replace(/&lt;/g, '<')
+            .replace(/&gt;/g, '>')
+            .replace(/&amp;/g, '&');
+        };
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                content = unescapeHtml(content);
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('-1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

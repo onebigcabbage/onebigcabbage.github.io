@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.4.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="keywords" content="TensorFlow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TensorFlow学习（一）- 构建卷积神经网络">
+<meta property="og:url" content="http://caicai.science/2018/10/06/TensorFlow学习（一）_ 构建卷积神经网络/index.html">
+<meta property="og:site_name" content="蔡圣哲">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://tensorflow.google.cn/images/mnist_0-9.png">
+<meta property="og:image" content="http://caicai.science/images/cnn.gif">
+<meta property="og:image" content="http://caicai.science/images/pool.jpg">
+<meta property="og:image" content="http://caicai.science/images/out.jpg">
+<meta property="og:updated_time" content="2018-07-30T23:25:01.890Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TensorFlow学习（一）- 构建卷积神经网络">
+<meta name="twitter:image" content="https://tensorflow.google.cn/images/mnist_0-9.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://caicai.science/2018/10/06/TensorFlow学习（一）_ 构建卷积神经网络/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>TensorFlow学习（一）- 构建卷积神经网络 | 蔡圣哲</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">蔡圣哲</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">不积跬步，无以至千里</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://caicai.science/2018/10/06/TensorFlow学习（一）_ 构建卷积神经网络/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MR.C">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="蔡圣哲">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">TensorFlow学习（一）- 构建卷积神经网络
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-10-06 11:22:17" itemprop="dateCreated datePublished" datetime="2018-10-06T11:22:17+08:00">2018-10-06</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-07-31 07:25:01" itemprop="dateModified" datetime="2018-07-31T07:25:01+08:00">2018-07-31</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/机器学习/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <hr>
+<a id="more"></a>
+<p> TensorFlow的 <em>layers</em> 模块提供了一个高级API，可以轻松构建神经网络。它提供了便于创建全连接层和卷积层的方法，添加了激活函数以及应用DropOut正则化(防止过拟合)。在本教程中，您将学习如何构建卷积神经网络模型来识</p>
+<p>别MNIST数据集中的手写数字。<br>   <img src="https://tensorflow.google.cn/images/mnist_0-9.png" alt="这里写图片描述"><br>   MNIST数据集包含60,000个训练样例和10,000个手写数字0-9的测试示例，格式为28x28像素单色图像。</p>
+<hr>
+<p>完整代码已上传至<a href="https://github.com/onebigcabbage/TensorFlowTool" target="_blank" rel="noopener">github</a>。</p>
+<hr>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><p>首先写出TensorFlow程序的基本框架。创建 <em>cnn_mnist.py</em> ，添加下面的代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line">tf.logging.set_verbosity(tf.logging.INFO)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">  tf.app.run()</span><br></pre></td></tr></table></figure>
+<p>如果用的python2，请在最上面添加：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> absolute_import</span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> division</span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br></pre></td></tr></table></figure>
+<h2 id="CNNs（卷及神经网络）简介"><a href="#CNNs（卷及神经网络）简介" class="headerlink" title="CNNs（卷及神经网络）简介"></a>CNNs（卷及神经网络）简介</h2><blockquote>
+<p>个人觉得以下能理解尽量理解，不能理解的话可以简单参考”数字图像处理“。实在不能理解，知道卷积核如何运算到数据上也可以，因为接下来的操作都是数学坑了。</p>
+</blockquote>
+<p>卷积神经网络（CNN）是当前用于图像分类任务的最先进的模型。CNN将一系列滤波器（卷积核）应用于图像的原始像素数据以提取和学习更高级别的特征，然后该模型可用于分类。 <strong>CNN包含三个组件：</strong></p>
+<blockquote>
+<p>下面属博主个人理解，和官网有些差异。可参考<a href="https://tensorflow.google.cn/tutorials/layers" target="_blank" rel="noopener">TensorFlow官网</a>。</p>
+</blockquote>
+<p><strong>卷积层:</strong>  用人工事先定义好的卷积核对图像进行卷积计算，输出采用ReLU激活函数。对于本代码的补0卷积计算，可参考下图：<br><img src="/images/cnn.gif" alt="卷积操作"><br><strong>池化层:</strong> 简单来说就是对卷积过后的特征进行下采样，也就是减少图像的空间大小。通常使用max-pooling，既在规定的窗口大小下取最大。例如定义2×2的尺寸，池化后：<br><img src="/images/pool.jpg" alt="池化操作"><br><strong>输出层:</strong> 经过卷积和池化的运算，特征提取完毕。再通过输出层计算输出可知道样本所属的类别了。一般输出层采用 <em>softmax</em> 激活函数，产生结果为属于某类别的概率，所有结果加起来总和为1。</p>
+<p>整个过程可看下图简单理解：</p>
+<p><img src="/images/out.jpg" alt="描述"></p>
+<h2 id="构建CNN的MNIST分类器"><a href="#构建CNN的MNIST分类器" class="headerlink" title="构建CNN的MNIST分类器"></a>构建CNN的MNIST分类器</h2><p>让我们构建一个模型，使用以下CNN结构对MNIST数据集中的图像进行分类：</p>
+<ol>
+<li><strong>卷积层1：</strong> 使用32 5×5的卷积核，ReLU激活函数。</li>
+<li><strong>池化层1：</strong> 使用步长为2，尺寸为2×2的窗口。</li>
+<li><strong>卷积层2：</strong> 使用64 5×5的卷积核，ReLU激活函数。</li>
+<li><strong>池化层2：</strong> 使用步长为2，尺寸为2×2的窗口。</li>
+<li><strong>特征处理层：</strong> 1024个节点。在训练中，DropOut正则率为0.4（任何给定的特征在训练中都会以0.4的概率被丢弃）（知道用来防止过拟合即可）</li>
+<li><strong>输出层：</strong> 10个节点，输出0-9各自的概率，例如<em>8</em>的概率最大，即表示图像的数字是 <em>8</em>。</li>
+</ol>
+<p><em>tf.layers</em> 模块包含了创建上面各种层的方法：</p>
+<ul>
+<li><em>conv2d()</em>  构造一个二维卷积层。需要卷积核数量,卷积核大小,是否填充和激活函数作为参数。</li>
+<li><em>max_pooling2d()</em> 使用max-pooling构造一个二维的池层。将池化窗口大小和步长作为参数</li>
+<li><em>dense()</em> 构造一个全连接层。以神经元节点数和激活函数为参数。</li>
+</ul>
+<hr>
+<p>定义<em>cnn_model_fn</em>函数。将MNIST的特征、标签和模型模式（TRAIN、EVAL、PREDICT）作为参数；并返回预测、损失和训练记录。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cnn_model_fn</span><span class="params">(features, labels, mode)</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="输入层"><a href="#输入层" class="headerlink" title="输入层"></a>输入层</h3><p>输入数据向量的格式为 <em>[batch_size, image_width, image_height, channels]</em> 定义如下：</p>
+<ul>
+<li><em>batch_size: </em> 在训练梯度下降时每次训练的样本个数。</li>
+<li><em>image_width: </em> 图像训练样本的宽度。</li>
+<li><em>image_height:</em>  图像训练样本的高度。</li>
+<li><em>channels:</em> 图像样本中的颜色通道数量，彩色图像一般是<em>3</em>个通道（红、绿、蓝），而黑白图像只有单个通道（黑）。</li>
+</ul>
+<p>MNIST数据集是由单通道[28×28]像素组成的图像集。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">input_layer = tf.reshape(features[&quot;x&quot;], [-1, 28, 28, 1])</span><br></pre></td></tr></table></figure></p>
+<p>定义 <em>batch_size</em> =1，指定了这个维度应该根据 输入值的数量 动态计算features(“x”)，保持所有其他维度的大小不变。详见<a href="https://tensorflow.google.cn/api_docs/python/tf/reshape" target="_blank" rel="noopener">这里</a>。</p>
+<p>###卷积层1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">conv1 = tf.layers.conv2d(</span><br><span class="line">      inputs=input_layer, </span><br><span class="line">      filters=32, </span><br><span class="line">      kernal_size=[5, 5], </span><br><span class="line">      padding=&apos;same&apos;, </span><br><span class="line">      activation=tf.nn.relu)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注： <em>padding</em> 参数有两种：<em>valid</em> 和 <em>same</em>。 <em>same</em> 是在卷积后填0，使得得到的特征尺寸大小和输入时的大小一样，而 <em>valid</em> 则是默认，28x28运算后得到的是24x24。<br>经<em>conv2d()</em> 后的形状是 <em>[batch_size, 28, 28, 32]</em> </p>
+</blockquote>
+<h3 id="池化层1"><a href="#池化层1" class="headerlink" title="池化层1"></a>池化层1</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pool1 = tf.layers.max_pooling2d(</span><br><span class="line">      inputs=conv1, </span><br><span class="line">      pool_size=[<span class="number">2</span>, <span class="number">2</span>], </span><br><span class="line">      strides=<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>经过 <em>max_pooling2d()</em> 后得到的形状大小为 <em>[batch_size, 14, 14, 32]</em> 。</p>
+</blockquote>
+<p>###卷积层2</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">conv2 = tf.layers.conv2d(</span><br><span class="line">      inputs=pool1, </span><br><span class="line">      filters=64, </span><br><span class="line">      kernal_size=[5, 5], </span><br><span class="line">      padding=&apos;same&apos;, </span><br><span class="line">      activation=tf.nn.relu)</span><br></pre></td></tr></table></figure>
+<h3 id="池化层2"><a href="#池化层2" class="headerlink" title="池化层2"></a>池化层2</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pool2 = tf.layers.max_pooling2d(</span><br><span class="line">      inputs=conv2, </span><br><span class="line">      pool_size=[2, 2], </span><br><span class="line">      strides=2)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>最后得到特征大小为 <em>[batch_size, 7, 7, 64]</em> 。</p>
+</blockquote>
+<p>###特征处理层<br>我们想要在CNN中添加一个全连接层（包含1,024个神经元节点和ReLU激活函数），以对由卷积/池化层提取的特征进行分类。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">pool2_flat = tf.reshape(pool2, [-1, 7 * 7 * 64])</span><br><span class="line">dense = tf.layers.dense(</span><br><span class="line">	inputs=pool2_flat, </span><br><span class="line">	activation=tf.nn.relu)</span><br><span class="line">dropout = tf.layers.dropout(</span><br><span class="line">	inputs=dense, </span><br><span class="line">	rate=0.4, </span><br><span class="line">	training=mode ==tf.estimator.ModeKeys.TRAIN)</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p><em>training</em>参数采用布尔值来指定模型当前是否在训练模式下运行，当为<em>True</em> 时<em>dropout</em> 才运行。我们检查传递给函数<em>cnn_model_fn</em>的模式是否是TRAIN模式。<br>最后得到特征大小为 <em>[batch_size, 1024]</em> 。</p>
+</blockquote>
+<h3 id="输出层"><a href="#输出层" class="headerlink" title="输出层"></a>输出层</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">logits = tf.layers.dense(inputs=dropout, units=10)</span><br></pre></td></tr></table></figure>
+<h3 id="预测"><a href="#预测" class="headerlink" title="预测"></a>预测</h3><p>讲预测类别和概率放入一个dict中，并返回一个<em>EstimatorSpec</em>对象。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if mode == tf.estimator.ModeKeys.PREDICT：</span><br><span class="line">	return tf.estimator.EstimatorSpec(mode=mode, predictions=predictions)</span><br></pre></td></tr></table></figure></p>
+<p>###计算损失<br>使用交叉熵<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">loss = tf.losses.sparse_softmax_cross_entropy(labels=labels, logits=logits)</span><br></pre></td></tr></table></figure></p>
+<h3 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h3><p>通过交叉熵得到损失后，设置0.001的学习率和SGD（随机梯度下降）算法，通过训练优化损失。    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if mode == tf.estimator.ModeKeys.TRAIN:</span><br><span class="line">    optimizer = tf.train.GradientDescentOptimizer(learing_rate=0.001)</span><br><span class="line">    train_op = optimizer.minimize(loss=loss, global_step=tf.train.get_global_step())</span><br><span class="line">    return tf.estimator.EstimatorSpec(mode=mode, loss=loss, train_op=train_op)</span><br></pre></td></tr></table></figure>
+<p>###评估指标</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">eval_metric_ops = &#123;</span><br><span class="line">      &quot;accuracy&quot;: tf.metrics.accuracy(</span><br><span class="line">          labels=labels, predictions=predictions[&quot;classes&quot;])</span><br><span class="line">      return tf.estimator.EstimatorSpec(</span><br><span class="line">          mode=mode, loss=loss, eval_metric_ops=eval_metric_ops)&#125;</span><br></pre></td></tr></table></figure>
+<p>#训练和评估CNN分类器<br>定义<em>main()</em>函数</p>
+<p>##加载数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">def main(unused_argv):</span><br><span class="line">  mnist = tf.contrib.learn.datasets.load_dataset(&quot;mnist&quot;)</span><br><span class="line">  train_data = mnist.train.images # Returns np.array</span><br><span class="line">  train_labels = np.asarray(mnist.train.labels, dtype=np.int32)</span><br><span class="line">  eval_data = mnist.test.images # Returns np.array</span><br><span class="line">  eval_labels = np.asarray(mnist.test.labels, dtype=np.int32)</span><br></pre></td></tr></table></figure>
+<p>##构建<em>Estimator</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mnist_classifier = tf.estimator.Estimator(</span><br><span class="line">      model_fn=cnn_model_fn, model_dir=&quot;/tmp/mnist_convnet_model&quot;)</span><br></pre></td></tr></table></figure>
+<p>##设置<em>Logging Hook</em><br>由于CNN可能需要一段时间才能进行训练，因此我们设置一些日志记录，以便在训练期间跟踪进度。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tensors_to_log = &#123;&quot;probabilities&quot;: &quot;softmax_tensor&quot;&#125;</span><br><span class="line">  logging_hook = tf.train.LoggingTensorHook(</span><br><span class="line">      tensors=tensors_to_log, every_n_iter=50)</span><br></pre></td></tr></table></figure>
+<p>###训练模型</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">train_input_fn = tf.estimator.inputs.numpy_input_fn(</span><br><span class="line">      x=&#123;&quot;x&quot;: train_data&#125;, </span><br><span class="line">      y=train_labels, </span><br><span class="line">      batch_size=100, </span><br><span class="line">      num_epochs=None, </span><br><span class="line">      shuffle=True) </span><br><span class="line">  mnist_classifier.train(</span><br><span class="line">      input_fn=train_input_fn,</span><br><span class="line">      steps=20000,</span><br><span class="line">      hooks=[logging_hook])</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>输入x必须是dict型； batch_size=100即小批量梯度下降每次训练的样本数为100；<br>num_epochs=None即模型一直运行完设置的steps=20000时停止；<br>shuffle=True即训练时样本是随机抽取的</p>
+</blockquote>
+<p>###评估模型</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">eval_input_fn = tf.estimator.inputs.numpy_input_fn(</span><br><span class="line">    x=&#123;&quot;x&quot;: eval_data&#125;,</span><br><span class="line">    y=eval_labels,</span><br><span class="line">    num_epochs=1,</span><br><span class="line">    shuffle=False)</span><br><span class="line">eval_results = mnist_classifier.evaluate(input_fn=eval_input_fn)</span><br><span class="line">print(eval_results)</span><br></pre></td></tr></table></figure>
+<p>#运行结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">Extracting MNIST-data/train-images-idx3-ubyte.gz</span><br><span class="line">Extracting MNIST-data/train-labels-idx1-ubyte.gz</span><br><span class="line">Extracting MNIST-data/t10k-images-idx3-ubyte.gz</span><br><span class="line">Extracting MNIST-data/t10k-labels-idx1-ubyte.gz</span><br><span class="line">INFO:tensorflow:Using default config.</span><br><span class="line">INFO:tensorflow:Using config: &#123;&apos;_model_dir&apos;: &apos;/tmp/mnist_convnet_model&apos;, &apos;_tf_random_seed&apos;: None, &apos;_save_summary_steps&apos;: 100, &apos;_save_checkpoints_steps&apos;: None, &apos;_save_checkpoints_secs&apos;: 600, &apos;_session_config&apos;: None, &apos;_keep_checkpoint_max&apos;: 5, &apos;_keep_checkpoint_every_n_hours&apos;: 10000, &apos;_log_step_count_steps&apos;: 100, &apos;_service&apos;: None, &apos;_cluster_spec&apos;: &lt;tensorflow.python.training.server_lib.ClusterSpec object at 0x7f35eb339128&gt;, &apos;_task_type&apos;: &apos;worker&apos;, &apos;_task_id&apos;: 0, &apos;_global_id_in_cluster&apos;: 0, &apos;_master&apos;: &apos;&apos;, &apos;_evaluation_master&apos;: &apos;&apos;, &apos;_is_chief&apos;: True, &apos;_num_ps_replicas&apos;: 0, &apos;_num_worker_replicas&apos;: 1&#125;</span><br><span class="line">INFO:tensorflow:Calling model_fn.</span><br><span class="line">INFO:tensorflow:Done calling model_fn.</span><br><span class="line">INFO:tensorflow:Create CheckpointSaverHook.</span><br><span class="line">INFO:tensorflow:Graph was finalized.</span><br><span class="line">INFO:tensorflow:Running local_init_op.</span><br><span class="line">INFO:tensorflow:Done running local_init_op.</span><br><span class="line">INFO:tensorflow:Saving checkpoints for 1 into /tmp/mnist_convnet_model/model.ckpt.</span><br><span class="line">INFO:tensorflow:probabilities = [[0.10603123 0.11674101 0.09009421 0.09591874 0.09321657 0.0876532</span><br><span class="line">  0.09703767 0.10731895 0.10852493 0.09746351]</span><br><span class="line"> [0.12638797 0.09118222 0.09904857 0.08684804 0.09524325 0.09678999</span><br><span class="line">  0.09612204 0.09447883 0.10238035 0.11151876]</span><br><span class="line"> [0.10961667 0.09775148 0.09031133 0.09005759 0.09975118 0.09663537</span><br><span class="line">  0.09558715 0.10681319 0.10184265 0.11163338]</span><br><span class="line"> [0.10582132 0.08626121 0.09644306 0.09036049 0.09503932 0.09686131</span><br><span class="line">  0.10292714 0.1105746  0.11193833 0.10377329]</span><br><span class="line"> ......</span><br><span class="line"> ......</span><br><span class="line"> ......</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/TensorFlow/" rel="tag"># TensorFlow</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/06/如何在其他电脑上更新博客/" rel="next" title="使用Github搭建个人博客（番外篇）： 换电脑后，如何更新博客">
+                <i class="fa fa-chevron-left"></i> 使用Github搭建个人博客（番外篇）： 换电脑后，如何更新博客
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/06/GitHub搭建个人博客(Ubuntu版)/" rel="prev" title="使用Github搭建个人博客（初级篇）">
+                使用Github搭建个人博客（初级篇） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">MR.C</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">21</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="undefined" target="_blank" title="GitHub"><i class="fa fa-fw fa-globe"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="undefined" target="_blank" title="Twitter"><i class="fa fa-fw fa-globe"></i>Twitter</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="undefined" target="_blank" title="Weibo"><i class="fa fa-fw fa-globe"></i>Weibo</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="undefined" target="_blank" title="ZhiHu"><i class="fa fa-fw fa-globe"></i>ZhiHu</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#开始"><span class="nav-number">1.</span> <span class="nav-text">开始</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CNNs（卷及神经网络）简介"><span class="nav-number">2.</span> <span class="nav-text">CNNs（卷及神经网络）简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建CNN的MNIST分类器"><span class="nav-number">3.</span> <span class="nav-text">构建CNN的MNIST分类器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#输入层"><span class="nav-number">3.1.</span> <span class="nav-text">输入层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#池化层1"><span class="nav-number">3.2.</span> <span class="nav-text">池化层1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#池化层2"><span class="nav-number">3.3.</span> <span class="nav-text">池化层2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输出层"><span class="nav-number">3.4.</span> <span class="nav-text">输出层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#预测"><span class="nav-number">3.5.</span> <span class="nav-text">预测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#训练"><span class="nav-number">3.6.</span> <span class="nav-text">训练</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">MR.C</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Muse</a> v6.4.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+        // ref: https://github.com/ForbesLindesay/unescape-html
+        var unescapeHtml = function(html) {
+          return String(html)
+            .replace(/&quot;/g, '"')
+            .replace(/&#39;/g, '\'')
+            .replace(/&#x3A;/g, ':')
+            // replace all the other &#x; chars
+            .replace(/&#(\d+);/g, function (m, p) { return String.fromCharCode(p); })
+            .replace(/&lt;/g, '<')
+            .replace(/&gt;/g, '>')
+            .replace(/&amp;/g, '&');
+        };
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                content = unescapeHtml(content);
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('-1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
