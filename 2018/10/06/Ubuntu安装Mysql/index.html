@@ -483,10 +483,8 @@
       
         <hr>
 <a id="more"></a>
-<h2 id="下载"><a class="header-anchor" href="#下载" aria-hidden="true">¶</a> 下载</h2>
-<p>在官网下载 <a href="https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-server_8.0.11-1ubuntu18.04_amd64.deb-bundle.tar" target="_blank" rel="noopener">mysql-server_8.0.11-1ubuntu18.04_amd64.deb-bundle.tar</a> 文件。</p>
-<h2 id="准备"><a class="header-anchor" href="#准备" aria-hidden="true">¶</a> 准备</h2>
-<p>将文件放到 <code>/usr/local/src</code> 中：</p>
+<h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><p>在官网下载 <a href="https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-server_8.0.11-1ubuntu18.04_amd64.deb-bundle.tar" target="_blank" rel="noopener">mysql-server_8.0.11-1ubuntu18.04_amd64.deb-bundle.tar</a> 文件。</p>
+<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>将文件放到 <code>/usr/local/src</code> 中：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mv mysql-server_8.0.11-1ubuntu18.04_amd64.deb-bundle.tar /usr/local/src</span><br></pre></td></tr></table></figure>
 <p>切换到该文件夹：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/src</span><br></pre></td></tr></table></figure>
@@ -495,23 +493,22 @@
 <p>解压 <em>tar</em> 文件：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -xf mysql-server_8.0.11-1ubuntu18.04_amd64.deb-bundle.tar</span><br></pre></td></tr></table></figure>
 <p>执行完成所有步骤后，将会多出以下几个文件：</p>
-<p><code>libmysqlclient21_8.0.11-1ubuntu18.04_amd64.deb</code></p>
-<p><code>libmysqlclient-dev_8.0.11-1ubuntu18.04_amd64.deb</code></p>
-<p><code>mysql-client_8.0.11-1ubuntu18.04_amd64.deb</code></p>
+<p><code>libmysqlclient21_8.0.11-1ubuntu18.04_amd64.deb</code>  </p>
+<p><code>libmysqlclient-dev_8.0.11-1ubuntu18.04_amd64.deb</code> </p>
+<p><code>mysql-client_8.0.11-1ubuntu18.04_amd64.deb</code> </p>
+<p><code>mysql-common_8.0.11-1ubuntu18.04_amd64.deb</code> </p>
+<p><code>libmysqlclient21_8.0.11-1ubuntu18.04_amd64.deb</code> </p>
+<p><code>libmysqlclient-dev_8.0.11-1ubuntu18.04_amd64.deb</code> </p>
+<p><code>mysql-client_8.0.11-1ubuntu18.04_amd64.deb</code> </p>
 <p><code>mysql-common_8.0.11-1ubuntu18.04_amd64.deb</code></p>
-<p><code>libmysqlclient21_8.0.11-1ubuntu18.04_amd64.deb</code></p>
-<p><code>libmysqlclient-dev_8.0.11-1ubuntu18.04_amd64.deb</code></p>
-<p><code>mysql-client_8.0.11-1ubuntu18.04_amd64.deb</code></p>
-<p><code>mysql-common_8.0.11-1ubuntu18.04_amd64.deb</code></p>
-<p><code>mysql-community-client_8.0.11-1ubuntu18.04_amd64.deb</code></p>
-<p><code>mysql-community-client-core_8.0.11-1ubuntu18.04_amd64.deb</code></p>
-<p><code>mysql-community-server-core_8.0.11-1ubuntu18.04_amd64.deb</code></p>
-<p><code>mysql-community-server_8.0.11-1ubuntu18.04_amd64.deb</code></p>
-<p><code>mysql-community-test_8.0.11-1ubuntu18.04_amd64.deb</code></p>
-<p><code>mysql-server_8.0.11-1ubuntu18.04_amd64.deb</code></p>
+<p><code>mysql-community-client_8.0.11-1ubuntu18.04_amd64.deb</code> </p>
+<p><code>mysql-community-client-core_8.0.11-1ubuntu18.04_amd64.deb</code> </p>
+<p><code>mysql-community-server-core_8.0.11-1ubuntu18.04_amd64.deb</code> </p>
+<p><code>mysql-community-server_8.0.11-1ubuntu18.04_amd64.deb</code> </p>
+<p><code>mysql-community-test_8.0.11-1ubuntu18.04_amd64.deb</code> </p>
+<p><code>mysql-server_8.0.11-1ubuntu18.04_amd64.deb</code> </p>
 <p><code>mysql-testsuite_8.0.11-1ubuntu18.04_amd64.deb</code>    无用</p>
-<h2 id="安装"><a class="header-anchor" href="#安装" aria-hidden="true">¶</a> 安装</h2>
-<p>按下面命令运行：</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>按下面命令运行：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dpkg-preconfigure mysql-community-server</span><br></pre></td></tr></table></figure>
 <p>运行后会出现让输入密码，输入密码后按 <code>Tab</code> 和回车，再次输入密码按 <code>Tab</code> 和回车，回到命令行。</p>
 <p>将文件夹中的所有文件名挨个输入到下面语句中替代*，有可能会出现先后顺序问题：</p>
@@ -521,8 +518,7 @@
 <p>安装完成后，输入：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -u root -p</span><br></pre></td></tr></table></figure>
 <p>输入密码。</p>
-<h2 id="完成。"><a class="header-anchor" href="#完成。" aria-hidden="true">¶</a> 完成。</h2>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css">
+<h2 id="完成。"><a href="#完成。" class="headerlink" title="完成。"></a>完成。</h2>
       
     </div>
 
@@ -555,8 +551,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/10/06/Leetcode/" rel="next" title="Leetcode解题思路">
-                <i class="fa fa-chevron-left"></i> Leetcode解题思路
+              <a href="/2018/10/06/attention总览/" rel="next" title="详解从 Seq2Seq模型、RNN结构、Encoder-Decoder模型 到 Attention模型">
+                <i class="fa fa-chevron-left"></i> 详解从 Seq2Seq模型、RNN结构、Encoder-Decoder模型 到 Attention模型
               </a>
             
           </div>
@@ -565,8 +561,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/10/06/自然语言处理笔记/" rel="prev" title="自然语言处理笔记">
-                自然语言处理笔记 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/10/06/Leetcode/" rel="prev" title="Leetcode解题思路">
+                Leetcode解题思路 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -785,7 +781,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#下载"><span class="nav-number">1.</span> <span class="nav-text">¶ 下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#准备"><span class="nav-number">2.</span> <span class="nav-text">¶ 准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">3.</span> <span class="nav-text">¶ 安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完成。"><span class="nav-number">4.</span> <span class="nav-text">¶ 完成。</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#下载"><span class="nav-number">1.</span> <span class="nav-text">下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#准备"><span class="nav-number">2.</span> <span class="nav-text">准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">3.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完成。"><span class="nav-number">4.</span> <span class="nav-text">完成。</span></a></li></ol></div>
             
 
           </div>
