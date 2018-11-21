@@ -121,7 +121,6 @@
 <meta property="og:url" content="http://caicai.science/2018/11/21/LSTM/index.html">
 <meta property="og:site_name" content="蔡圣哲">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://caicai.science/images/RNN/RNN-rolled.png">
 <meta property="og:image" content="http://caicai.science/images/RNN/RNN-unrolled.png">
 <meta property="og:image" content="http://caicai.science/images/RNN/RNN-shorttermdepdencies.png">
 <meta property="og:image" content="http://caicai.science/images/RNN/RNN-longtermdependencies.png">
@@ -134,10 +133,10 @@
 <meta property="og:image" content="http://caicai.science/images/RNN/LSTM3-focus-i.png">
 <meta property="og:image" content="http://caicai.science/images/RNN/LSTM3-focus-C.png">
 <meta property="og:image" content="http://caicai.science/images/RNN/LSTM3-focus-o.png">
-<meta property="og:updated_time" content="2018-11-21T01:10:08.432Z">
+<meta property="og:updated_time" content="2018-11-21T01:30:01.219Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="循环神经网络：RNN、LSTM">
-<meta name="twitter:image" content="http://caicai.science/images/RNN/RNN-rolled.png">
+<meta name="twitter:image" content="http://caicai.science/images/RNN/RNN-unrolled.png">
 
 
 
@@ -400,7 +399,7 @@
                 
               
 
-              <time title="Created: 2018-11-21 09:10:08" itemprop="dateCreated datePublished" datetime="2018-11-21T09:10:08+08:00">2018-11-21</time>
+              <time title="Created: 2018-11-21 09:30:01" itemprop="dateCreated datePublished" datetime="2018-11-21T09:30:01+08:00">2018-11-21</time>
             
 
             
@@ -465,13 +464,11 @@
       
         <hr>
 <a id="more"></a>
-<h2 id="RNN："><a href="#RNN：" class="headerlink" title="RNN："></a>RNN：</h2><p>　<em>NLP</em> 问题中，句子由 <em>n</em> 个词组成，可看做一串序列，<em>RNN</em> 正是可以处理序列类型的数据的深度学习模型。</p>
-<p><img src="/images/RNN/RNN-rolled.png" alt="Recurrent Neural Networks have loops."></p>
-<p>上图所示为未展开的 <em>RNN</em> 模型， $x_{t}$ 是输入, $h_{t}$ 是输出，中间的循环则允许信息从网络的前一个步骤传递到下一个步骤。</p>
-<p>&emsp;&emsp;  这样看可能不太明显，我们将RNN网络展开如下图，它其实可以看作多个传统的神经网络结构连接而成，只是前一个网络将一些信息传递给下一个网络。</p>
-<p><img src="/images/RNN/RNN-unrolled.png" alt="**An unrolled recurrent neural network.**"></p>
-<p>&emsp;&emsp;  这种链式结构很明显的适用于序列型数据。近几年，将RNNs应用在语音识别、语言模型、机器翻译、图像描述等等领域都取得了很大的成功。具体的可以参考 <em>Andrej Karpathy</em> 的文章 <em><a href="http://karpathy.github.io/2015/05/21/rnn-effectiveness/" target="_blank" rel="noopener">The Unreasonable Effectiveness of Recurrent Neural Networks</a></em> 。</p>
-<p>&emsp;&emsp;  <strong>重点是，这些取得的成果使用的是RNN的一个变种结构———- “LSTMs”，它的效果要比传统的RNN网络结构好的多。</strong></p>
+<p>[TOC]</p>
+<h2 id="RNN："><a href="#RNN：" class="headerlink" title="RNN："></a>RNN：</h2><p>　<em>NLP</em> 问题中，句子由 <em>n</em> 个词组成，可看做一串序列，<em>RNN</em> 正是可以处理序列类型的数据的深度学习模型。如下图，<em>RNN</em> 由多个相同的神经网络单元连接而成，前一个单元对当前的输入进行计算后，将结果作为下一个单元的输入传递给下一个单元。</p>
+<p><img src="/images/RNN/RNN-unrolled.png" alt="**An rolled recurrent neural network.**"></p>
+<p>　这种链式结构明显的适用于序列型数据，所以 <em>RNN</em> 在语音识别、语言模型、机器翻译、图像描述等等领域都取得了很大的成功。具体的可以参考文章 <em><a href="http://karpathy.github.io/2015/05/21/rnn-effectiveness/" target="_blank" rel="noopener">The Unreasonable Effectiveness of Recurrent Neural Networks</a></em> 。</p>
+<p>&emsp;&emsp; </p>
 <h2 id="长期依赖的问题"><a href="#长期依赖的问题" class="headerlink" title="长期依赖的问题"></a>长期依赖的问题</h2><p>&emsp;&emsp;  RNN的一个很大优点是可以将之前的信息连接到当前的任务中，例如你可以联想看过的电影情节来预测接下来要发生的故事情节。如果RNN能够真正做到这样，那对很多领域非常有用。但是事实并非这样，它视情况而定。</p>
 <p>&emsp;&emsp;   有时我们当前的任务只需要最近的信息就可以了。例如，语言模型基于之前的几个词就可以预测接下来的词。假设想要预测 <em>the clouds are in the </em>sky<em>,</em> 的最后一个单词，我们不需要太多的上下文语境就可以推测出是 <em>sky</em> 。在这种语境很简单，并且相关信息与其位置差距很小的情况下，RNNs可以很好的从之前的语境推测出答案。</p>
 <p><img src="/images/RNN/RNN-shorttermdepdencies.png" alt="RNN-shorttermdepdencies"></p>
@@ -480,7 +477,7 @@
 <p>&emsp;&emsp; 然而，随着间隔的增大，RNNs也越来越不能从之前的信息学到东西。</p>
 <p><img src="/images/RNN/RNN-longtermdependencies.png" alt="RNN-longtermdependencies"></p>
 <p>&emsp;&emsp; 理论上，RNNs可以通过人工调节参数来解决这种”长期依赖“问题。但是实践证明，RNNs并不能很好的学习很长的句子。<strong>不过，LSTMs可以解决这个问题。</strong></p>
-<h2 id="LSTM网络"><a href="#LSTM网络" class="headerlink" title="LSTM网络"></a>LSTM网络</h2><p>&emsp;&emsp; <strong>LSTMs</strong> 是RNN的一种特殊网络结构，通常也被称为长短期记忆网络，它可以有效解决长期依赖问题。有关介绍可参见<a href="http://www.bioinf.jku.at/publications/older/2604.pdf" target="_blank" rel="noopener">Hochreiter &amp; Schmidhuber (1997)</a> 。LSTM被明确的设计出来解决长期依赖问题，它很大的功能就是嫩记住很长时间之前的信息。所有的RNNs网络结构都是由一串相同的神经网络单元构成。标准的RNN神经单元都很简单，比如只有一个 <em>tanh</em> 层。</p>
+<h2 id="LSTM："><a href="#LSTM：" class="headerlink" title="LSTM："></a>LSTM：</h2><p>&emsp;&emsp; <strong>LSTMs</strong> 是RNN的一种特殊网络结构，通常也被称为长短期记忆网络，它可以有效解决长期依赖问题。有关介绍可参见<a href="http://www.bioinf.jku.at/publications/older/2604.pdf" target="_blank" rel="noopener">Hochreiter &amp; Schmidhuber (1997)</a> 。LSTM被明确的设计出来解决长期依赖问题，它很大的功能就是嫩记住很长时间之前的信息。所有的RNNs网络结构都是由一串相同的神经网络单元构成。标准的RNN神经单元都很简单，比如只有一个 <em>tanh</em> 层。</p>
 <p><img src="/images/RNN/LSTM3-SimpleRNN.png" alt="The repeating module in a standard RNN contains a single layer."></p>
 <p>&emsp;&emsp; LSTM同样也是这种链式结构，但是其神经网络单元不同。它拥有四个层而不是一层，并且这四层相互作用。</p>
 <p><img src="/images/RNN/LSTM3-chain.png" alt="The repeating module in an LSTM contains four interacting layers"></p>
@@ -768,7 +765,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#RNN："><span class="nav-number">1.</span> <span class="nav-text">RNN：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#长期依赖的问题"><span class="nav-number">2.</span> <span class="nav-text">长期依赖的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LSTM网络"><span class="nav-number">3.</span> <span class="nav-text">LSTM网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LSTM核心思想"><span class="nav-number">4.</span> <span class="nav-text">LSTM核心思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LSTM工作步骤详解"><span class="nav-number">5.</span> <span class="nav-text">LSTM工作步骤详解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">6.</span> <span class="nav-text">References</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#RNN："><span class="nav-number">1.</span> <span class="nav-text">RNN：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#长期依赖的问题"><span class="nav-number">2.</span> <span class="nav-text">长期依赖的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LSTM："><span class="nav-number">3.</span> <span class="nav-text">LSTM：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LSTM核心思想"><span class="nav-number">4.</span> <span class="nav-text">LSTM核心思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LSTM工作步骤详解"><span class="nav-number">5.</span> <span class="nav-text">LSTM工作步骤详解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">6.</span> <span class="nav-text">References</span></a></li></ol></div>
             
 
           </div>
