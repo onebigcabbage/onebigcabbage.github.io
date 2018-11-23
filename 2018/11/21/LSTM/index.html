@@ -123,7 +123,10 @@
 <meta property="og:site_name" content="蔡圣哲">
 <meta property="og:description" content="RNN 基本结构 其他结构   长期依赖的问题 LSTM： LSTM核心思想 LSTM工作步骤详解 References">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://caicai.science/images/RNN/RNN-unrolled.png">
+<meta property="og:image" content="http://caicai.science/images/RNN/nvsn.png">
+<meta property="og:image" content="http://caicai.science/images/RNN/nvs1.png">
+<meta property="og:image" content="http://caicai.science/images/RNN/1vsn.png">
+<meta property="og:image" content="http://caicai.science/images/RNN/1vsn2.png">
 <meta property="og:image" content="http://caicai.science/images/RNN/RNN-shorttermdepdencies.png">
 <meta property="og:image" content="http://caicai.science/images/RNN/RNN-longtermdependencies.png">
 <meta property="og:image" content="http://caicai.science/images/RNN/LSTM3-SimpleRNN.png">
@@ -135,11 +138,11 @@
 <meta property="og:image" content="http://caicai.science/images/RNN/LSTM3-focus-i.png">
 <meta property="og:image" content="http://caicai.science/images/RNN/LSTM3-focus-C.png">
 <meta property="og:image" content="http://caicai.science/images/RNN/LSTM3-focus-o.png">
-<meta property="og:updated_time" content="2018-11-21T02:08:36.293Z">
+<meta property="og:updated_time" content="2018-11-21T06:44:35.838Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="循环神经网络：RNN、LSTM">
 <meta name="twitter:description" content="RNN 基本结构 其他结构   长期依赖的问题 LSTM： LSTM核心思想 LSTM工作步骤详解 References">
-<meta name="twitter:image" content="http://caicai.science/images/RNN/RNN-unrolled.png">
+<meta name="twitter:image" content="http://caicai.science/images/RNN/nvsn.png">
 
 
 
@@ -402,7 +405,7 @@
                 
               
 
-              <time title="Created: 2018-11-21 10:08:36" itemprop="dateCreated datePublished" datetime="2018-11-21T10:08:36+08:00">2018-11-21</time>
+              <time title="Created: 2018-11-21 14:44:35" itemprop="dateCreated datePublished" datetime="2018-11-21T14:44:35+08:00">2018-11-21</time>
             
 
             
@@ -484,13 +487,41 @@
 </div>
 
 <a id="more"></a>
-<h2><span id="rnn">RNN</span><a href="#rnn" class="header-anchor">#</a></h2><h3><span id="ji-ben-jie-gou">基本结构</span><a href="#ji-ben-jie-gou" class="header-anchor">#</a></h3><p>　<em>NLP</em> 问题中，句子由 <em>n</em> 个词组成，可看做一串序列，<em>RNN</em> 正是可以处理序列类型的数据的深度学习模型。如下图所示，<em>RNN</em> 由多个相同的神经网络单元连接而成，<em>t</em> 时刻网络单元的计算包括两个元素，<em>t-1</em> 时刻的输出 $ h_{t-1} $ 和 <em>t</em> 时刻的输入 $ x_{t} $ 。计算后的结果 $ h_{t} $ 则传递给下一个单元，作为 <em>t+1</em> 时刻的一个输入。</p>
-<p><img src="/images/RNN/RNN-unrolled.png" alt="**An rolled recurrent neural network.**"></p>
-<p>　假设输入序列为 $ x_{1}，x_{2}，x_{3}，…，x_{n} $ ，对应的中间状态为 $ h_{1}，h_{2}，h_{3}，…，h_{n} $ ，输出为 $ y_{1}，y_{2}，y_{3}，…，y_{n} $ 。计算过程为：</p>
-<p>$$ h_{t} = f(Ux_{t} + Wh_{t} + b) $$</p>
+<h2><span id="rnn">RNN</span><a href="#rnn" class="header-anchor">#</a></h2><ul>
+<li><h3><span id="ji-ben-jie-gou">基本结构</span><a href="#ji-ben-jie-gou" class="header-anchor">#</a></h3></li>
+</ul>
+<p>　<em>NLP</em> 问题中，通常句子都是由 <em>n</em> 个词组成，可看做一串序列，<em>RNN</em> 正是可以处理序列类型数据的深度学习模型。如下图所示，<em>RNN</em> 由多个相同的神经网络单元，即图中的方块，连接而成，输入可看做一句话的每个单词，上一个单元的计算结果传递给下一个单元。经过串行计算后，每一个单元总是包含有之前所有单元的一些信息。</p>
+<p><img src="/images/RNN/nvsn.png" alt="**An rolled recurrent neural network.**"></p>
+<p>　<em>t</em> 时刻网络单元的计算包括两个元素，<em>t-1</em> 时刻的输出 $ h_{t-1} $ 和 <em>t</em> 时刻的输入 $ x_{t} $ 。计算后的结果 $ h_{t} $ 则传递给下一个单元，作为 <em>t+1</em> 时刻的一个输入。假设输入序列为 $ x_{1}，x_{2}，x_{3}，…，x_{n} $ ，对应的中间状态为 $ h_{1}，h_{2}，h_{3}，…，h_{n} $ ，输出为 $ y_{1}，y_{2}，y_{3}，…，y_{n} $ 。</p>
+<p>　计算过程为：</p>
+<p>$$ h_{t} = f(Ux_{t} + Wh_{t-1} + b) $$</p>
 <p>$$ y_{t} = Softmax(Vh_{t} + c) $$</p>
 <p>　其中，$Ｕ，Ｗ，Ｖ，ｂ，ｃ$ 为需要更新的参数，激活函数 $ f $ 一般为 <em>tanh</em> 函数。</p>
-<h3><span id="qi-ta-jie-gou">其他结构</span><a href="#qi-ta-jie-gou" class="header-anchor">#</a></h3><p>　这种链式结构明显的适用于序列型数据，所以 <em>RNN</em> 在语音识别、语言模型、机器翻译、图像描述等等领域都取得了很大的成功。具体的可以参考文章 <em><a href="http://karpathy.github.io/2015/05/21/rnn-effectiveness/" target="_blank" rel="noopener">The Unreasonable Effectiveness of Recurrent Neural Networks</a></em> 。</p>
+<ul>
+<li><h3><span id="qi-ta-jie-gou">其他结构</span><a href="#qi-ta-jie-gou" class="header-anchor">#</a></h3><ul>
+<li><p>N VS 1</p>
+<p>　当处理文本分类时，输入是一个文本序列，而输出可能只是一个类别，那么只需要对最后一个中间状态做计算并输出结果就可以了。如下图所示：</p>
+</li>
+</ul>
+<p><img src="/images/RNN/nvs1.png" alt=""></p>
+<p>​    　计算过程：</p>
+<p>​    $$ h_{t} = f(Ux_{t} + Wh_{t-1} + b)  $$</p>
+<p>​    $$ y = Softmax(Vh_{4} + c) $$</p>
+<ul>
+<li><p>1 VS N</p>
+<p>　当处理 <em>Image Caption</em> 任务时，输入可能是一个向量，输出则是一个文本序列，如下图所示：</p>
+<table><br>    <tr><br>        <td><center><img src="/images/RNN/1vsn.png"></center></td><br>        <td><center><img src="/images/RNN/1vsn2.png"></center></td><br>    </tr><br></table>
+
+<p>　计算过程：</p>
+<p>$$ h_{t} = f(Ux + Wh_{t-1} + b)  $$</p>
+<p>$$ y_{t} = Softmax(Vh_{t} + c) $$</p>
+</li>
+<li><p>N VS M</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>　这种链式结构明显的适用于序列型数据，所以 <em>RNN</em> 在语音识别、语言模型、机器翻译、图像描述等等领域都取得了很大的成功。具体的可以参考文章 <em><a href="http://karpathy.github.io/2015/05/21/rnn-effectiveness/" target="_blank" rel="noopener">The Unreasonable Effectiveness of Recurrent Neural Networks</a></em> 。</p>
 <p>&emsp;&emsp; </p>
 <h2><span id="chang-qi-yi-lai-de-wen-ti">长期依赖的问题</span><a href="#chang-qi-yi-lai-de-wen-ti" class="header-anchor">#</a></h2><p>&emsp;&emsp;  RNN的一个很大优点是可以将之前的信息连接到当前的任务中，例如你可以联想看过的电影情节来预测接下来要发生的故事情节。如果RNN能够真正做到这样，那对很多领域非常有用。但是事实并非这样，它视情况而定。</p>
 <p>&emsp;&emsp;   有时我们当前的任务只需要最近的信息就可以了。例如，语言模型基于之前的几个词就可以预测接下来的词。假设想要预测 <em>the clouds are in the </em>sky<em>,</em> 的最后一个单词，我们不需要太多的上下文语境就可以推测出是 <em>sky</em> 。在这种语境很简单，并且相关信息与其位置差距很小的情况下，RNNs可以很好的从之前的语境推测出答案。</p>
