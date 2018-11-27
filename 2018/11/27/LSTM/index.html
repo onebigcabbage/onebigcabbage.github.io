@@ -115,37 +115,32 @@
 
 
 
-  <meta name="description" content="RNN 基本结构 其他结构   梯度消失（爆炸） LSTM 长期依赖问题   LSTM核心思想 LSTM工作步骤详解 References     RNN# 基本结构#  　NLP 问题中，通常需要处理的句子都是由 n 个词组成，可看做一串序列，RNN 正是可以处理序列类型数据的深度学习模型。 　如图所示，RNN 由多个相同的神经网络单元，即图中的方块连接而成，输入为每个单词的词向量，上">
-<meta name="keywords" content="RNN,Deep Learning,LSTM">
+  <meta name="keywords" content="RNN,Deep Learning,LSTM">
 <meta property="og:type" content="article">
 <meta property="og:title" content="循环神经网络：RNN、LSTM">
 <meta property="og:url" content="http://caicai.science/2018/11/27/LSTM/index.html">
 <meta property="og:site_name" content="蔡圣哲">
-<meta property="og:description" content="RNN 基本结构 其他结构   梯度消失（爆炸） LSTM 长期依赖问题   LSTM核心思想 LSTM工作步骤详解 References     RNN# 基本结构#  　NLP 问题中，通常需要处理的句子都是由 n 个词组成，可看做一串序列，RNN 正是可以处理序列类型数据的深度学习模型。 　如图所示，RNN 由多个相同的神经网络单元，即图中的方块连接而成，输入为每个单词的词向量，上">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://caicai.science/images/RNN/rnn.png">
-<meta property="og:image" content="http://caicai.science/images/RNN/nvs1.png">
+<meta property="og:image" content="http://caicai.science/2018/11/27/images/RNN/rnn.png">
+<meta property="og:image" content="http://caicai.science/2018/11/27/images/RNN/nvs1.png">
 <meta property="og:image" content="http://caicai.science/images/RNN/1vsn.png">
 <meta property="og:image" content="http://caicai.science/images/RNN/1vsn2.png">
-<meta property="og:image" content="http://caicai.science/images/RNN/nvsn.png">
+<meta property="og:image" content="http://caicai.science/2018/11/27/images/RNN/nvsn.png">
 <meta property="og:image" content="http://caicai.science/2018/11/27/images/RNN/3time.png">
 <meta property="og:image" content="http://caicai.science/2018/11/27/images/RNN/forward.png">
 <meta property="og:image" content="http://caicai.science/2018/11/27/images/RNN/back.png">
 <meta property="og:image" content="http://caicai.science/2018/11/27/images/RNN/LSTM3-SimpleRNN.png">
 <meta property="og:image" content="http://caicai.science/2018/11/27/images/RNN/equation2.png">
-<meta property="og:image" content="http://caicai.science/images/RNN/LSTM3-chain.png">
-<meta property="og:image" content="http://caicai.science/images/RNN/LSTM2-notation.png">
-<meta property="og:image" content="http://caicai.science/images/RNN/LSTM3-C-line.png">
-<meta property="og:image" content="http://caicai.science/images/RNN/LSTM3-gate.png">
+<meta property="og:image" content="http://caicai.science/2018/11/27/images/RNN/RNN-longtermdependencies.png">
+<meta property="og:image" content="http://caicai.science/2018/11/27/images/RNN/LSTM3-chain.png">
 <meta property="og:image" content="http://caicai.science/images/RNN/LSTM3-focus-f.png">
 <meta property="og:image" content="http://caicai.science/images/RNN/LSTM3-focus-i.png">
 <meta property="og:image" content="http://caicai.science/images/RNN/LSTM3-focus-C.png">
 <meta property="og:image" content="http://caicai.science/images/RNN/LSTM3-focus-o.png">
-<meta property="og:updated_time" content="2018-11-27T00:54:21.534Z">
+<meta property="og:updated_time" content="2018-11-27T02:38:14.026Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="循环神经网络：RNN、LSTM">
-<meta name="twitter:description" content="RNN 基本结构 其他结构   梯度消失（爆炸） LSTM 长期依赖问题   LSTM核心思想 LSTM工作步骤详解 References     RNN# 基本结构#  　NLP 问题中，通常需要处理的句子都是由 n 个词组成，可看做一串序列，RNN 正是可以处理序列类型数据的深度学习模型。 　如图所示，RNN 由多个相同的神经网络单元，即图中的方块连接而成，输入为每个单词的词向量，上">
-<meta name="twitter:image" content="http://caicai.science/images/RNN/rnn.png">
+<meta name="twitter:image" content="http://caicai.science/2018/11/27/images/RNN/rnn.png">
 
 
 
@@ -408,7 +403,7 @@
                 
               
 
-              <time title="Created: 2018-11-27 08:54:21" itemprop="dateCreated datePublished" datetime="2018-11-27T08:54:21+08:00">2018-11-27</time>
+              <time title="Created: 2018-11-27 10:38:14" itemprop="dateCreated datePublished" datetime="2018-11-27T10:38:14+08:00">2018-11-27</time>
             
 
             
@@ -471,7 +466,8 @@
       
 
       
-        <a id="more"></a>
+        <hr>
+<a id="more"></a>
 <div class="toc">
 
 <!-- toc -->
@@ -479,14 +475,14 @@
 <li><a href="#rnn">RNN</a><ul>
 <li><a href="#ji-ben-jie-gou">基本结构</a></li>
 <li><a href="#qi-ta-jie-gou">其他结构</a></li>
+<li><a href="#ti-du-xiao-shi-bao-zha">梯度消失（爆炸）</a></li>
 </ul>
 </li>
-<li><a href="#ti-du-xiao-shi-bao-zha">梯度消失（爆炸）</a></li>
 <li><a href="#lstm">LSTM</a><ul>
 <li><a href="#chang-qi-yi-lai-wen-ti">长期依赖问题</a></li>
+<li><a href="#ji-ben-jie-gou-1">基本结构</a></li>
 </ul>
 </li>
-<li><a href="#lstm-he-xin-si-xiang">LSTM核心思想</a></li>
 <li><a href="#lstm-gong-zuo-bu-zou-xiang-jie">LSTM工作步骤详解</a></li>
 <li><a href="#references">References</a></li>
 </ul>
@@ -498,7 +494,7 @@
 </ul>
 <p>　<em>NLP</em> 问题中，通常需要处理的句子都是由 <em>n</em> 个词组成，可看做一串序列，<em>RNN</em> 正是可以处理序列类型数据的深度学习模型。</p>
 <p>　如图所示，<em>RNN</em> 由多个相同的神经网络单元，即图中的方块连接而成，输入为每个单词的词向量，上一个单元的计算结果传递给下一个单元。经过串行计算后，每一个单元总是包含有之前所有单元的一些信息。</p>
-<p><img src="/images/RNN/rnn.png" alt="**An rolled recurrent neural network.**"></p>
+<p><img src="../images/RNN/rnn.png" alt="**An rolled recurrent neural network.**"></p>
 <p>　<em>t</em> 时刻神经单元的计算包含两个元素，<em>t-1</em> 时刻的输出 $ h_{t-1} $ 和 <em>t</em> 时刻的输入 $ x_{t} $ 。计算后的结果 $ h_{t} $ 则传递给下一个单元，作为 <em>t+1</em> 时刻的一个输入。假设输入序列为 $ x_{1}，x_{2}，x_{3}，…，x_{n} $ ，对应的中间状态为 $ h_{1}，h_{2}，h_{3}，…，h_{n} $ ，输出为 $ y_{1}，y_{2}，y_{3}，…，y_{n} $ 。</p>
 <p>　计算过程为：</p>
 <p>$$ h_{t} = f(Ux_{t} + Wh_{t-1} + b) $$</p>
@@ -510,34 +506,29 @@
 <p>　当处理文本分类时，输入是一个文本序列，而输出可能只是一个类别，那么只需要对最后一个中间状态做计算并输出结果就可以了。如下图所示：</p>
 </li>
 </ul>
-<p><img src="/images/RNN/nvs1.png" alt=""></p>
+<p><img src="../images/RNN/nvs1.png" alt=""></p>
 <p>​    　计算过程：</p>
 <p>​    $$ h_{t} = f(Ux_{t} + Wh_{t-1} + b)  $$</p>
 <p>​    $$ y = g(Vh_{4} + c) $$</p>
 <ul>
 <li><p>One to Many</p>
-<p>　当处理 <em>Image Caption</em> 任务时，输入可能是一个向量，输出则是一个文本序列，如下图所示：</p>
-<table><br>    <tr><br>        <td><center><img src="/images/RNN/1vsn.png"></center></td><br>      <td><center><img src="/images/RNN/1vsn2.png"></center></td><br>    </tr><br></table>
+<p> 当处理 <em>Image Caption</em> 任务时，输入可能是一个向量，输出则是一个文本序列，如下图所示：</p>
+   <table><br>       <tr><br>           <td><center><img src="/images/RNN/1vsn.png"></center></td><br>         <td><center><img src="/images/RNN/1vsn2.png"></center></td><br>       </tr><br>   </table>
 
-
+<p> 　计算过程：<br> $$ h_{t} = f(Ux + Wh_{t-1} + b)  $$<br> $$ y_{t} = g(Vh_{t} + c) $$</p>
 </li>
-</ul>
-</li>
-</ul>
-<pre><code>　计算过程：
-
-$$ h_{t} = f(Ux + Wh_{t-1} + b)  $$
-
-$$ y_{t} = g(Vh_{t} + c) $$
-</code></pre><ul>
 <li><p>Many to Many</p>
-<p>当处理机器翻译时，输入一串文本序列，输出一串文本序列。如下图所示：</p>
-<p><img src="/images/RNN/nvsn.png" alt=""></p>
-<p>该模型称为 <em>Sequence to Sequence</em> 模型，又称为 <em>Encoder-Decoder</em> 模型。</p>
+<p>  　当处理机器翻译时，输入一串文本序列，输出一串文本序列。如下图所示：</p>
+<p> <img src="../images/RNN/nvsn.png" alt=""></p>
+<p> 　该模型称为 <em>Sequence to Sequence</em> 模型，又称为 <em>Encoder-Decoder</em> 模型。</p>
 </li>
 </ul>
-<p>　这种链式结构明显的适用于序列型数据，所以 <em>RNN</em> 在语音识别、语言模型、机器翻译、图像描述等等领域都取得很大的成功。</p>
-<h2><span id="ti-du-xiao-shi-bao-zha">梯度消失（爆炸）</span><a href="#ti-du-xiao-shi-bao-zha" class="header-anchor">#</a></h2><p>假设有三个时间段的 <em>RNN</em> 模型，如下图所示：</p>
+</li>
+</ul>
+<ul>
+<li><h3><span id="ti-du-xiao-shi-bao-zha">梯度消失（爆炸）</span><a href="#ti-du-xiao-shi-bao-zha" class="header-anchor">#</a></h3></li>
+</ul>
+<p>假设有三个时间段的 <em>RNN</em> 模型，如下图所示：</p>
 <p><img src="../images/RNN/3time.png" alt=""></p>
 <p>前向传播：</p>
 <p><img src="../images/RNN/forward.png" alt=""></p>
@@ -547,33 +538,18 @@ $$ y_{t} = g(Vh_{t} + c) $$
 <p><img src="../images/RNN/LSTM3-SimpleRNN.png" alt="standard RNN"></p>
 <p>即：</p>
 <p><img src="../images/RNN/equation2.png" alt=""></p>
-<p>反向传播求导过程会包含一系列    </p>
+<p>　反向传播求导过程会包含每一步求导的连乘，假如参数 <em>W</em> 也是一个比较小的数 <em>0.02</em> ，当 <em>t</em> 很大时，上式就会趋于零，<em>RNN</em> 的梯度就会消失。反之，会梯度爆炸。</p>
 <h2><span id="lstm">LSTM</span><a href="#lstm" class="header-anchor">#</a></h2><ul>
-<li><h3><span id="chang-qi-yi-lai-wen-ti">长期依赖问题</span><a href="#chang-qi-yi-lai-wen-ti" class="header-anchor">#</a></h3><p>RNN的对输入进行计算，如下图所示：</p>
+<li><h3><span id="chang-qi-yi-lai-wen-ti">长期依赖问题</span><a href="#chang-qi-yi-lai-wen-ti" class="header-anchor">#</a></h3><p>　若梯度消失，那么最前面的输入所蕴含的信息就无法传达到后面。比如要推测 <em>I grew up in France… I speak fluent French.</em> 的最后一个词 <em>French</em> 。那么肯定就要知道很靠前的 <em>France</em> 这个词的信息，但是它们相互相隔非常远，有可能获取不到。</p>
+<p><img src="../images/RNN/RNN-longtermdependencies.png" alt="RNN-longtermdependencies"></p>
+</li>
+<li><h3><span id="ji-ben-jie-gou">基本结构</span><a href="#ji-ben-jie-gou" class="header-anchor">#</a></h3><p>和 <em>RNN</em> 的神经网络单元不同的是，<em>LSTM</em> 的隐状态包括两部分：$C_{t-1}$ 和 $h_{t}$ </p>
+<p> <img src="../images/RNN/LSTM3-chain.png" alt="LSTM"></p>
 </li>
 </ul>
-<p>  隐状态，即中间状态的计算方式为：</p>
-<p>  $$ h_{t} = f(Ux_{t} + Wh_{t-1} + b) $$</p>
-<p>  反向传播</p>
-<p>  有时我们当前的任务只需要最近的信息就可以了。例如，语言模型基于之前的几个词就可以预测接下来的词。假设想要预测 <em>the clouds are in the </em>sky<em>,</em> 的最后一个单词，我们不需要太多的上下文语境就可以推测出是 <em>sky</em> 。在这种语境很简单，并且相关信息与其位置差距很小的情况下，RNNs可以很好的从之前的语境推测出答案。</p>
-<p>  <img src="" alt="RNN-shorttermdepdencies"></p>
-<p>  但是很多情况下我们需要更多的上下文情节。假如我们想要推测 <em>I grew up in France… I speak fluent </em>French<em>.</em> 的最后一个词， 根据最近的词的语境，最后一个词最可能的是一种语言，但是想要知道是什么语言，我们需要知道很靠前的 <em>France</em> 这个词。很有可能相关信息和我们需要的关键信息相隔非常远。</p>
-<p>  &emsp; &emsp;然而，随着间隔的增大，RNNs也越来越不能从之前的信息学到东西。</p>
-<p>  <img src="" alt="RNN-longtermdependencies"></p>
-<p> <strong>LSTMs</strong> 是RNN的一种特殊网络结构，通常也被称为长短期记忆网络，它可以有效解决长期依赖问题。有关介绍可参见<a href="http://www.bioinf.jku.at/publications/older/2604.pdf" target="_blank" rel="noopener">Hochreiter &amp; Schmidhuber (1997)</a> 。LSTM被明确的设计出来解决长期依赖问题，它很大的功能就是嫩记住很长时间之前的信息。所有的RNNs网络结构都是由一串相同的神经网络单元构成。标准的RNN神经单元都很简单，比如只有一个 <em>tanh</em> 层。</p>
-<p>&emsp;&emsp; LSTM同样也是这种链式结构，但是其神经网络单元不同。它拥有四个层而不是一层，并且这四层相互作用。</p>
-<p><img src="/images/RNN/LSTM3-chain.png" alt="The repeating module in an LSTM contains four interacting layers"></p>
-<p>&emsp; &emsp;  不用担心上面复杂的流程图，接下来我们一步步讲述。首先看下图，流程图中的每一条黑线表示将一个向量从一个节点的输出传输到另一个节点的输入；红色圆圈表示向量运算，比如向量相加、向量相乘等；黄色的方块表示学习神经网络层；合并线表示将数据合并；分叉线表示其内容被复制为多份并且转移到不同的地方。</p>
-<p><img src="/images/RNN/LSTM2-notation.png" alt=""></p>
-<h2><span id="lstm-he-xin-si-xiang">LSTM核心思想</span><a href="#lstm-he-xin-si-xiang" class="header-anchor">#</a></h2><p>&emsp;&emsp; LSTM最重要的就是 <em>Cell State</em> （细胞状态）: $C_{t}$ ，它就像一种传输带，仅仅通过一些少量的线性运算，通过水平线贯穿作用在整个流程图中。</p>
-<blockquote>
-<p>Cell：相当于一个记事本，有个叫State的参数记东西。</p>
-</blockquote>
-<p><img src="/images/RNN/LSTM3-C-line.png" alt=""></p>
-<p>&emsp;&emsp; LSTM还可以通过调节 一种被称为”门“的结构在神经单元上增加或者减少信息。”门“可以让信息选择性的通过，由 <em>sigmoid</em> 神经网络层和点乘运算操作构成。</p>
-<p><img src="/images/RNN/LSTM3-gate.png" alt=""></p>
+<p>&emsp;&emsp; LSTM最重要的就是 <em>Cell State</em> （细胞状态）: $C_{t}$ ，它就像一种传输带，仅仅通过一些少量的线性运算，通过水平线贯穿作用在整个流程图中。</p>
 <p>&emsp;&emsp; <em>sigmoid</em> 层的输出是一个介于0到1之间的数，表示可以通过的信息量。0表示丢弃所有的信息，1表示让所有的信息全部通过。LSTM一共有三个”门“用来控制 <em>Cell State</em> 。</p>
-<h2><span id="lstm-gong-zuo-bu-zou-xiang-jie">LSTM工作步骤详解</span><a href="#lstm-gong-zuo-bu-zou-xiang-jie" class="header-anchor">#</a></h2><p>&emsp; &emsp;  LSTM首先确定从 <em>Cell State</em> 中丢弃哪些信息，这个决定是由被称为”遗忘门“的 <em>sigmoid</em> 层所决定的。输入 <em>$h_{t-1}​$</em> 和 <em>$x_{t}​$</em> ，输出一个介于0到1的数至单元状态 <em>$C_{t-1}​$</em> 。1代表全部保留，0代表全部丢弃。</p>
+<h2><span id="lstm-gong-zuo-bu-zou-xiang-jie">LSTM工作步骤详解</span><a href="#lstm-gong-zuo-bu-zou-xiang-jie" class="header-anchor">#</a></h2><p>&emsp; &emsp;  LSTM首先确定从 <em>Cell State</em> 中丢弃哪些信息，这个决定是由被称为”遗忘门“的 <em>sigmoid</em> 层所决定的。输入 <em>$h_{t-1}$</em> 和 <em>$x_{t}$</em> ，输出一个介于0到1的数至单元状态 <em>$C_{t-1}$</em> 。1代表全部保留，0代表全部丢弃。</p>
 <p>&emsp; &emsp;  让我们继续看基于所有之前词语来预测新词的语言模型，<em>Cell State</em> 也许包含了当前主语的类别，所以可以选择正确的代词。当看到一个新的主语时，我们就会忘记之前旧的那个。</p>
 <p><img src="/images/RNN/LSTM3-focus-f.png" alt=""></p>
 <p>&emsp;&emsp; 接下来，我们要确定在 <em>Cell State</em> 中存储哪些新信息，两部分完成。第一步：由 <em>sigmoid</em> 层构成的”更新门“确定我们需要更新的值。接着，由 <em>tanh</em> 层建立一个能够和 <em>$C_{t-1}$</em> 相加的候选集向量 <em>$\tilde{C_{t}}$</em>；第二步：将这第一步中的东西结合产生新的更新状态。</p>
@@ -848,7 +824,7 @@ $$ y_{t} = g(Vh_{t} + c) $$
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">RNN#</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.1.</span> <span class="nav-text">基本结构#</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.2.</span> <span class="nav-text">其他结构#</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">梯度消失（爆炸）#</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">LSTM#</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">3.1.</span> <span class="nav-text">长期依赖问题#</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">4.</span> <span class="nav-text">LSTM核心思想#</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">5.</span> <span class="nav-text">LSTM工作步骤详解#</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">6.</span> <span class="nav-text">References#</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">RNN#</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.1.</span> <span class="nav-text">基本结构#</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.2.</span> <span class="nav-text">其他结构#</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.3.</span> <span class="nav-text">梯度消失（爆炸）#</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">LSTM#</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">2.1.</span> <span class="nav-text">长期依赖问题#</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">2.2.</span> <span class="nav-text">基本结构#</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">LSTM工作步骤详解#</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">4.</span> <span class="nav-text">References#</span></a></li></ol></div>
             
 
           </div>
