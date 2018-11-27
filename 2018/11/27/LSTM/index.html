@@ -124,7 +124,6 @@
 <meta property="og:image" content="http://caicai.science/images/RNN/rnn.png">
 <meta property="og:image" content="http://caicai.science/images/RNN/nvs1.png">
 <meta property="og:image" content="http://caicai.science/images/RNN/1vsn.png">
-<meta property="og:image" content="http://caicai.science/images/RNN/1vsn2.png">
 <meta property="og:image" content="http://caicai.science/images/RNN/nvsn.png">
 <meta property="og:image" content="http://caicai.science/images/RNN/3time.png">
 <meta property="og:image" content="http://caicai.science/images/RNN/forward.png">
@@ -137,7 +136,7 @@
 <meta property="og:image" content="http://caicai.science/images/RNN/LSTM3-focus-i.png">
 <meta property="og:image" content="http://caicai.science/images/RNN/LSTM3-focus-C.png">
 <meta property="og:image" content="http://caicai.science/images/RNN/LSTM3-focus-o.png">
-<meta property="og:updated_time" content="2018-11-27T02:53:41.199Z">
+<meta property="og:updated_time" content="2018-11-27T03:00:18.242Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="循环神经网络：RNN、LSTM">
 <meta name="twitter:image" content="http://caicai.science/images/RNN/rnn.png">
@@ -403,7 +402,7 @@
                 
               
 
-              <time title="Created: 2018-11-27 10:53:41" itemprop="dateCreated datePublished" datetime="2018-11-27T10:53:41+08:00">2018-11-27</time>
+              <time title="Created: 2018-11-27 11:00:18" itemprop="dateCreated datePublished" datetime="2018-11-27T11:00:18+08:00">2018-11-27</time>
             
 
             
@@ -507,20 +506,19 @@
 </li>
 </ul>
 <p><img src="/images/RNN/nvs1.png" alt=""></p>
-<p>​    　计算过程：</p>
+<p>​    计算过程：</p>
 <p>​    $$ h_{t} = f(Ux_{t} + Wh_{t-1} + b)  $$</p>
 <p>​    $$ y = g(Vh_{4} + c) $$</p>
 <ul>
 <li><p>One to Many</p>
 <p> 当处理 <em>Image Caption</em> 任务时，输入可能是一个向量，输出则是一个文本序列，如下图所示：</p>
-   <table><br>       <tr><br>           <td><center><img src="/images/RNN/1vsn.png"></center></td><br>         <td><center><img src="/images/RNN/1vsn2.png"></center></td><br>       </tr><br>   </table>
-
-<p> 　计算过程：<br> $$ h_{t} = f(Ux + Wh_{t-1} + b)  $$<br> $$ y_{t} = g(Vh_{t} + c) $$</p>
+<p> <img src="/images/RNN/1vsn.png" alt=""></p>
+<p> 计算过程：<br> $$ h_{t} = f(Ux + Wh_{t-1} + b)  $$<br> $$ y_{t} = g(Vh_{t} + c) $$</p>
 </li>
 <li><p>Many to Many</p>
-<p>  　当处理机器翻译时，输入一串文本序列，输出一串文本序列。如下图所示：</p>
+<p>  当处理机器翻译时，输入一串文本序列，输出一串文本序列。如下图所示：</p>
 <p> <img src="/images/RNN/nvsn.png" alt=""></p>
-<p> 　该模型称为 <em>Sequence to Sequence</em> 模型，又称为 <em>Encoder-Decoder</em> 模型。</p>
+<p> 该模型称为 <em>Sequence to Sequence</em> 模型，又称为 <em>Encoder-Decoder</em> 模型。</p>
 </li>
 </ul>
 </li>
@@ -540,11 +538,12 @@
 </li>
 </ul>
 <h2><span id="lstm">LSTM</span><a href="#lstm" class="header-anchor">#</a></h2><ul>
-<li><h3><span id="chang-qi-yi-lai-wen-ti">长期依赖问题</span><a href="#chang-qi-yi-lai-wen-ti" class="header-anchor">#</a></h3><p>　若梯度消失，那么最前面的输入所蕴含的信息就无法传达到后面。比如要推测 <em>I grew up in France… I speak fluent French.</em> 的最后一个词 <em>French</em> 。那么肯定就要知道很靠前的 <em>France</em> 这个词的信息，但是它们相互相隔非常远，有可能获取不到。</p>
+<li><h3><span id="chang-qi-yi-lai-wen-ti">长期依赖问题</span><a href="#chang-qi-yi-lai-wen-ti" class="header-anchor">#</a></h3><p>　若梯度消失，那么最前面的输入所蕴含的信息就无法传达到后面。比如要推测 <em>I grew up in France… I speak fluent French.</em> 的最后一个词 <em>French</em> 。那么肯定就要知道很靠前的 <em>France</em> 这个词的信息，但是它们相互相隔非常远，有可能获取不到，如下图所示：</p>
 <p><img src="/images/RNN/RNN-longtermdependencies.png" alt="RNN-longtermdependencies"></p>
 </li>
-<li><h3><span id="ji-ben-jie-gou">基本结构</span><a href="#ji-ben-jie-gou" class="header-anchor">#</a></h3><p>和 <em>RNN</em> 的神经网络单元不同的是，<em>LSTM</em> 的隐状态包括两部分：$C_{t-1}$ 和 $h_{t}$ ，同时引入了遗忘门、输入门和输出门。</p>
-<p> <img src="/images/RNN/LSTM3-chain.png" alt="LSTM"></p>
+<li><h3><span id="ji-ben-jie-gou">基本结构</span><a href="#ji-ben-jie-gou" class="header-anchor">#</a></h3><p>和 <em>RNN</em> 的神经网络单元不同的是，<em>LSTM</em> 的隐状态包括两部分：$C_{t}$ 和 $h_{t}$ ，同时引入了遗忘门、输入门和输出门。</p>
+<p><img src="/images/RNN/LSTM3-chain.png" alt="LSTM"></p>
+<p>$C_{t-1}$ 记录了每个单元需要保存的信息，作用在</p>
 </li>
 </ul>
 <p>&emsp;&emsp; LSTM最重要的就是 <em>Cell State</em> （细胞状态）: $C_{t}$ ，它就像一种传输带，仅仅通过一些少量的线性运算，通过水平线贯穿作用在整个流程图中。</p>
