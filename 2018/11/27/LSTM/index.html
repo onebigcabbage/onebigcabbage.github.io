@@ -121,26 +121,26 @@
 <meta property="og:url" content="http://caicai.science/2018/11/27/LSTM/index.html">
 <meta property="og:site_name" content="蔡圣哲">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://caicai.science/2018/11/27/images/RNN/rnn.png">
-<meta property="og:image" content="http://caicai.science/2018/11/27/images/RNN/nvs1.png">
+<meta property="og:image" content="http://caicai.science/images/RNN/rnn.png">
+<meta property="og:image" content="http://caicai.science/images/RNN/nvs1.png">
 <meta property="og:image" content="http://caicai.science/images/RNN/1vsn.png">
 <meta property="og:image" content="http://caicai.science/images/RNN/1vsn2.png">
-<meta property="og:image" content="http://caicai.science/2018/11/27/images/RNN/nvsn.png">
-<meta property="og:image" content="http://caicai.science/2018/11/27/images/RNN/3time.png">
-<meta property="og:image" content="http://caicai.science/2018/11/27/images/RNN/forward.png">
-<meta property="og:image" content="http://caicai.science/2018/11/27/images/RNN/back.png">
-<meta property="og:image" content="http://caicai.science/2018/11/27/images/RNN/LSTM3-SimpleRNN.png">
-<meta property="og:image" content="http://caicai.science/2018/11/27/images/RNN/equation2.png">
-<meta property="og:image" content="http://caicai.science/2018/11/27/images/RNN/RNN-longtermdependencies.png">
-<meta property="og:image" content="http://caicai.science/2018/11/27/images/RNN/LSTM3-chain.png">
+<meta property="og:image" content="http://caicai.science/images/RNN/nvsn.png">
+<meta property="og:image" content="http://caicai.science/images/RNN/3time.png">
+<meta property="og:image" content="http://caicai.science/images/RNN/forward.png">
+<meta property="og:image" content="http://caicai.science/images/RNN/back.png">
+<meta property="og:image" content="http://caicai.science/images/RNN/LSTM3-SimpleRNN.png">
+<meta property="og:image" content="http://caicai.science/images/RNN/equation2.png">
+<meta property="og:image" content="http://caicai.science/images/RNN/RNN-longtermdependencies.png">
+<meta property="og:image" content="http://caicai.science/images/RNN/LSTM3-chain.png">
 <meta property="og:image" content="http://caicai.science/images/RNN/LSTM3-focus-f.png">
 <meta property="og:image" content="http://caicai.science/images/RNN/LSTM3-focus-i.png">
 <meta property="og:image" content="http://caicai.science/images/RNN/LSTM3-focus-C.png">
 <meta property="og:image" content="http://caicai.science/images/RNN/LSTM3-focus-o.png">
-<meta property="og:updated_time" content="2018-11-27T02:38:14.026Z">
+<meta property="og:updated_time" content="2018-11-27T02:53:41.199Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="循环神经网络：RNN、LSTM">
-<meta name="twitter:image" content="http://caicai.science/2018/11/27/images/RNN/rnn.png">
+<meta name="twitter:image" content="http://caicai.science/images/RNN/rnn.png">
 
 
 
@@ -403,7 +403,7 @@
                 
               
 
-              <time title="Created: 2018-11-27 10:38:14" itemprop="dateCreated datePublished" datetime="2018-11-27T10:38:14+08:00">2018-11-27</time>
+              <time title="Created: 2018-11-27 10:53:41" itemprop="dateCreated datePublished" datetime="2018-11-27T10:53:41+08:00">2018-11-27</time>
             
 
             
@@ -494,7 +494,7 @@
 </ul>
 <p>　<em>NLP</em> 问题中，通常需要处理的句子都是由 <em>n</em> 个词组成，可看做一串序列，<em>RNN</em> 正是可以处理序列类型数据的深度学习模型。</p>
 <p>　如图所示，<em>RNN</em> 由多个相同的神经网络单元，即图中的方块连接而成，输入为每个单词的词向量，上一个单元的计算结果传递给下一个单元。经过串行计算后，每一个单元总是包含有之前所有单元的一些信息。</p>
-<p><img src="../images/RNN/rnn.png" alt="**An rolled recurrent neural network.**"></p>
+<p><img src="/images/RNN/rnn.png" alt=""></p>
 <p>　<em>t</em> 时刻神经单元的计算包含两个元素，<em>t-1</em> 时刻的输出 $ h_{t-1} $ 和 <em>t</em> 时刻的输入 $ x_{t} $ 。计算后的结果 $ h_{t} $ 则传递给下一个单元，作为 <em>t+1</em> 时刻的一个输入。假设输入序列为 $ x_{1}，x_{2}，x_{3}，…，x_{n} $ ，对应的中间状态为 $ h_{1}，h_{2}，h_{3}，…，h_{n} $ ，输出为 $ y_{1}，y_{2}，y_{3}，…，y_{n} $ 。</p>
 <p>　计算过程为：</p>
 <p>$$ h_{t} = f(Ux_{t} + Wh_{t-1} + b) $$</p>
@@ -506,7 +506,7 @@
 <p>　当处理文本分类时，输入是一个文本序列，而输出可能只是一个类别，那么只需要对最后一个中间状态做计算并输出结果就可以了。如下图所示：</p>
 </li>
 </ul>
-<p><img src="../images/RNN/nvs1.png" alt=""></p>
+<p><img src="/images/RNN/nvs1.png" alt=""></p>
 <p>​    　计算过程：</p>
 <p>​    $$ h_{t} = f(Ux_{t} + Wh_{t-1} + b)  $$</p>
 <p>​    $$ y = g(Vh_{4} + c) $$</p>
@@ -519,32 +519,32 @@
 </li>
 <li><p>Many to Many</p>
 <p>  　当处理机器翻译时，输入一串文本序列，输出一串文本序列。如下图所示：</p>
-<p> <img src="../images/RNN/nvsn.png" alt=""></p>
+<p> <img src="/images/RNN/nvsn.png" alt=""></p>
 <p> 　该模型称为 <em>Sequence to Sequence</em> 模型，又称为 <em>Encoder-Decoder</em> 模型。</p>
 </li>
 </ul>
 </li>
 </ul>
 <ul>
-<li><h3><span id="ti-du-xiao-shi-bao-zha">梯度消失（爆炸）</span><a href="#ti-du-xiao-shi-bao-zha" class="header-anchor">#</a></h3></li>
-</ul>
-<p>假设有三个时间段的 <em>RNN</em> 模型，如下图所示：</p>
-<p><img src="../images/RNN/3time.png" alt=""></p>
+<li><h3><span id="ti-du-xiao-shi-bao-zha">梯度消失（爆炸）</span><a href="#ti-du-xiao-shi-bao-zha" class="header-anchor">#</a></h3><p>假设有三个时间段的 <em>RNN</em> 模型，如下图所示：</p>
+<p><img src="/images/RNN/3time.png" alt=""></p>
 <p>前向传播：</p>
-<p><img src="../images/RNN/forward.png" alt=""></p>
-<p><em>t3</em> 时刻的损失函数为 <em>L3</em>，对共享参数 <em>W、U、V</em> 求导：</p>
-<p><img src="../images/RNN/back.png" alt=""></p>
-<p>可见，共享参数 <em>W、U</em> 的每次求导计算会涉及到整个序列。而 <em>RNN</em> 的神经单元只有一个 <em>tanh</em> 激活函数，如下图所示：</p>
-<p><img src="../images/RNN/LSTM3-SimpleRNN.png" alt="standard RNN"></p>
+<p><img src="/images/RNN/forward.png" alt=""></p>
+<p>$t_{3}$ 时刻的损失函数为 $L_{3}$，对共享参数 $W、U、V$ 求导：</p>
+<p><img src="/images/RNN/back.png" alt=""></p>
+<p>可见，共享参数 $W、U$ 的每次求导计算会涉及到整个序列。而 <em>RNN</em> 的神经单元只有一个 $tanh$ 激活函数，如下图所示：</p>
+<p><img src="/images/RNN/LSTM3-SimpleRNN.png" alt="standard RNN"></p>
 <p>即：</p>
-<p><img src="../images/RNN/equation2.png" alt=""></p>
-<p>　反向传播求导过程会包含每一步求导的连乘，假如参数 <em>W</em> 也是一个比较小的数 <em>0.02</em> ，当 <em>t</em> 很大时，上式就会趋于零，<em>RNN</em> 的梯度就会消失。反之，会梯度爆炸。</p>
+<p><img src="/images/RNN/equation2.png" alt=""></p>
+<p>反向传播求导过程会包含每一步求导的连乘，假如参数 <em>W</em> 也是一个比较小的数 <em>0.02</em> ，当 <em>t</em> 很大时，上式就会趋于零，<em>RNN</em> 的梯度就会消失。反之，会梯度爆炸。</p>
+</li>
+</ul>
 <h2><span id="lstm">LSTM</span><a href="#lstm" class="header-anchor">#</a></h2><ul>
 <li><h3><span id="chang-qi-yi-lai-wen-ti">长期依赖问题</span><a href="#chang-qi-yi-lai-wen-ti" class="header-anchor">#</a></h3><p>　若梯度消失，那么最前面的输入所蕴含的信息就无法传达到后面。比如要推测 <em>I grew up in France… I speak fluent French.</em> 的最后一个词 <em>French</em> 。那么肯定就要知道很靠前的 <em>France</em> 这个词的信息，但是它们相互相隔非常远，有可能获取不到。</p>
-<p><img src="../images/RNN/RNN-longtermdependencies.png" alt="RNN-longtermdependencies"></p>
+<p><img src="/images/RNN/RNN-longtermdependencies.png" alt="RNN-longtermdependencies"></p>
 </li>
-<li><h3><span id="ji-ben-jie-gou">基本结构</span><a href="#ji-ben-jie-gou" class="header-anchor">#</a></h3><p>和 <em>RNN</em> 的神经网络单元不同的是，<em>LSTM</em> 的隐状态包括两部分：$C_{t-1}$ 和 $h_{t}$ </p>
-<p> <img src="../images/RNN/LSTM3-chain.png" alt="LSTM"></p>
+<li><h3><span id="ji-ben-jie-gou">基本结构</span><a href="#ji-ben-jie-gou" class="header-anchor">#</a></h3><p>和 <em>RNN</em> 的神经网络单元不同的是，<em>LSTM</em> 的隐状态包括两部分：$C_{t-1}$ 和 $h_{t}$ ，同时引入了遗忘门、输入门和输出门。</p>
+<p> <img src="/images/RNN/LSTM3-chain.png" alt="LSTM"></p>
 </li>
 </ul>
 <p>&emsp;&emsp; LSTM最重要的就是 <em>Cell State</em> （细胞状态）: $C_{t}$ ，它就像一种传输带，仅仅通过一些少量的线性运算，通过水平线贯穿作用在整个流程图中。</p>
