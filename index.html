@@ -343,7 +343,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://caicai.science/2018/11/26/LSTM/">
+    <link itemprop="mainEntityOfPage" href="http://caicai.science/2018/11/27/LSTM/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="MR.C">
@@ -362,7 +362,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/11/26/LSTM/" itemprop="url">
+                <a class="post-title-link" href="/2018/11/27/LSTM/" itemprop="url">
                   循环神经网络：RNN、LSTM
                 </a>
               
@@ -389,7 +389,7 @@
                 
               
 
-              <time title="Created: 2018-11-26 14:43:49" itemprop="dateCreated datePublished" datetime="2018-11-26T14:43:49+08:00">2018-11-26</time>
+              <time title="Created: 2018-11-27 08:54:21" itemprop="dateCreated datePublished" datetime="2018-11-27T08:54:21+08:00">2018-11-27</time>
             
 
             
@@ -421,7 +421,7 @@
 
           
           
-             <span id="/2018/11/26/LSTM/" class="leancloud_visitors" data-flag-title="循环神经网络：RNN、LSTM">
+             <span id="/2018/11/27/LSTM/" class="leancloud_visitors" data-flag-title="循环神经网络：RNN、LSTM">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -455,21 +455,40 @@
         
           
             <a id="more"></a>
-<center><div class="toc"><br><br><!-- toc --><br><br>- <a href="#rnn">RNN</a><br>  <em> <a href="#ji-ben-jie-gou">基本结构</a>
-  </em> <a href="#jie-gou-tu">结构图</a><br>- <a href="#bptt">BPTT</a><br>- <a href="#lstm">LSTM</a><br>  * <a href="#chang-qi-yi-lai-wen-ti">长期依赖问题</a><br>- <a href="#lstm-he-xin-si-xiang">LSTM核心思想</a><br>- <a href="#lstm-gong-zuo-bu-zou-xiang-jie">LSTM工作步骤详解</a><br>- <a href="#references">References</a><br><br><!-- tocstop --><br><br></div></center>
+<div class="toc">
+
+<!-- toc -->
+<ul>
+<li><a href="#rnn">RNN</a><ul>
+<li><a href="#ji-ben-jie-gou">基本结构</a></li>
+<li><a href="#qi-ta-jie-gou">其他结构</a></li>
+</ul>
+</li>
+<li><a href="#ti-du-xiao-shi-bao-zha">梯度消失（爆炸）</a></li>
+<li><a href="#lstm">LSTM</a><ul>
+<li><a href="#chang-qi-yi-lai-wen-ti">长期依赖问题</a></li>
+</ul>
+</li>
+<li><a href="#lstm-he-xin-si-xiang">LSTM核心思想</a></li>
+<li><a href="#lstm-gong-zuo-bu-zou-xiang-jie">LSTM工作步骤详解</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+<!-- tocstop -->
+</div>
 
 <h2><span id="rnn">RNN</span><a href="#rnn" class="header-anchor">#</a></h2><ul>
 <li><h3><span id="ji-ben-jie-gou">基本结构</span><a href="#ji-ben-jie-gou" class="header-anchor">#</a></h3></li>
 </ul>
-<p>　<em>NLP</em> 问题中，通常需要处理的句子都是由 <em>n</em> 个词组成，可看做一串序列，<em>RNN</em> 正是可以处理序列类型数据的深度学习模型。如下图所示，<em>RNN</em> 由多个相同的神经网络单元，即图中的方块，连接而成，输入可看做一句话的每个单词，上一个单元的计算结果传递给下一个单元。经过串行计算后，每一个单元总是包含有之前所有单元的一些信息。</p>
-<p><img src="/images/RNN/nvsn.png" alt="**An rolled recurrent neural network.**"></p>
-<p>　<em>t</em> 时刻网络单元的计算包括两个元素，<em>t-1</em> 时刻的输出 $ h_{t-1} $ 和 <em>t</em> 时刻的输入 $ x_{t} $ 。计算后的结果 $ h_{t} $ 则传递给下一个单元，作为 <em>t+1</em> 时刻的一个输入。假设输入序列为 $ x_{1}，x_{2}，x_{3}，…，x_{n} $ ，对应的中间状态为 $ h_{1}，h_{2}，h_{3}，…，h_{n} $ ，输出为 $ y_{1}，y_{2}，y_{3}，…，y_{n} $ 。</p>
+<p>　<em>NLP</em> 问题中，通常需要处理的句子都是由 <em>n</em> 个词组成，可看做一串序列，<em>RNN</em> 正是可以处理序列类型数据的深度学习模型。</p>
+<p>　如图所示，<em>RNN</em> 由多个相同的神经网络单元，即图中的方块连接而成，输入为每个单词的词向量，上一个单元的计算结果传递给下一个单元。经过串行计算后，每一个单元总是包含有之前所有单元的一些信息。</p>
+<p><img src="/images/RNN/rnn.png" alt="**An rolled recurrent neural network.**"></p>
+<p>　<em>t</em> 时刻神经单元的计算包含两个元素，<em>t-1</em> 时刻的输出 $ h_{t-1} $ 和 <em>t</em> 时刻的输入 $ x_{t} $ 。计算后的结果 $ h_{t} $ 则传递给下一个单元，作为 <em>t+1</em> 时刻的一个输入。假设输入序列为 $ x_{1}，x_{2}，x_{3}，…，x_{n} $ ，对应的中间状态为 $ h_{1}，h_{2}，h_{3}，…，h_{n} $ ，输出为 $ y_{1}，y_{2}，y_{3}，…，y_{n} $ 。</p>
 <p>　计算过程为：</p>
 <p>$$ h_{t} = f(Ux_{t} + Wh_{t-1} + b) $$</p>
 <p>$$ y_{t} = g(Vh_{t} + c) $$</p>
 <p>　其中，$Ｕ，Ｗ，Ｖ，ｂ，ｃ$ 为需要更新的共享参数，激活函数 $ f $ 一般为 <em>tanh</em> 函数。</p>
 <ul>
-<li><h3><span id="jie-gou-tu">结构图</span><a href="#jie-gou-tu" class="header-anchor">#</a></h3><ul>
+<li><h3><span id="qi-ta-jie-gou">其他结构</span><a href="#qi-ta-jie-gou" class="header-anchor">#</a></h3><ul>
 <li><p>Many to One</p>
 <p>　当处理文本分类时，输入是一个文本序列，而输出可能只是一个类别，那么只需要对最后一个中间状态做计算并输出结果就可以了。如下图所示：</p>
 </li>
@@ -501,14 +520,24 @@ $$ y_{t} = g(Vh_{t} + c) $$
 </li>
 </ul>
 <p>　这种链式结构明显的适用于序列型数据，所以 <em>RNN</em> 在语音识别、语言模型、机器翻译、图像描述等等领域都取得很大的成功。</p>
-<h2><span id="bptt">BPTT</span><a href="#bptt" class="header-anchor">#</a></h2><h2><span id="lstm">LSTM</span><a href="#lstm" class="header-anchor">#</a></h2><ul>
-<li><h3><span id="chang-qi-yi-lai-wen-ti">长期依赖问题</span><a href="#chang-qi-yi-lai-wen-ti" class="header-anchor">#</a></h3><p>RNN的神经单元只有一个 <em>tanh</em> 激活函数对输入进行计算，如下图所示：</p>
-<p><img src="/images/RNN/LSTM3-SimpleRNN.png" alt="The repeating module in a standard RNN contains a single layer."></p>
-<p>隐状态，即中间状态的计算方式为：</p>
-<p>$$ h_{t} = f(Ux_{t} + Wh_{t-1} + b) $$</p>
-<p>反向传播</p>
+<h2><span id="ti-du-xiao-shi-bao-zha">梯度消失（爆炸）</span><a href="#ti-du-xiao-shi-bao-zha" class="header-anchor">#</a></h2><p>假设有三个时间段的 <em>RNN</em> 模型，如下图所示：</p>
+<p><img src="../images/RNN/3time.png" alt=""></p>
+<p>前向传播：</p>
+<p><img src="../images/RNN/forward.png" alt=""></p>
+<p><em>t3</em> 时刻的损失函数为 <em>L3</em>，对共享参数 <em>W、U、V</em> 求导：</p>
+<p><img src="../images/RNN/back.png" alt=""></p>
+<p>可见，共享参数 <em>W、U</em> 的每次求导计算会涉及到整个序列。而 <em>RNN</em> 的神经单元只有一个 <em>tanh</em> 激活函数，如下图所示：</p>
+<p><img src="../images/RNN/LSTM3-SimpleRNN.png" alt="standard RNN"></p>
+<p>即：</p>
+<p><img src="../images/RNN/equation2.png" alt=""></p>
+<p>反向传播求导过程会包含一系列    </p>
+<h2><span id="lstm">LSTM</span><a href="#lstm" class="header-anchor">#</a></h2><ul>
+<li><h3><span id="chang-qi-yi-lai-wen-ti">长期依赖问题</span><a href="#chang-qi-yi-lai-wen-ti" class="header-anchor">#</a></h3><p>RNN的对输入进行计算，如下图所示：</p>
 </li>
 </ul>
+<p>  隐状态，即中间状态的计算方式为：</p>
+<p>  $$ h_{t} = f(Ux_{t} + Wh_{t-1} + b) $$</p>
+<p>  反向传播</p>
 <p>  有时我们当前的任务只需要最近的信息就可以了。例如，语言模型基于之前的几个词就可以预测接下来的词。假设想要预测 <em>the clouds are in the </em>sky<em>,</em> 的最后一个单词，我们不需要太多的上下文语境就可以推测出是 <em>sky</em> 。在这种语境很简单，并且相关信息与其位置差距很小的情况下，RNNs可以很好的从之前的语境推测出答案。</p>
 <p>  <img src="" alt="RNN-shorttermdepdencies"></p>
 <p>  但是很多情况下我们需要更多的上下文情节。假如我们想要推测 <em>I grew up in France… I speak fluent </em>French<em>.</em> 的最后一个词， 根据最近的词的语境，最后一个词最可能的是一种语言，但是想要知道是什么语言，我们需要知道很靠前的 <em>France</em> 这个词。很有可能相关信息和我们需要的关键信息相隔非常远。</p>
@@ -592,7 +621,7 @@ $$ y_{t} = g(Vh_{t} + c) $$
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://caicai.science/2018/11/24/Markdown/">
+    <link itemprop="mainEntityOfPage" href="http://caicai.science/2018/11/27/Markdown/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="MR.C">
@@ -611,7 +640,7 @@ $$ y_{t} = g(Vh_{t} + c) $$
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/11/24/Markdown/" itemprop="url">
+                <a class="post-title-link" href="/2018/11/27/Markdown/" itemprop="url">
                   Markdown
                 </a>
               
@@ -638,7 +667,7 @@ $$ y_{t} = g(Vh_{t} + c) $$
                 
               
 
-              <time title="Created: 2018-11-24 16:38:51" itemprop="dateCreated datePublished" datetime="2018-11-24T16:38:51+08:00">2018-11-24</time>
+              <time title="Created: 2018-11-27 08:54:06" itemprop="dateCreated datePublished" datetime="2018-11-27T08:54:06+08:00">2018-11-27</time>
             
 
             
@@ -670,7 +699,7 @@ $$ y_{t} = g(Vh_{t} + c) $$
 
           
           
-             <span id="/2018/11/24/Markdown/" class="leancloud_visitors" data-flag-title="Markdown">
+             <span id="/2018/11/27/Markdown/" class="leancloud_visitors" data-flag-title="Markdown">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -704,7 +733,11 @@ $$ y_{t} = g(Vh_{t} + c) $$
         
           
             <a id="more"></a>
-<center><div class="toc"><br><br><!-- toc --><br><br><br><br><!-- tocstop --><br><br></div></center>
+<div class="toc">
+
+<!-- toc -->
+<!-- tocstop -->
+</div>
 
 <ul>
 <li><p>插入链接</p>
