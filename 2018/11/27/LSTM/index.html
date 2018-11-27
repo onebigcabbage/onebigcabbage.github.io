@@ -132,11 +132,12 @@
 <meta property="og:image" content="http://caicai.science/images/RNN/equation2.png">
 <meta property="og:image" content="http://caicai.science/images/RNN/RNN-longtermdependencies.png">
 <meta property="og:image" content="http://caicai.science/images/RNN/LSTM3-chain.png">
+<meta property="og:image" content="http://caicai.science/images/RNN/LSTM3-C-line.png">
 <meta property="og:image" content="http://caicai.science/images/RNN/LSTM3-focus-f.png">
 <meta property="og:image" content="http://caicai.science/images/RNN/LSTM3-focus-i.png">
 <meta property="og:image" content="http://caicai.science/images/RNN/LSTM3-focus-C.png">
 <meta property="og:image" content="http://caicai.science/images/RNN/LSTM3-focus-o.png">
-<meta property="og:updated_time" content="2018-11-27T03:00:18.242Z">
+<meta property="og:updated_time" content="2018-11-27T06:24:27.844Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="循环神经网络：RNN、LSTM">
 <meta name="twitter:image" content="http://caicai.science/images/RNN/rnn.png">
@@ -402,7 +403,7 @@
                 
               
 
-              <time title="Created: 2018-11-27 11:00:18" itemprop="dateCreated datePublished" datetime="2018-11-27T11:00:18+08:00">2018-11-27</time>
+              <time title="Created: 2018-11-27 14:24:27" itemprop="dateCreated datePublished" datetime="2018-11-27T14:24:27+08:00">2018-11-27</time>
             
 
             
@@ -482,7 +483,7 @@
 <li><a href="#ji-ben-jie-gou-1">基本结构</a></li>
 </ul>
 </li>
-<li><a href="#lstm-gong-zuo-bu-zou-xiang-jie">LSTM工作步骤详解</a></li>
+<li><a href="#wei-dai-ma">伪代码</a></li>
 <li><a href="#references">References</a></li>
 </ul>
 <!-- tocstop -->
@@ -501,8 +502,7 @@
 <p>　其中，$Ｕ，Ｗ，Ｖ，ｂ，ｃ$ 为需要更新的共享参数，激活函数 $ f $ 一般为 <em>tanh</em> 函数。</p>
 <ul>
 <li><h3><span id="qi-ta-jie-gou">其他结构</span><a href="#qi-ta-jie-gou" class="header-anchor">#</a></h3><ul>
-<li><p>Many to One</p>
-<p>　当处理文本分类时，输入是一个文本序列，而输出可能只是一个类别，那么只需要对最后一个中间状态做计算并输出结果就可以了。如下图所示：</p>
+<li><h4><span id="many-to-one">Many to One</span><a href="#many-to-one" class="header-anchor">#</a></h4><p>　当处理文本分类时，输入是一个文本序列，而输出可能只是一个类别，那么只需要对最后一个中间状态做计算并输出结果就可以了。如下图所示：</p>
 </li>
 </ul>
 <p><img src="/images/RNN/nvs1.png" alt=""></p>
@@ -510,13 +510,11 @@
 <p>​    $$ h_{t} = f(Ux_{t} + Wh_{t-1} + b)  $$</p>
 <p>​    $$ y = g(Vh_{4} + c) $$</p>
 <ul>
-<li><p>One to Many</p>
-<p> 当处理 <em>Image Caption</em> 任务时，输入可能是一个向量，输出则是一个文本序列，如下图所示：</p>
+<li><h4><span id="one-to-many">One to Many</span><a href="#one-to-many" class="header-anchor">#</a></h4><p> 当处理 <em>Image Caption</em> 任务时，输入可能是一个向量，输出则是一个文本序列，如下图所示：</p>
 <p> <img src="/images/RNN/1vsn.png" alt=""></p>
 <p> 计算过程：<br> $$ h_{t} = f(Ux + Wh_{t-1} + b)  $$<br> $$ y_{t} = g(Vh_{t} + c) $$</p>
 </li>
-<li><p>Many to Many</p>
-<p>  当处理机器翻译时，输入一串文本序列，输出一串文本序列。如下图所示：</p>
+<li><h4><span id="many-to-many">Many to Many</span><a href="#many-to-many" class="header-anchor">#</a></h4><p>  当处理机器翻译时，输入一串文本序列，输出一串文本序列。如下图所示：</p>
 <p> <img src="/images/RNN/nvsn.png" alt=""></p>
 <p> 该模型称为 <em>Sequence to Sequence</em> 模型，又称为 <em>Encoder-Decoder</em> 模型。</p>
 </li>
@@ -541,23 +539,31 @@
 <li><h3><span id="chang-qi-yi-lai-wen-ti">长期依赖问题</span><a href="#chang-qi-yi-lai-wen-ti" class="header-anchor">#</a></h3><p>　若梯度消失，那么最前面的输入所蕴含的信息就无法传达到后面。比如要推测 <em>I grew up in France… I speak fluent French.</em> 的最后一个词 <em>French</em> 。那么肯定就要知道很靠前的 <em>France</em> 这个词的信息，但是它们相互相隔非常远，有可能获取不到，如下图所示：</p>
 <p><img src="/images/RNN/RNN-longtermdependencies.png" alt="RNN-longtermdependencies"></p>
 </li>
-<li><h3><span id="ji-ben-jie-gou">基本结构</span><a href="#ji-ben-jie-gou" class="header-anchor">#</a></h3><p>和 <em>RNN</em> 的神经网络单元不同的是，<em>LSTM</em> 的隐状态包括两部分：$C_{t}$ 和 $h_{t}$ ，同时引入了遗忘门、输入门和输出门。</p>
+<li><h3><span id="ji-ben-jie-gou">基本结构</span><a href="#ji-ben-jie-gou" class="header-anchor">#</a></h3><p>和 <em>RNN</em> 的神经网络单元不同的是，<em>LSTM</em> 每个单元输的出包括两部分：$C_{t}$ 和 $h_{t}$ ，同时引入了遗忘门、输入门和输出门，增加了很多计算。</p>
 <p><img src="/images/RNN/LSTM3-chain.png" alt="LSTM"></p>
-<p>$C_{t-1}$ 记录了每个单元需要保存的信息，作用在</p>
+<p>单元状态 $C_{t-1}$ 通过累加的方式记录了 <em>t</em> 时刻需要保存的信息，作用在整个神经单元，因此可以长距离传输信息，如下图所示：</p>
+<p><img src="/images/RNN/LSTM3-C-line.png" alt=""></p>
+<ul>
+<li><h4><span id="yi-wang-men">遗忘门</span><a href="#yi-wang-men" class="header-anchor">#</a></h4><p>遗忘门用来丢弃上一时刻 $C_{t-1}$ 的部分信息，上一时刻的隐状态 $h_{t-1}$ 和当前时刻的输入 $x{t}$ 通过一个 $sigmoid$ 层，输出 $f_{t}$ 介于 <em>0</em> 到 <em>1</em> 之间，<em>1</em> 代表信息全部保留，<em>0</em> 代表全部丢弃。</p>
+<p><img src="/images/RNN/LSTM3-focus-f.png" alt=""></p>
+</li>
+<li><h4><span id="shu-ru-men">输入门</span><a href="#shu-ru-men" class="header-anchor">#</a></h4><p>1.为了更新单元状态 $C_{t}$ ，将 $h_{t-1}$ 和 $x_{t}$ 传递给 $sigmoid$ 函数，输出 $i_{t}$ 同样介于 <em>0</em> 到 <em>1</em> 之间，决定将更新临时单元状态中的哪些值。</p>
+<p>2.为了协调神经单元，将 $h_{t-1}$ 和 $x_{t}$ 传递给 $tanh$ 函数，输出的临时单元状态 $\tilde{C_{t}}$ 介于 -<em>1</em> 到 <em>1</em> 之间。</p>
+<p>3.将 $i_{t}$ 和 $\tilde{C_{t}}$ 逐点相乘。</p>
+<p><img src="/images/RNN/LSTM3-focus-i.png" alt=""></p>
+</li>
+<li><h4><span id="dan-yuan-zhuang-tai-c-t">单元状态 $C_{t}$</span><a href="#dan-yuan-zhuang-tai-c-t" class="header-anchor">#</a></h4><p>1.将 $C{t-1}$ 与 $f_{t}$ 逐点相乘，和接近 <em>0</em> 的值相乘，表示该词的作用不太大，会逐渐被遗忘；反之，该词的权重会变大，表示比较重要。</p>
+<p>2.将结果和输入门的输出逐点相加，将单词的向量加加减减，更新为新的值，构成当前时刻神经单元的所有信息 $C{t}$ 。</p>
+<p><img src="/images/RNN/LSTM3-focus-C.png" alt=""></p>
+</li>
+<li><h4><span id="shu-chu-men">输出门</span><a href="#shu-chu-men" class="header-anchor">#</a></h4><p>1.将 $h_{t-1}$ 和 $x_{t}$ 传递给 $sigmoid$ 函数，输出 $o_{t}$ 同样介于 <em>0</em> 到 <em>1</em> 之间，决定 $C_{t}$ 的哪些部分需要输出。</p>
+<p>2.将 $C_{t}$ 传递给 $tanh$ 函数，与 $o_{t}$ 逐点相乘得到输出，该输出作为当前隐状态 $h_{t}$ 参与下一个神经单元进行计算。</p>
+<p><img src="/images/RNN/LSTM3-focus-o.png" alt=""></p>
 </li>
 </ul>
-<p>&emsp;&emsp; LSTM最重要的就是 <em>Cell State</em> （细胞状态）: $C_{t}$ ，它就像一种传输带，仅仅通过一些少量的线性运算，通过水平线贯穿作用在整个流程图中。</p>
-<p>&emsp;&emsp; <em>sigmoid</em> 层的输出是一个介于0到1之间的数，表示可以通过的信息量。0表示丢弃所有的信息，1表示让所有的信息全部通过。LSTM一共有三个”门“用来控制 <em>Cell State</em> 。</p>
-<h2><span id="lstm-gong-zuo-bu-zou-xiang-jie">LSTM工作步骤详解</span><a href="#lstm-gong-zuo-bu-zou-xiang-jie" class="header-anchor">#</a></h2><p>&emsp; &emsp;  LSTM首先确定从 <em>Cell State</em> 中丢弃哪些信息，这个决定是由被称为”遗忘门“的 <em>sigmoid</em> 层所决定的。输入 <em>$h_{t-1}$</em> 和 <em>$x_{t}$</em> ，输出一个介于0到1的数至单元状态 <em>$C_{t-1}$</em> 。1代表全部保留，0代表全部丢弃。</p>
-<p>&emsp; &emsp;  让我们继续看基于所有之前词语来预测新词的语言模型，<em>Cell State</em> 也许包含了当前主语的类别，所以可以选择正确的代词。当看到一个新的主语时，我们就会忘记之前旧的那个。</p>
-<p><img src="/images/RNN/LSTM3-focus-f.png" alt=""></p>
-<p>&emsp;&emsp; 接下来，我们要确定在 <em>Cell State</em> 中存储哪些新信息，两部分完成。第一步：由 <em>sigmoid</em> 层构成的”更新门“确定我们需要更新的值。接着，由 <em>tanh</em> 层建立一个能够和 <em>$C_{t-1}$</em> 相加的候选集向量 <em>$\tilde{C_{t}}$</em>；第二步：将这第一步中的东西结合产生新的更新状态。</p>
-<p>&emsp; &emsp;  在语言模型中，我们想要添加新的主语到 <em>Cell State</em> ，来取代要遗忘的旧的主语。</p>
-<p><img src="/images/RNN/LSTM3-focus-i.png" alt=""></p>
-<p>&emsp;&emsp; 现在利用旧的  <em>Cell State</em> ：$C_{t-1}$ 更新新的  <em>Cell State</em> ：$C_{t-1}$ 。使用 $C_{t-1}$ 乘以 $f_{t}$ ，表示忘掉我们决定丢弃之前的那些信息。然后加上 $i_{t} <em> \tilde{C_{t}}$ ，这就是新的 </em>Cell State*。在语言模型中，这就是我们丢弃旧的主语，添加新信息的步骤。</p>
-<p><img src="/images/RNN/LSTM3-focus-C.png" alt=""></p>
-<p>&emsp;&emsp; 最终的输出基于 <em>Cell State</em>：$C_{t}$ 。首先经过 <em>sigmoid</em> 层来确定 $C_{t}$ 的哪些部分需要输出，然后将  $C_{t}$ 通过 <em>tanh</em> 层变为一个介于-1到1的值，乘上 <em>sigmoid</em> 层的输出，这就是我们需要的输出。</p>
-<p><img src="/images/RNN/LSTM3-focus-o.png" alt=""></p>
+</li>
+</ul>
+<h2><span id="wei-dai-ma">伪代码</span><a href="#wei-dai-ma" class="header-anchor">#</a></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">tanh</span><span class="params">(x)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> (np.exp(x) - np.exp(-x)) / (np.exp(x) + np.exp(-x))</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sigmoid</span><span class="params">(x)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span> / <span class="number">1</span> + np.exp(x)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">forget_layer</span><span class="params">(com)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> sigmoid(com)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">input_layer</span><span class="params">(com)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> sigmoid(com)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">temp_ct_layer</span><span class="params">(com)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> tanh(com)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">output_layer</span><span class="params">(com)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> sigmoid(classmethod)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">LSTMCell</span><span class="params">(pre_ct, pre_ht, input)</span>:</span></span><br><span class="line">    combine = pre_ht + input</span><br><span class="line">    ft = forget_layer(combine)</span><br><span class="line">    it = input_layer(combine)</span><br><span class="line">    temp_ct = temp_ct_layer(combine)</span><br><span class="line">    ot = output_layer(combine)</span><br><span class="line">    ct = pre_ct * ft + temp_ct * it</span><br><span class="line">    ht = ot * tanh(ct)</span><br><span class="line">    <span class="keyword">return</span> ct, ht</span><br><span class="line"></span><br><span class="line">ct = [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]</span><br><span class="line">ht = [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]</span><br><span class="line">inputs = [...]</span><br><span class="line"><span class="keyword">for</span> input <span class="keyword">in</span> inputs:</span><br><span class="line">    LSTMCell(ct, ht, input)</span><br></pre></td></tr></table></figure>
 <h2><span id="references">References</span><a href="#references" class="header-anchor">#</a></h2><p><em><a href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/" target="_blank" rel="noopener">Understanding LSTM Networks</a></em> </p>
 <p><em><a href="http://karpathy.github.io/2015/05/21/rnn-effectiveness/" target="_blank" rel="noopener">The Unreasonable Effectiveness of Recurrent Neural Networks</a></em></p>
 
@@ -823,7 +829,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">RNN#</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.1.</span> <span class="nav-text">基本结构#</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.2.</span> <span class="nav-text">其他结构#</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.3.</span> <span class="nav-text">梯度消失（爆炸）#</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">LSTM#</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">2.1.</span> <span class="nav-text">长期依赖问题#</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">2.2.</span> <span class="nav-text">基本结构#</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">LSTM工作步骤详解#</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">4.</span> <span class="nav-text">References#</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">RNN#</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.1.</span> <span class="nav-text">基本结构#</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.2.</span> <span class="nav-text">其他结构#</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">1.2.1.</span> <span class="nav-text">Many to One#</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">1.2.2.</span> <span class="nav-text">One to Many#</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">1.2.3.</span> <span class="nav-text">Many to Many#</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">1.3.</span> <span class="nav-text">梯度消失（爆炸）#</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">LSTM#</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">2.1.</span> <span class="nav-text">长期依赖问题#</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">2.2.</span> <span class="nav-text">基本结构#</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">2.2.1.</span> <span class="nav-text">遗忘门#</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">2.2.2.</span> <span class="nav-text">输入门#</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">2.2.3.</span> <span class="nav-text">单元状态 $C_{t}$#</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">2.2.4.</span> <span class="nav-text">输出门#</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">伪代码#</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">4.</span> <span class="nav-text">References#</span></a></li></ol></div>
             
 
           </div>
